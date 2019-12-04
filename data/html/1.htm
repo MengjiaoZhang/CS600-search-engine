@@ -1,0 +1,1608 @@
+<!DOCTYPE html><html class="loading" dir="ltr" lang="ALL"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+  <base href="/">
+
+  <!-- Facebook base meta tags. -->
+  <meta property="og:image:width" content="600">
+  <meta property="og:image:height" content="600">
+  <meta property="og:site_name" content="Deepmind">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter base meta tags. -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@DeepMindAI">
+
+  <!-- Set in Angular. -->
+  <title>Using AI to give doctors a 48-hour head start on life-threatening illness | DeepMind</title>
+  <meta name="description" content="Artificial intelligence can now predict one of the leading causes of avoidable patient harm up to two days before it happens, as demonstrated by&nbsp;our latest research published in Nature.">
+
+  <link rel="preconnect" href="https://lh3.googleusercontent.com">
+  <link href="assets/favicon.ico" rel="icon">
+<link rel="stylesheet" href="styles.c25992414036055c2434.css"><style ng-transition="deepmind-website">[_nghost-sc0] {
+  display: flex;
+  flex-direction: column;
+}
+@media (min-width: 1024px) {
+  [_nghost-sc0] {
+    flex-direction: row;
+  }
+}
+[_nghost-sc0]   .dm-body[_ngcontent-sc0] {
+  background-color: #f0f5f5;
+  height: 100%;
+  width: 100%;
+}
+@media (min-width: 1024px) {
+  [_nghost-sc0]   .dm-body[_ngcontent-sc0] {
+    width: calc(100% - 100px);
+  }
+}
+[_nghost-sc0]   .svg-elements[_ngcontent-sc0] {
+  height: 0;
+  position: absolute;
+  visibility: hidden;
+  width: 0;
+}</style><style ng-transition="deepmind-website">[_nghost-sc2] {
+  display: block;
+  position: relative;
+}
+header[_ngcontent-sc2] {
+  background-color: #0053d6;
+  height: 60px;
+  width: 100%;
+}
+@media (min-width: 768px) {
+  header[_ngcontent-sc2] {
+    height: 70px;
+  }
+}
+@media (min-width: 1024px) {
+  header[_ngcontent-sc2] {
+    height: 100%;
+    width: 100px;
+  }
+}
+header[_ngcontent-sc2]::after {
+  background-color: #0053d6;
+  content: "";
+  height: 100%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: right 0.3s ease, width 0.3s ease;
+  width: 0;
+  z-index: 34;
+}
+header.is-peaking[_ngcontent-sc2]::after {
+  right: -10px;
+  width: 10px;
+}
+.header-container[_ngcontent-sc2] {
+  background-color: #0053d6;
+  display: flex;
+  flex-direction: column;
+  height: inherit;
+  justify-content: space-between;
+  left: 0;
+  padding: 0 20px;
+  position: fixed;
+  top: 0;
+  width: inherit;
+  z-index: 35;
+}
+@media (min-width: 1024px) {
+  .header-container[_ngcontent-sc2] {
+    height: 100%;
+    padding: 30px 20px;
+  }
+}
+header.is-menu-open[_ngcontent-sc2]   .header-container[_ngcontent-sc2] {
+  width: 100%;
+}
+@media (min-width: 1024px) {
+  header.is-menu-open[_ngcontent-sc2]   .header-container[_ngcontent-sc2] {
+    width: 100px;
+  }
+}
+.header-container[_ngcontent-sc2]   ul[_ngcontent-sc2] {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.menu-wrapper[_ngcontent-sc2] {
+  display: flex;
+  height: 100%;
+}
+@media (min-width: 1024px) {
+  .menu-wrapper[_ngcontent-sc2] {
+    flex-direction: column;
+    height: auto;
+  }
+}
+.menu-header[_ngcontent-sc2] {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+@media (min-width: 1024px) {
+  .menu-header[_ngcontent-sc2] {
+    display: block;
+  }
+}
+.menu-header[_ngcontent-sc2]   .logo[_ngcontent-sc2] {
+  display: block;
+  margin: 0 0 0 -12px;
+}
+@media (min-width: 768px) {
+  .menu-header[_ngcontent-sc2]   .logo[_ngcontent-sc2] {
+    margin: 0;
+  }
+}
+@media (min-width: 1024px) {
+  .menu-header[_ngcontent-sc2]   .logo[_ngcontent-sc2] {
+    margin: 0 0 30px 0;
+  }
+}
+.menu-header[_ngcontent-sc2]   .logo[_ngcontent-sc2]   svg[_ngcontent-sc2] {
+  display: block;
+  height: 40px;
+  width: 184px;
+}
+@media (min-width: 1024px) {
+  .menu-header[_ngcontent-sc2]   .logo[_ngcontent-sc2]   svg[_ngcontent-sc2] {
+    width: 40px;
+  }
+}
+.menu-header[_ngcontent-sc2]   .logo[_ngcontent-sc2]   svg.full-logo[_ngcontent-sc2] {
+  width: 184px;
+}
+.menu-header[_ngcontent-sc2]   .menu-controls[_ngcontent-sc2] {
+  align-items: center;
+  display: flex;
+  flex-direction: row-reverse;
+}
+@media (min-width: 1024px) {
+  .menu-header[_ngcontent-sc2]   .menu-controls[_ngcontent-sc2] {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+    width: 38px;
+  }
+}
+.menu-header[_ngcontent-sc2]   .menu-controls[_ngcontent-sc2]   button[_ngcontent-sc2]    + button[_ngcontent-sc2] {
+  display: block;
+  margin: 0 20px 0 0;
+}
+@media (min-width: 1024px) {
+  .menu-header[_ngcontent-sc2]   .menu-controls[_ngcontent-sc2]   button[_ngcontent-sc2]    + button[_ngcontent-sc2] {
+    margin: 30px 0 0;
+  }
+}
+nav[_ngcontent-sc2] {
+  display: none;
+}
+@media (min-width: 1024px) {
+  nav[_ngcontent-sc2] {
+    display: flex;
+  }
+}
+@media (min-width: 1024px) {
+  header.is-menu-open[_ngcontent-sc2]   nav[_ngcontent-sc2] {
+    align-items: center;
+    height: 100%;
+    justify-content: center;
+  }
+}
+.pages[_ngcontent-sc2] {
+  display: block;
+  width: 100%;
+}
+header.is-menu-open[_ngcontent-sc2]   .pages[_ngcontent-sc2] {
+  width: auto;
+}
+@media (min-width: 1024px) {
+  header.is-menu-open[_ngcontent-sc2]   .pages[_ngcontent-sc2] {
+    display: flex;
+    flex-direction: row-reverse;
+    -webkit-transform: rotateZ(-90deg);
+            transform: rotateZ(-90deg);
+  }
+}
+.pages[_ngcontent-sc2]   li[_ngcontent-sc2]   a[_ngcontent-sc2] {
+  cursor: pointer;
+  position: relative;
+}
+.pages[_ngcontent-sc2]   li[_ngcontent-sc2]   a[_ngcontent-sc2]::before {
+  border-left: 6px solid transparent;
+  content: "";
+  display: block;
+  height: 100%;
+  left: -20px;
+  position: absolute;
+  top: 0;
+}
+.pages[_ngcontent-sc2]   li[_ngcontent-sc2]   a[_ngcontent-sc2]:focus::before, .pages[_ngcontent-sc2]   li[_ngcontent-sc2]   a[_ngcontent-sc2]:hover::before {
+  border-color: #fff;
+}
+.pages[_ngcontent-sc2]   li.is-active[_ngcontent-sc2]   a[_ngcontent-sc2]::before {
+  border-color: #fff;
+}
+.page-link[_ngcontent-sc2] {
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  display: block;
+  padding: 10px 0;
+}
+.page-link.nav-cta[_ngcontent-sc2]:focus, .page-link.nav-cta[_ngcontent-sc2]:hover {
+  color: #fff;
+}
+.social-media-wrapper[_ngcontent-sc2] {
+  display: none;
+}
+@media (min-width: 1024px) {
+  .social-media-wrapper[_ngcontent-sc2] {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    width: 38px;
+  }
+}
+.social-media-wrapper[_ngcontent-sc2]   li[_ngcontent-sc2]    + li[_ngcontent-sc2] {
+  margin-top: 10px;
+}
+.social-media-wrapper[_ngcontent-sc2]   svg[_ngcontent-sc2] {
+  height: 20px;
+  width: 20px;
+}
+.hamburger-menu[_ngcontent-sc2] {
+  cursor: pointer;
+  display: block;
+  height: 18px;
+  position: relative;
+  width: 22px;
+}
+@media (min-width: 1024px) {
+  .hamburger-menu[_ngcontent-sc2] {
+    width: 30px;
+  }
+}
+@media (hover: hover) {
+  .hamburger-menu[_ngcontent-sc2]:focus   span[_ngcontent-sc2]:nth-child(2), .hamburger-menu[_ngcontent-sc2]:hover   span[_ngcontent-sc2]:nth-child(2) {
+    -webkit-transform: scaleX(0.5);
+            transform: scaleX(0.5);
+  }
+}
+.hamburger-menu[_ngcontent-sc2]   span[_ngcontent-sc2] {
+  background-color: #fff;
+  display: block;
+  height: 2px;
+  margin: 0;
+  position: absolute;
+  -webkit-transform-origin: center;
+          transform-origin: center;
+  transition: width 0.2s ease, -webkit-transform 0.3s ease;
+  transition: transform 0.3s ease, width 0.2s ease;
+  transition: transform 0.3s ease, width 0.2s ease, -webkit-transform 0.3s ease;
+  width: 100%;
+}
+.hamburger-menu[_ngcontent-sc2]   span[_ngcontent-sc2]:first-child {
+  top: 0;
+}
+.hamburger-menu[_ngcontent-sc2]   span[_ngcontent-sc2]:nth-child(2) {
+  top: 8px;
+}
+.hamburger-menu[_ngcontent-sc2]   span[_ngcontent-sc2]:last-child {
+  bottom: 0;
+}
+.hamburger-menu.is-active[_ngcontent-sc2]   span[_ngcontent-sc2]:first-child {
+  -webkit-transform: translateY(8px) rotate(45deg);
+          transform: translateY(8px) rotate(45deg);
+  width: 23px;
+}
+@media (min-width: 1024px) {
+  .hamburger-menu.is-active[_ngcontent-sc2]   span[_ngcontent-sc2]:first-child {
+    width: 29px;
+  }
+}
+.hamburger-menu.is-active[_ngcontent-sc2]   span[_ngcontent-sc2]:nth-child(2) {
+  width: 0;
+}
+.hamburger-menu.is-active[_ngcontent-sc2]   span[_ngcontent-sc2]:last-child {
+  -webkit-transform: translateY(-8px) rotate(-45deg);
+          transform: translateY(-8px) rotate(-45deg);
+  width: 23px;
+}
+@media (min-width: 1024px) {
+  .hamburger-menu.is-active[_ngcontent-sc2]   span[_ngcontent-sc2]:last-child {
+    width: 29px;
+  }
+}
+.search[_ngcontent-sc2] {
+  text-align: center;
+}
+.search.no-focus[_ngcontent-sc2]:focus   g[_ngcontent-sc2] {
+  -webkit-transform: none;
+          transform: none;
+}
+.search[_ngcontent-sc2]:focus   g[_ngcontent-sc2], .search[_ngcontent-sc2]:hover   g[_ngcontent-sc2] {
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
+}
+@media (hover: none) {
+  .search.no-focus[_ngcontent-sc2]:focus   g[_ngcontent-sc2] {
+    -webkit-transform: none;
+            transform: none;
+  }
+  .search.no-focus[_ngcontent-sc2]:hover   g[_ngcontent-sc2] {
+    -webkit-transform: none;
+            transform: none;
+  }
+  .search[_ngcontent-sc2]:focus   g[_ngcontent-sc2], .search[_ngcontent-sc2]:hover   g[_ngcontent-sc2] {
+    -webkit-transform: none;
+            transform: none;
+  }
+}
+.search[_ngcontent-sc2]   svg[_ngcontent-sc2] {
+  height: 22px;
+  vertical-align: middle;
+  width: 22px;
+}
+@media (min-width: 1024px) {
+  .search[_ngcontent-sc2]   svg[_ngcontent-sc2] {
+    height: 28px;
+    width: 30px;
+  }
+}
+.search[_ngcontent-sc2]   svg[_ngcontent-sc2]   g[_ngcontent-sc2] {
+  transition: -webkit-transform 0.3s ease;
+  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, -webkit-transform 0.3s ease;
+}
+.search[_ngcontent-sc2]   svg[_ngcontent-sc2]   g[_ngcontent-sc2]   [_ngcontent-sc2]:first-child {
+  fill: #0053d6;
+}</style><style ng-transition="deepmind-website">[_nghost-sc3] {
+  display: block;
+}
+footer[_ngcontent-sc3] {
+  background-color: #14234b;
+  overflow: hidden;
+  padding: 50px 0 40px;
+  position: relative;
+}
+@media (min-width: 768px) {
+  footer[_ngcontent-sc3] {
+    padding: 60px 0 50px;
+  }
+}
+@media (min-width: 1440px) {
+  footer[_ngcontent-sc3] {
+    padding: 90px 0 100px;
+  }
+}
+.logo[_ngcontent-sc3] {
+  display: none;
+}
+@media (min-width: 1024px) {
+  .logo[_ngcontent-sc3] {
+    display: block;
+    margin: 0 0 45px;
+  }
+}
+.logo[_ngcontent-sc3]   svg[_ngcontent-sc3] {
+  fill: #fff;
+  height: 28px;
+  width: 130px;
+}
+.body[_ngcontent-sc3] {
+  flex: 1 1 0%;
+  position: relative;
+}
+.categories[_ngcontent-sc3] {
+  display: flex;
+  flex-flow: row wrap;
+}
+@media (min-width: 1440px) {
+  .categories[_ngcontent-sc3] {
+    flex-flow: row nowrap;
+  }
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3] {
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .categories[_ngcontent-sc3]   .column[_ngcontent-sc3] {
+    margin: 0 0 30px;
+    max-width: 33.3333333333%;
+  }
+}
+@media (min-width: 1440px) {
+  .categories[_ngcontent-sc3]   .column[_ngcontent-sc3] {
+    max-width: none;
+  }
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3]:last-child {
+  flex-grow: 0;
+}
+@media (min-width: 768px) {
+  .categories[_ngcontent-sc3]   .column[_ngcontent-sc3]:last-child {
+    flex-grow: 1;
+  }
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3]    > .nav-cta[_ngcontent-sc3] {
+  font-size: 16px;
+  font-weight: 700;
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   [dmAccordionTitle][_ngcontent-sc3] {
+  flex-grow: 1;
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   [dmAccordionTitle][_ngcontent-sc3]:focus, .categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   [dmAccordionTitle][_ngcontent-sc3]:hover {
+  border: 0;
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   ul[_ngcontent-sc3] {
+  list-style-type: none;
+  padding: 0 0 20px;
+}
+@media (min-width: 768px) {
+  .categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   ul[_ngcontent-sc3] {
+    border-left: 1px solid #0053d6;
+    margin: 15px 0 0;
+    padding: 0 0 0 8px;
+  }
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   ul[_ngcontent-sc3]   li[_ngcontent-sc3]    + li[_ngcontent-sc3] {
+  margin: 10px 0 0;
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   ul[_ngcontent-sc3]   li[_ngcontent-sc3]   a[_ngcontent-sc3] {
+  display: inherit;
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   ul[_ngcontent-sc3]   li[_ngcontent-sc3]   a[_ngcontent-sc3]:focus, .categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   ul[_ngcontent-sc3]   li[_ngcontent-sc3]   a[_ngcontent-sc3]:hover {
+  border: 0;
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   ul[_ngcontent-sc3]   li[_ngcontent-sc3]   dm-link[_ngcontent-sc3] {
+  line-height: 1;
+}
+.information[_ngcontent-sc3] {
+  display: flex;
+}
+@media (min-width: 768px) {
+  .information[_ngcontent-sc3] {
+    border-top: 1px solid #5c657f;
+    padding: 25px 0;
+  }
+}
+@media (min-width: 1440px) {
+  .information[_ngcontent-sc3] {
+    padding: 35px 0;
+  }
+}
+.information[_ngcontent-sc3]   .legal[_ngcontent-sc3] {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+@media (min-width: 768px) {
+  .information[_ngcontent-sc3]   .legal[_ngcontent-sc3] {
+    align-items: center;
+    flex-direction: row;
+    margin: 0;
+  }
+}
+.information[_ngcontent-sc3]   .legal[_ngcontent-sc3]   dm-link[_ngcontent-sc3] {
+  margin: 0 0 15px;
+}
+@media (min-width: 768px) {
+  .information[_ngcontent-sc3]   .legal[_ngcontent-sc3]   dm-link[_ngcontent-sc3] {
+    margin: 0 45px 0 0;
+  }
+}
+.information[_ngcontent-sc3]   .social[_ngcontent-sc3] {
+  align-items: flex-end;
+  display: flex;
+  justify-content: flex-end;
+  list-style: none;
+}
+@media (min-width: 768px) {
+  .information[_ngcontent-sc3]   .social[_ngcontent-sc3] {
+    align-items: center;
+  }
+}
+.information[_ngcontent-sc3]   .social[_ngcontent-sc3]   li[_ngcontent-sc3] {
+  display: flex;
+}
+.information[_ngcontent-sc3]   .social[_ngcontent-sc3]   a[_ngcontent-sc3] {
+  margin: 0 0 15px;
+  padding: 0 0 0 32px;
+}
+@media (min-width: 768px) {
+  .information[_ngcontent-sc3]   .social[_ngcontent-sc3]   a[_ngcontent-sc3] {
+    margin: 0 0 0 15px;
+    padding: 0;
+  }
+}
+.information[_ngcontent-sc3]   .social[_ngcontent-sc3]   a[_ngcontent-sc3]   svg[_ngcontent-sc3] {
+  height: 20px;
+  vertical-align: middle;
+  width: 20px;
+}
+.shape[_ngcontent-sc3] {
+  height: 100%;
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+@media (min-width: 1440px) {
+  .shape[_ngcontent-sc3] {
+    display: inline;
+  }
+}
+.shape[_ngcontent-sc3]   svg[_ngcontent-sc3] {
+  bottom: -100px;
+  fill: #0053d6;
+  height: 400px;
+  position: absolute;
+  right: -100px;
+  width: 400px;
+}
+@media (min-width: 768px) {
+  .shape[_ngcontent-sc3]   svg[_ngcontent-sc3] {
+    right: -100px;
+    top: 10%;
+  }
+}
+@media (min-width: 1440px) {
+  .shape[_ngcontent-sc3]   svg[_ngcontent-sc3] {
+    bottom: -200px;
+    left: 60%;
+    top: auto;
+  }
+}
+.back-to-top[_ngcontent-sc3] {
+  margin: 30px 0;
+  position: relative;
+  text-align: right;
+}
+@media (min-width: 768px) {
+  .back-to-top[_ngcontent-sc3] {
+    margin: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+}
+@media (min-width: 1024px) {
+  .back-to-top[_ngcontent-sc3] {
+    display: none;
+  }
+}
+.back-to-top[_ngcontent-sc3]   svg[_ngcontent-sc3] {
+  fill: #fff;
+  height: 16px;
+  margin: 0 0 0 auto;
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+  transition: -webkit-transform 0.2s ease;
+  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, -webkit-transform 0.2s ease;
+  width: 25px;
+}
+@media (min-width: 768px) {
+  .back-to-top[_ngcontent-sc3]   svg[_ngcontent-sc3] {
+    margin: auto;
+  }
+}</style><style ng-transition="deepmind-website">[_nghost-sc8] {
+  display: block;
+}
+.media[_ngcontent-sc8] {
+  display: block;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+.link[_ngcontent-sc8]   .icon[_ngcontent-sc8] {
+  height: 30px;
+  min-width: 30px;
+  position: relative;
+  width: 30px;
+}
+.link.external[_ngcontent-sc8]:focus   .icon[_ngcontent-sc8]::before, .link.external[_ngcontent-sc8]:hover   .icon[_ngcontent-sc8]::before {
+  background-color: #0053d6;
+}
+.link.external[_ngcontent-sc8]   .icon[_ngcontent-sc8]::before {
+  background-color: #ffdb13;
+  border-radius: 50%;
+  content: "";
+  display: block;
+  height: 30px;
+  position: absolute;
+  right: 0;
+  width: 30px;
+}
+.link.external[_ngcontent-sc8]   svg[_ngcontent-sc8] {
+  background-color: transparent;
+  border-radius: 0;
+  padding: 8px;
+  position: relative;
+}
+.link.transparent[_ngcontent-sc8]   .icon[_ngcontent-sc8] {
+  line-height: 0;
+}
+.hero-link[_ngcontent-sc8] {
+  align-items: flex-start;
+  font: 500 14px/30px "Deepmind Sans", Helvetica, Arial, sans-serif;
+  letter-spacing: 0;
+}
+@media (min-width: 1024px) {
+  .hero-link[_ngcontent-sc8] {
+    font-size: 18px;
+    line-height: 30px;
+  }
+}
+.cta-text[_ngcontent-sc8] {
+  margin-right: 10px;
+  text-transform: uppercase;
+}</style><style ng-transition="deepmind-website">[_nghost-sc10] {
+  display: block;
+  position: relative;
+  width: 100%;
+}</style><meta property="og:title" content="Using AI to give doctors a 48-hour head start on life-threatening illness"><meta property="og:description" content="Artificial intelligence can now predict one of the leading causes of avoidable patient harm up to two days before it happens, as demonstrated by&nbsp;our latest research published in Nature."><meta property="og:image" content="https://lh3.googleusercontent.com/jVZ3VN7wwx2dSowqLmhqm0qAzAmcb-1t7ks3HiNnoHknihF5sl9VDEwuCNTSxfx8jFIi7mBQkvHUdnSKXSPgYLNpvCuE4YajJeMnrYA"><meta property="og:url" content="/blog/article/predicting-patient-deterioration"><meta name="twitter:title" content="Using AI to give doctors a 48-hour head start on life-threatening illness"><meta name="twitter:description" content="Artificial intelligence can now predict one of the leading causes of avoidable patient harm up to two days before it happens, as demonstrated by&nbsp;our latest research published in Nature."><meta name="twitter:image:src" content="https://lh3.googleusercontent.com/jVZ3VN7wwx2dSowqLmhqm0qAzAmcb-1t7ks3HiNnoHknihF5sl9VDEwuCNTSxfx8jFIi7mBQkvHUdnSKXSPgYLNpvCuE4YajJeMnrYA"><meta name="twitter:site" content="/blog/article/predicting-patient-deterioration"><style ng-transition="deepmind-website">[_nghost-sc49] {
+  display: block;
+  margin-top: 70px;
+}
+@media (min-width: 1024px) {
+  [_nghost-sc49] {
+    margin-top: 100px;
+  }
+}
+dm-breadcrumb[_ngcontent-sc49] {
+  left: 20px;
+  position: absolute;
+  top: -45px;
+}
+@media (min-width: 768px) {
+  dm-breadcrumb[_ngcontent-sc49] {
+    left: 30px;
+  }
+}
+@media (min-width: 1024px) {
+  dm-breadcrumb[_ngcontent-sc49] {
+    left: 60px;
+    margin: 40px 0 25px;
+    top: -100px;
+  }
+}
+@media (min-width: 1440px) {
+  dm-breadcrumb[_ngcontent-sc49] {
+    left: 90px;
+  }
+}
+.blog-article-bg[_ngcontent-sc49] {
+  background: linear-gradient(to right, #fff 50%, #ffe6f0 50%);
+}
+@media (min-width: 1024px) {
+  .blog-article-bg[_ngcontent-sc49] {
+    background: linear-gradient(to right, #ffe6f0 50%, #fff 50%);
+  }
+}
+.page-content-container[_ngcontent-sc49] {
+  display: flex;
+  flex-direction: column-reverse;
+}
+@media (max-width: 1023px) {
+  .page-content-container[_ngcontent-sc49] {
+    padding: 0;
+  }
+}
+@media (min-width: 1024px) {
+  .page-content-container[_ngcontent-sc49] {
+    flex-direction: row;
+  }
+}
+aside[_ngcontent-sc49] {
+  background-color: #ffe6f0;
+  display: flex;
+  flex-direction: column;
+  padding: 50px 0 50px 30px;
+  width: 100%;
+}
+@media (min-width: 768px) {
+  aside[_ngcontent-sc49] {
+    -webkit-column-gap: 0;
+       -moz-column-gap: 0;
+            column-gap: 0;
+    -webkit-columns: 2;
+       -moz-columns: 2;
+            columns: 2;
+    display: inline;
+  }
+}
+@media (min-width: 1024px) {
+  aside[_ngcontent-sc49] {
+    display: flex;
+    max-width: 260px;
+    padding: 0 40px 50px 0;
+  }
+}
+@media (min-width: 1440px) {
+  aside[_ngcontent-sc49] {
+    max-width: 300px;
+  }
+}
+.page-content[_ngcontent-sc49] {
+  background-color: #fff;
+  padding: 20px 20px 0;
+  width: calc(100% - 20px);
+}
+@media (min-width: 768px) {
+  .page-content[_ngcontent-sc49] {
+    padding: 20px 30px 0;
+    width: calc(100% - 125px);
+  }
+}
+@media (min-width: 1024px) {
+  .page-content[_ngcontent-sc49] {
+    padding: 55px 0 55px 30px;
+    width: 100%;
+  }
+}
+@media (min-width: 1440px) {
+  .page-content[_ngcontent-sc49] {
+    padding: 70px 0 70px 100px;
+  }
+}
+dm-social-share[_ngcontent-sc49], dm-authors-list[_ngcontent-sc49], dm-tag-list[_ngcontent-sc49] {
+  margin-bottom: 30px;
+}
+@media (min-width: 768px) {
+  dm-social-share[_ngcontent-sc49], dm-authors-list[_ngcontent-sc49], dm-tag-list[_ngcontent-sc49] {
+    margin: 0 20px 30px 0;
+  }
+}
+@media (min-width: 1024px) {
+  dm-social-share[_ngcontent-sc49], dm-authors-list[_ngcontent-sc49], dm-tag-list[_ngcontent-sc49] {
+    margin: 0 0 30px;
+  }
+}
+dm-authors-list[_ngcontent-sc49] {
+  margin-bottom: 30px;
+}
+@media (min-width: 768px) {
+  dm-authors-list[_ngcontent-sc49] {
+    -webkit-column-break-before: always;
+       -moz-column-break-before: always;
+            break-before: always;
+    margin: 0;
+  }
+}
+@media (min-width: 1024px) {
+  dm-authors-list[_ngcontent-sc49] {
+    -webkit-column-break-before: auto;
+       -moz-column-break-before: auto;
+            break-before: auto;
+    margin-bottom: 30px;
+  }
+}
+dm-tag-list[_ngcontent-sc49] {
+  order: 3;
+}</style><style ng-transition="deepmind-website">[_nghost-sc13] {
+  display: block;
+}
+.theme-dark[_nghost-sc13]   li[_ngcontent-sc13]   a[_ngcontent-sc13] {
+  color: #0053d6;
+}
+.theme-dark[_nghost-sc13]   .logo[_ngcontent-sc13]   svg[_ngcontent-sc13], .theme-dark[_nghost-sc13]   .arrow[_ngcontent-sc13] {
+  fill: #0053d6;
+}
+ul[_ngcontent-sc13] {
+  align-items: center;
+  display: flex;
+  list-style: none;
+}
+ul[_ngcontent-sc13]   li[_ngcontent-sc13] {
+  align-items: center;
+  display: flex;
+}
+ul[_ngcontent-sc13]   li[_ngcontent-sc13]:not(:nth-child(2)) {
+  display: none;
+}
+@media (min-width: 1024px) {
+  ul[_ngcontent-sc13]   li[_ngcontent-sc13]:not(:nth-child(2)) {
+    display: flex;
+  }
+}
+ul[_ngcontent-sc13]   li[_ngcontent-sc13]:last-child   a[_ngcontent-sc13] {
+  font-weight: bold;
+}
+ul[_ngcontent-sc13]   li[_ngcontent-sc13]   .nav-cta[_ngcontent-sc13]:focus, ul[_ngcontent-sc13]   li[_ngcontent-sc13]   .nav-cta[_ngcontent-sc13]:hover {
+  border: 0;
+}
+ul[_ngcontent-sc13]   li[_ngcontent-sc13]   .disabled[_ngcontent-sc13] {
+  cursor: default;
+  pointer-events: none;
+}
+ul[_ngcontent-sc13]   li[_ngcontent-sc13]   .disabled[_ngcontent-sc13]:focus, ul[_ngcontent-sc13]   li[_ngcontent-sc13]   .disabled[_ngcontent-sc13]:hover {
+  color: #fff;
+}
+ul[_ngcontent-sc13]   .logo[_ngcontent-sc13]   svg[_ngcontent-sc13] {
+  display: none;
+  fill: #fff;
+  height: 25px;
+  width: 110px;
+}
+@media (min-width: 1024px) {
+  ul[_ngcontent-sc13]   .logo[_ngcontent-sc13]   svg[_ngcontent-sc13] {
+    display: block;
+    height: 28px;
+    width: 130px;
+  }
+}
+ul[_ngcontent-sc13]   .arrow[_ngcontent-sc13] {
+  fill: #fff;
+  height: 9px;
+  margin: 0 25px 0 0;
+  -webkit-transform: scaleX(-1);
+          transform: scaleX(-1);
+  width: 5px;
+}
+@media (min-width: 1024px) {
+  ul[_ngcontent-sc13]   .arrow[_ngcontent-sc13] {
+    margin: 0 25px;
+    -webkit-transform: scaleX(1);
+            transform: scaleX(1);
+  }
+}
+ul[_ngcontent-sc13]   .arrow.is-last[_ngcontent-sc13] {
+  display: none;
+}
+@media (min-width: 1024px) {
+  ul[_ngcontent-sc13]   .arrow.is-last[_ngcontent-sc13] {
+    display: inline;
+  }
+}</style><style ng-transition="deepmind-website">[_nghost-sc50] {
+  display: block;
+}
+header[_ngcontent-sc50] {
+  position: relative;
+}
+header[_ngcontent-sc50]   .article-image[_ngcontent-sc50] {
+  background: linear-gradient(transparent 60%, #ffe6f0 60%);
+}
+@media (min-width: 768px) {
+  header[_ngcontent-sc50]   .article-image[_ngcontent-sc50] {
+    background: linear-gradient(transparent 30%, #ffe6f0 30%);
+  }
+}
+@media (min-width: 1024px) {
+  header[_ngcontent-sc50]   .article-image[_ngcontent-sc50] {
+    background: transparent;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    z-index: 0;
+  }
+}
+@media (min-width: 2048px) {
+  header[_ngcontent-sc50]   .article-image[_ngcontent-sc50] {
+    max-height: 820px;
+  }
+}
+@media (min-width: 1024px) {
+  header[_ngcontent-sc50]   .article-image[_ngcontent-sc50]   picture[_ngcontent-sc50] {
+    height: auto;
+    position: relative;
+    display: block;
+    margin-left: auto;
+    width: 75%;
+  }
+  header[_ngcontent-sc50]   .article-image[_ngcontent-sc50]   picture[_ngcontent-sc50]::before {
+    content: "";
+    display: block;
+    padding-top: 56.25%;
+    width: 100%;
+  }
+  header[_ngcontent-sc50]   .article-image[_ngcontent-sc50]   picture[_ngcontent-sc50]    > img[_ngcontent-sc50], header[_ngcontent-sc50]   .article-image[_ngcontent-sc50]   picture[_ngcontent-sc50]    > svg[_ngcontent-sc50], header[_ngcontent-sc50]   .article-image[_ngcontent-sc50]   picture[_ngcontent-sc50]    > path[_ngcontent-sc50] {
+    display: block;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+}
+@media (min-width: 2048px) {
+  header[_ngcontent-sc50]   .article-image[_ngcontent-sc50]   picture[_ngcontent-sc50] {
+    width: calc( 1440px - 330px + (100vw - 1440px - 100px) / 2);
+  }
+}
+header[_ngcontent-sc50]   .article-image[_ngcontent-sc50]   picture[_ngcontent-sc50]   img[_ngcontent-sc50] {
+  height: 100%;
+  max-width: none;
+  width: calc(100% - 20px);
+}
+@media (min-width: 768px) {
+  header[_ngcontent-sc50]   .article-image[_ngcontent-sc50]   picture[_ngcontent-sc50]   img[_ngcontent-sc50] {
+    width: calc(100% - 30px);
+  }
+}
+@media (min-width: 1024px) {
+  header[_ngcontent-sc50]   .article-image[_ngcontent-sc50]   picture[_ngcontent-sc50]   img[_ngcontent-sc50] {
+    width: auto;
+  }
+}
+.article-content-container[_ngcontent-sc50] {
+  align-items: flex-start;
+  background-color: #ffe6f0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+@media (min-width: 1024px) {
+  .article-content-container[_ngcontent-sc50] {
+    align-items: flex-end;
+    bottom: 0;
+    margin: 0 auto;
+    position: absolute;
+    z-index: 1;
+  }
+}
+@media (min-width: 1440px) {
+  .article-content-container[_ngcontent-sc50] {
+    padding-left: calc((100% - 1440px) / 2);
+  }
+}
+@media (min-width: 2048px) {
+  .article-content-container[_ngcontent-sc50] {
+    min-width: 745px;
+    width: calc(100% - calc( 1440px - 330px + (100vw - 1440px - 100px) / 2) + 350px);
+  }
+}
+.article-content[_ngcontent-sc50] {
+  padding: 30px 20px 25px;
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .article-content[_ngcontent-sc50] {
+    padding: 25px 125px 25px 30px;
+  }
+}
+@media (min-width: 1024px) {
+  .article-content[_ngcontent-sc50] {
+    margin: 0;
+    max-width: 485px;
+    padding: 50px 50px 30px 60px;
+  }
+}
+@media (min-width: 1440px) {
+  .article-content[_ngcontent-sc50] {
+    max-width: 745px;
+    padding: 50px 50px 30px 90px;
+  }
+}
+.article-meta-container[_ngcontent-sc50] {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.article-meta-container[_ngcontent-sc50]   svg[_ngcontent-sc50] {
+  background-color: #e1144b;
+  border-radius: 50%;
+  fill: #fff;
+  height: 40px;
+  margin: 0 9px 0 0;
+  width: 40px;
+}
+.article-meta-container[_ngcontent-sc50]   .article-category-container[_ngcontent-sc50] {
+  align-items: center;
+  display: flex;
+}
+.dm-h2[_ngcontent-sc50] {
+  margin: 30px 0;
+}
+
+@media (min-width: 1024px) {
+  .article-description[_ngcontent-sc50] {
+    font-size: 36px;
+    line-height: 48px;
+  }
+}
+@media (min-width: 1440px) {
+  .article-description[_ngcontent-sc50] {
+    font-size: 55px;
+    line-height: 65px;
+  }
+}</style><style ng-transition="deepmind-website">[_nghost-sc19] {
+  display: block;
+}
+
+.social-share[_ngcontent-sc19] {
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  padding-top: 15px;
+  text-align: left;
+}
+
+.social-share[_ngcontent-sc19]   p[_ngcontent-sc19] {
+  margin-bottom: 15px;
+}
+
+.social-media[_ngcontent-sc19] {
+  display: flex;
+  list-style: none;
+  padding: 0;
+}
+
+.social-media[_ngcontent-sc19]   li[_ngcontent-sc19] {
+  margin-right: 10px;
+}
+
+.social-media[_ngcontent-sc19]   li[_ngcontent-sc19]:last-child {
+  margin: 0;
+}
+
+.social-media[_ngcontent-sc19]   svg[_ngcontent-sc19] {
+  height: 30px;
+  width: 30px;
+}</style><style ng-transition="deepmind-website">[_nghost-sc45] {
+  display: block;
+}
+.authors-container[_ngcontent-sc45] {
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  padding-top: 15px;
+  text-align: left;
+}
+.authors-container[_ngcontent-sc45]   .title[_ngcontent-sc45] {
+  margin-bottom: 15px;
+}
+.authors-list[_ngcontent-sc45] {
+  display: flex;
+  flex-flow: row wrap;
+  list-style: none;
+  padding: 0;
+}
+@media (min-width: 768px) {
+  .authors-list[_ngcontent-sc45] {
+    display: block;
+  }
+}
+.authors-list[_ngcontent-sc45]   li[_ngcontent-sc45] {
+  align-items: center;
+  display: flex;
+  flex-basis: 50%;
+  margin-bottom: 5px;
+}
+.authors-list[_ngcontent-sc45]   li[_ngcontent-sc45]   .image[_ngcontent-sc45] {
+  align-items: center;
+  background-color: #0053d6;
+  border-radius: 50%;
+  display: flex;
+  height: 50px;
+  justify-content: center;
+  margin-right: 10px;
+  min-width: 50px;
+  overflow: hidden;
+  position: relative;
+  width: 50px;
+  z-index: 0;
+}
+.authors-list[_ngcontent-sc45]   li[_ngcontent-sc45]   .image[_ngcontent-sc45]   p[_ngcontent-sc45] {
+  color: #fff;
+  margin: 0;
+}
+li[_ngcontent-sc45]:not(.external)   .author-name[_ngcontent-sc45] {
+  border: 0;
+  position: relative;
+}
+li[_ngcontent-sc45]:not(.external)   .author-name[_ngcontent-sc45]::before {
+  background-color: #0053d6;
+  bottom: 0;
+  content: "";
+  height: 1px;
+  left: 0;
+  position: absolute;
+  right: 0;
+  -webkit-transform: scaleX(0);
+          transform: scaleX(0);
+  -webkit-transform-origin: bottom right;
+          transform-origin: bottom right;
+  transition: -webkit-transform 0.5s ease;
+  transition: transform 0.5s ease;
+  transition: transform 0.5s ease, -webkit-transform 0.5s ease;
+}
+li[_ngcontent-sc45]:not(.external)   .author-name[_ngcontent-sc45]:hover {
+  color: #0053d6;
+}
+li[_ngcontent-sc45]:not(.external)   .author-name[_ngcontent-sc45]:hover::before {
+  -webkit-transform: scaleX(1);
+          transform: scaleX(1);
+  -webkit-transform-origin: bottom left;
+          transform-origin: bottom left;
+}
+.authors-list[_ngcontent-sc45]   li.external[_ngcontent-sc45]   .image[_ngcontent-sc45] {
+  background-color: #fff;
+}
+.authors-list[_ngcontent-sc45]   li.external[_ngcontent-sc45]   .image[_ngcontent-sc45]   p[_ngcontent-sc45] {
+  color: #123693;
+  font-weight: 700;
+}
+.authors-list[_ngcontent-sc45]   li.external[_ngcontent-sc45]   .author-name[_ngcontent-sc45] {
+  color: #123693;
+}
+.authors-list[_ngcontent-sc45]   li.external[_ngcontent-sc45]   .author-name[_ngcontent-sc45]:hover {
+  color: #123693;
+}
+.footnote[_ngcontent-sc45] {
+  margin: 15px 0 0;
+}
+.footnote[_ngcontent-sc45]   small[_ngcontent-sc45]   sup[_ngcontent-sc45] {
+  top: -1px;
+}</style><style ng-transition="deepmind-website">[_nghost-sc9] {
+  display: block;
+  height: 100%;
+  left: 0;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+.image[_ngcontent-sc9], .video[_ngcontent-sc9] {
+  background: center/cover no-repeat;
+  display: block;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: -1;
+}
+.image[_ngcontent-sc9]   img[_ngcontent-sc9], .video[_ngcontent-sc9]   video[_ngcontent-sc9] {
+  max-width: none;
+  min-height: 100%;
+  min-width: 103%;
+  position: absolute;
+  width: 100%;
+}
+@supports ((-o-object-fit: cover) or (object-fit: cover)) {
+  .image[_ngcontent-sc9]   img[_ngcontent-sc9], .video[_ngcontent-sc9]   video[_ngcontent-sc9] {
+    -o-object-fit: cover;
+       object-fit: cover;
+  }
+}
+.v-position-default[_nghost-sc9]   .image[_ngcontent-sc9]   img[_ngcontent-sc9], .v-position-top[_nghost-sc9]   .image[_ngcontent-sc9]   img[_ngcontent-sc9], .v-position-default[_nghost-sc9]   .video[_ngcontent-sc9]   video[_ngcontent-sc9], .v-position-top[_nghost-sc9]   .video[_ngcontent-sc9]   video[_ngcontent-sc9] {
+  top: 0;
+}
+.v-position-bottom[_nghost-sc9]   .image[_ngcontent-sc9]   img[_ngcontent-sc9], .v-position-bottom[_nghost-sc9]   .video[_ngcontent-sc9]   video[_ngcontent-sc9] {
+  bottom: 0;
+}
+.v-position-center[_nghost-sc9]   .image[_ngcontent-sc9]   img[_ngcontent-sc9], .v-position-center[_nghost-sc9]   .video[_ngcontent-sc9]   video[_ngcontent-sc9] {
+  top: 50%;
+  -webkit-transform: translate(0, -50%);
+          transform: translate(0, -50%);
+}
+.h-position-default[_nghost-sc9]   .image[_ngcontent-sc9]   img[_ngcontent-sc9], .h-position-left[_nghost-sc9]   .image[_ngcontent-sc9]   img[_ngcontent-sc9], .h-position-default[_nghost-sc9]   .video[_ngcontent-sc9]   video[_ngcontent-sc9], .h-position-left[_nghost-sc9]   .video[_ngcontent-sc9]   video[_ngcontent-sc9] {
+  left: 0;
+}
+.h-position-right[_nghost-sc9]   .image[_ngcontent-sc9]   img[_ngcontent-sc9], .h-position-right[_nghost-sc9]   .video[_ngcontent-sc9]   video[_ngcontent-sc9] {
+  right: 0;
+}
+.h-position-center[_nghost-sc9]   .image[_ngcontent-sc9]   img[_ngcontent-sc9], .h-position-center[_nghost-sc9]   .video[_ngcontent-sc9]   video[_ngcontent-sc9] {
+  left: 50%;
+  -webkit-transform: translate(-50%, 0);
+          transform: translate(-50%, 0);
+}
+.h-position-center.v-position-center[_nghost-sc9]   .image[_ngcontent-sc9]   img[_ngcontent-sc9], .h-position-center.v-position-center[_nghost-sc9]   .video[_ngcontent-sc9]   video[_ngcontent-sc9] {
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+dm-modal[_ngcontent-sc9] {
+  pointer-events: auto;
+}</style><style ng-transition="deepmind-website">[_nghost-sc42] {
+  display: block;
+  position: relative;
+}
+.user-content.is-homepage-intro[_ngcontent-sc42] {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  left: 0;
+  margin: 40px auto;
+  max-width: 835px;
+  right: 0;
+  text-align: center;
+}</style><style ng-transition="deepmind-website">[_nghost-sc40] {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  min-width: 280px;
+  padding: 40px 20px;
+  position: relative;
+  text-align: center;
+}
+@media (min-width: 768px) {
+  [_nghost-sc40] {
+    padding: 20px 120px;
+  }
+}
+@media (min-width: 1024px) {
+  [_nghost-sc40] {
+    padding: 20px 140px;
+  }
+}
+@media (min-width: 1440px) {
+  [_nghost-sc40] {
+    padding: 70px 40px;
+  }
+  .is-homepage[_nghost-sc40] {
+    min-height: 740px;
+  }
+}
+[colour-theme=""][_nghost-sc40] {
+  background-color: #fff;
+}
+[colour-theme=""][_nghost-sc40]   h4[_ngcontent-sc40], [colour-theme=""][_nghost-sc40]   .caption[_ngcontent-sc40] {
+  color: #123693;
+}
+[colour-theme=""][_nghost-sc40]   blockquote[_ngcontent-sc40]   svg[_ngcontent-sc40] {
+  fill: #123693;
+}
+.content-wrapper[_ngcontent-sc40] {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  position: relative;
+}
+.content-wrapper[_ngcontent-sc40]   a[_ngcontent-sc40]:focus, .content-wrapper[_ngcontent-sc40]   a[_ngcontent-sc40]:hover {
+  border: 0;
+}
+.content-wrapper[_ngcontent-sc40]   blockquote[_ngcontent-sc40] {
+  margin: 0;
+  width: 100%;
+}
+.content-wrapper[_ngcontent-sc40]   blockquote[_ngcontent-sc40]   svg[_ngcontent-sc40] {
+  height: 43px;
+  margin: 0 0 25px;
+  width: 43px;
+}
+.content-wrapper[_ngcontent-sc40]   .caption.subtitle[_ngcontent-sc40] {
+  margin: 0 0 30px;
+}
+.content-wrapper[_ngcontent-sc40]   .caption.title[_ngcontent-sc40] {
+  margin: 0;
+}
+.content-wrapper[_ngcontent-sc40]   p[_ngcontent-sc40] {
+  width: 100%;
+}
+img[_ngcontent-sc40] {
+  border-radius: 50%;
+  margin: 0 0 15px;
+  width: 50px;
+}
+@supports ((-o-object-fit: cover) or (object-fit: cover)) {
+  img[_ngcontent-sc40] {
+    height: 50px;
+    -o-object-fit: cover;
+       object-fit: cover;
+  }
+}</style><style ng-transition="deepmind-website">[_nghost-sc37] {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+  z-index: 0;
+}
+.image-left[_nghost-sc37]   .content-card-body[_ngcontent-sc37], .image-right[_nghost-sc37]   .content-card-body[_ngcontent-sc37] {
+  width: 100%;
+}
+@media (min-width: 1440px) {
+  .image-left[_nghost-sc37]   .content-card-body[_ngcontent-sc37], .image-right[_nghost-sc37]   .content-card-body[_ngcontent-sc37] {
+    width: 50%;
+  }
+}
+@media (min-width: 1440px) {
+  .image-left[_nghost-sc37]   .image[_ngcontent-sc37], .image-right[_nghost-sc37]   .image[_ngcontent-sc37] {
+    height: auto;
+    max-height: none;
+    min-height: auto;
+    width: 50%;
+  }
+}
+@media (min-width: 1440px) {
+  .image-left[_nghost-sc37]   .content-card-body[_ngcontent-sc37], .image-right[_nghost-sc37]   .content-card-body[_ngcontent-sc37] {
+    width: 50%;
+  }
+}
+@media (min-width: 1440px) {
+  .image-left[_nghost-sc37] {
+    flex-direction: row;
+  }
+}
+@media (min-width: 1440px) {
+  .image-right[_nghost-sc37] {
+    flex-direction: row-reverse;
+  }
+}
+.content-card-body[_ngcontent-sc37] {
+  align-items: inherit;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: inherit;
+  padding: 20px;
+}
+@media (min-width: 1024px) {
+  .content-card-body[_ngcontent-sc37] {
+    padding: 25px;
+  }
+}
+.content-card-body.has-border[_ngcontent-sc37] {
+  position: relative;
+}
+.content-card-body.has-border[_ngcontent-sc37]:before {
+  background-color: #d8d8d8;
+  bottom: 0;
+  content: "";
+  height: 1px;
+  left: 20px;
+  position: absolute;
+  width: calc(100% - 40px);
+}
+@media (min-width: 1024px) {
+  .content-card-body.has-border[_ngcontent-sc37]:before {
+    left: 25px;
+    width: calc(100% - 50px);
+  }
+}
+.image[_ngcontent-sc37] {
+  height: auto;
+  position: relative;
+  display: block;
+  min-height: 200px;
+  position: relative;
+  width: 100%;
+}
+.image[_ngcontent-sc37]::before {
+  content: "";
+  display: block;
+  padding-top: 56.25%;
+  width: 100%;
+}
+.image[_ngcontent-sc37]    > img[_ngcontent-sc37], .image[_ngcontent-sc37]    > svg[_ngcontent-sc37], .image[_ngcontent-sc37]    > path[_ngcontent-sc37] {
+  display: block;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}</style><style ng-transition="deepmind-website">[_nghost-sc20] {
+  display: block;
+  height: 100%;
+  left: 0;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+.overflow[_nghost-sc20] {
+  overflow: visible;
+}
+[_nghost-sc20]   svg[_ngcontent-sc20] {
+  display: none;
+}
+@media (min-width: 768px) {
+  [_nghost-sc20]   svg[_ngcontent-sc20] {
+    display: block;
+    height: 225px;
+    width: 225px;
+  }
+}
+@media (min-width: 1024px) {
+  [_nghost-sc20]   svg[_ngcontent-sc20] {
+    height: 280px;
+    width: 280px;
+  }
+}
+@media (min-width: 1440px) {
+  [_nghost-sc20]   svg[_ngcontent-sc20] {
+    height: 375px;
+    width: 375px;
+  }
+}
+.top-left[_ngcontent-sc20] {
+  left: 0;
+  position: absolute;
+  top: 0;
+}
+@media (min-width: 768px) {
+  .top-left[_ngcontent-sc20] {
+    left: -50px;
+    top: -50px;
+  }
+}
+@media (min-width: 1024px) {
+  .top-left[_ngcontent-sc20] {
+    left: -75px;
+    top: -75px;
+  }
+}
+@media (min-width: 1440px) {
+  .top-left[_ngcontent-sc20] {
+    left: -100px;
+    top: -100px;
+  }
+}
+.top-right[_ngcontent-sc20] {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+@media (min-width: 768px) {
+  .top-right[_ngcontent-sc20] {
+    right: -50px;
+    top: -50px;
+  }
+}
+@media (min-width: 1024px) {
+  .top-right[_ngcontent-sc20] {
+    right: -75px;
+    top: -75px;
+  }
+}
+@media (min-width: 1440px) {
+  .top-right[_ngcontent-sc20] {
+    right: -100px;
+    top: -100px;
+  }
+}
+.bottom-right[_ngcontent-sc20] {
+  bottom: 0;
+  position: absolute;
+  right: 0;
+}
+@media (min-width: 768px) {
+  .bottom-right[_ngcontent-sc20] {
+    bottom: -50px;
+    right: -50px;
+  }
+}
+@media (min-width: 1024px) {
+  .bottom-right[_ngcontent-sc20] {
+    bottom: -75px;
+    right: -75px;
+  }
+}
+@media (min-width: 1440px) {
+  .bottom-right[_ngcontent-sc20] {
+    bottom: -100px;
+    right: -100px;
+  }
+}
+.bottom-left[_ngcontent-sc20] {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+}
+@media (min-width: 768px) {
+  .bottom-left[_ngcontent-sc20] {
+    bottom: -50px;
+    left: -50px;
+  }
+}
+@media (min-width: 1024px) {
+  .bottom-left[_ngcontent-sc20] {
+    bottom: -75px;
+    left: -75px;
+  }
+}
+@media (min-width: 1440px) {
+  .bottom-left[_ngcontent-sc20] {
+    bottom: -100px;
+    left: -100px;
+  }
+}
+.blue[_ngcontent-sc20]   svg[_ngcontent-sc20] {
+  fill: #0053d6;
+}
+.orange[_ngcontent-sc20]   svg[_ngcontent-sc20] {
+  fill: #ff8a4f;
+}
+.purple[_ngcontent-sc20]   svg[_ngcontent-sc20] {
+  fill: #ad70ff;
+}
+.red[_ngcontent-sc20]   svg[_ngcontent-sc20] {
+  fill: #ff617b;
+}
+.teal[_ngcontent-sc20]   svg[_ngcontent-sc20] {
+  fill: #49ebd0;
+}
+.yellow[_ngcontent-sc20]   svg[_ngcontent-sc20] {
+  fill: #fff26e;
+}</style><style ng-transition="deepmind-website">[_nghost-sc46] {
+  display: block;
+  margin: 30px 0;
+  position: relative;
+  width: 100%;
+}
+.full-width[_nghost-sc46] {
+  margin: 30px 0 30px -30px;
+  width: calc(100% + 80px);
+}
+@media (min-width: 768px) {
+  .full-width[_nghost-sc46] {
+    width: calc(100% + 215px);
+  }
+}
+@media (min-width: 1024px) {
+  .full-width[_nghost-sc46] {
+    margin: 30px 0 30px calc((312px + 100px) * -1);
+    width: calc(100% + 312px + 100px);
+  }
+}
+@media (min-width: 2048px) {
+  .full-width[_nghost-sc46] {
+    margin: 30px 0 30px calc((100vw - 775px) / -2);
+    width: calc(1440px + ((100vw - 1440px) / 2));
+  }
+}
+img[_ngcontent-sc46] {
+  left: 0;
+  position: relative;
+  width: 100%;
+}
+figcaption[_ngcontent-sc46] {
+  margin: 17px 0 0;
+}</style></head>
+<body>
+  <script data-gtm-id="GTM-MWTBMKX" src="https://www.gstatic.com/brandstudio/kato/google_tag_manager_component/google_tag_manager_component.js">
+  </script>
+  <noscript>
+    <iframe class="gtm-iframe"
+            height="0"
+            src="https://www.googletagmanager.com/ns.html?id=GTM-MWTBMKX"
+            width="0">
+    </iframe>
+  </noscript>
+
+  <script src="https://www.gstatic.com/brandstudio/kato/cookie_choice_component/cookie_consent_bar.v2.js">
+  </script>
+
+  <dm-app-root _nghost-sc0="" ng-version="8.0.0"><!----><dm-header _ngcontent-sc0="" _nghost-sc2="" class="ng-tns-c2-0"><!----><!----><header _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted"><div _ngcontent-sc2="" class="header-container"><div _ngcontent-sc2="" class="menu-wrapper"><div _ngcontent-sc2="" class="menu-header"><a _ngcontent-sc2="" class="nav-cta logo" aria-label="Home page" routerlink="/" href="/"><!----><svg _ngcontent-sc2="" class="full-logo ng-tns-c2-0 ng-star-inserted" role="img"><use _ngcontent-sc2="" class="ng-tns-c2-0" xlink:href="#deepmind-logo"></use></svg><!----></a><div _ngcontent-sc2="" class="menu-controls"><button _ngcontent-sc2="" class="nav-cta hamburger-menu" aria-label="Toggle menu" aria-pressed="true" role="button"><span _ngcontent-sc2="" class="ng-tns-c2-0"></span><span _ngcontent-sc2="" class="ng-tns-c2-0"></span><span _ngcontent-sc2="" class="ng-tns-c2-0"></span></button><button _ngcontent-sc2="" class="nav-cta search" aria-label="Search publications" aria-pressed="true" role="button"><svg _ngcontent-sc2="" class="ng-tns-c2-0" role="img" viewBox="0 0 27 28"><path _ngcontent-sc2="" class="ng-tns-c2-0" d="M17.537 20.034l1.414-1.414 7.854 7.854-1.414 1.415z"></path><g _ngcontent-sc2="" class="ng-tns-c2-0"><path _ngcontent-sc2="" class="ng-tns-c2-0" d="M11.292 20.583a9.292 9.292 0 1 0 0-18.583 9.292 9.292 0 0 0 0 18.583z"></path><path _ngcontent-sc2="" class="ng-tns-c2-0" d="M11.292 22.583C5.055 22.583 0 17.528 0 11.292 0 5.055 5.055 0 11.292 0c6.236 0 11.291 5.055 11.291 11.292 0 6.236-5.055 11.291-11.291 11.291zm0-2a9.292 9.292 0 1 0 0-18.583 9.292 9.292 0 0 0 0 18.583z"></path></g></svg></button></div></div><!----><nav _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted"><ul _ngcontent-sc2="" class="pages"><!----><li _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted"><a _ngcontent-sc2="" class="nav-cta page-link" href="/about"> About </a></li><li _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted"><a _ngcontent-sc2="" class="nav-cta page-link" href="/research"> Research </a></li><li _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted"><a _ngcontent-sc2="" class="nav-cta page-link" href="/impact"> Impact </a></li><li _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted is-active"><a _ngcontent-sc2="" class="nav-cta page-link" href="/blog"> Blog </a></li><li _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted"><a _ngcontent-sc2="" class="nav-cta page-link" href="/safety-and-ethics"> Safety &amp; Ethics </a></li><li _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted"><a _ngcontent-sc2="" class="nav-cta page-link" href="/careers"> Careers </a></li></ul></nav></div><div _ngcontent-sc2="" class="social-media-wrapper"><ul _ngcontent-sc2="" class="ng-tns-c2-0"><!----><li _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted"><a _ngcontent-sc2="" class="nav-cta icon" rel="noopener" target="_blank" aria-label="Follow us on Twitter!" href="https://twitter.com/DeepMindAI"><svg _ngcontent-sc2="" class="ng-tns-c2-0" role="img"><use _ngcontent-sc2="" class="ng-tns-c2-0" xlink:href="#twitter"></use></svg></a></li><li _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted"><a _ngcontent-sc2="" class="nav-cta icon" rel="noopener" target="_blank" aria-label="Follow us on Youtube!" href="https://www.youtube.com/deepmind"><svg _ngcontent-sc2="" class="ng-tns-c2-0" role="img"><use _ngcontent-sc2="" class="ng-tns-c2-0" xlink:href="#youtube"></use></svg></a></li></ul></div></div></header><!----><!----><!----></dm-header><div _ngcontent-sc0="" class="dm-body"><router-outlet _ngcontent-sc0=""></router-outlet><dm-page-loader class="ng-star-inserted"><dm-component-factory _nghost-sc10=""><!----><dm-blog-article-page _nghost-sc49="" id="" class="ng-star-inserted"><!----><!----><div _ngcontent-sc49="" class="dm-section ng-star-inserted"><dm-breadcrumb _ngcontent-sc49="" _nghost-sc13="" class="theme-dark"><!----><ul _ngcontent-sc13="" class="ng-star-inserted"><!----><li _ngcontent-sc13="" class="ng-star-inserted"><!----><a _ngcontent-sc13="" class="nav-cta logo ng-star-inserted" href="/"><svg _ngcontent-sc13="" role="img"><use _ngcontent-sc13="" xlink:href="#deepmind-logo-text"></use></svg></a><!----></li><li _ngcontent-sc13="" class="ng-star-inserted"><!----><a _ngcontent-sc13="" class="nav-cta ng-star-inserted" tab-index="0" href="/blog"><svg _ngcontent-sc13="" class="arrow" role="img"><use _ngcontent-sc13="" xlink:href="#breadcrumb-arrow"></use></svg> Blog </a><!----></li><li _ngcontent-sc13="" class="ng-star-inserted"><!----><a _ngcontent-sc13="" class="nav-cta disabled ng-star-inserted" tab-index="-1" href="/blog/article/predicting-patient-deterioration"><svg _ngcontent-sc13="" class="arrow is-last" role="img"><use _ngcontent-sc13="" xlink:href="#breadcrumb-arrow"></use></svg> Using AI to give doctors a 48-hour head start on life-threatening illness </a><!----></li></ul></dm-breadcrumb></div><dm-blog-article-hero _ngcontent-sc49="" _nghost-sc50="" class="ng-star-inserted"><header _ngcontent-sc50=""><!----><div _ngcontent-sc50="" class="article-image ng-star-inserted"><picture _ngcontent-sc50=""><source _ngcontent-sc50="" type="image/webp" srcset="https://lh3.googleusercontent.com/6tXOzijdNXU61AqiwYQwRFpd5THciGfBYU6uauoeFay1y0c6nYRmOtgkIC_-qReykBUipJY60j2OKaNCXURKdJJhxwzuEisTVX7zkg=w1440-rw-v1 1x,https://lh3.googleusercontent.com/6tXOzijdNXU61AqiwYQwRFpd5THciGfBYU6uauoeFay1y0c6nYRmOtgkIC_-qReykBUipJY60j2OKaNCXURKdJJhxwzuEisTVX7zkg=w2048-rw-v1 2x"><source _ngcontent-sc50="" type="image/jpg" srcset="https://lh3.googleusercontent.com/6tXOzijdNXU61AqiwYQwRFpd5THciGfBYU6uauoeFay1y0c6nYRmOtgkIC_-qReykBUipJY60j2OKaNCXURKdJJhxwzuEisTVX7zkg=w1440 1x,https://lh3.googleusercontent.com/6tXOzijdNXU61AqiwYQwRFpd5THciGfBYU6uauoeFay1y0c6nYRmOtgkIC_-qReykBUipJY60j2OKaNCXURKdJJhxwzuEisTVX7zkg=w2048 2x"><img _ngcontent-sc50="" alt="" srcset="https://lh3.googleusercontent.com/6tXOzijdNXU61AqiwYQwRFpd5THciGfBYU6uauoeFay1y0c6nYRmOtgkIC_-qReykBUipJY60j2OKaNCXURKdJJhxwzuEisTVX7zkg=w2048 2x" src="https://lh3.googleusercontent.com/6tXOzijdNXU61AqiwYQwRFpd5THciGfBYU6uauoeFay1y0c6nYRmOtgkIC_-qReykBUipJY60j2OKaNCXURKdJJhxwzuEisTVX7zkg=w1440"></picture></div><div _ngcontent-sc50="" class="article-content-container"><div _ngcontent-sc50="" class="article-content"><div _ngcontent-sc50="" class="article-meta-container"><div _ngcontent-sc50="" class="article-category-container"><svg _ngcontent-sc50="" role="img"><use _ngcontent-sc50="" xlink:href="#article"></use></svg><div _ngcontent-sc50="" class="category"><p _ngcontent-sc50="" class="caption title">Blog post</p><!----><p _ngcontent-sc50="" class="caption ng-star-inserted"> Research </p></div></div><p _ngcontent-sc50="" class="caption date">31 Jul 2019</p></div><h2 _ngcontent-sc50="" class="dm-h2 article-description"> Using AI to give doctors a 48-hour head start on life-threatening illness </h2></div></div></header></dm-blog-article-hero><div _ngcontent-sc49="" class="blog-article-bg ng-star-inserted"><div _ngcontent-sc49="" class="page-content-container dm-section"><aside _ngcontent-sc49=""><dm-social-share _ngcontent-sc49="" _nghost-sc19=""><!----><!----><div _ngcontent-sc19="" class="social-share ng-star-inserted"><p _ngcontent-sc19="" class="caption title">Share</p><ul _ngcontent-sc19="" class="social-media"><!----><li _ngcontent-sc19="" class="ng-star-inserted"><a _ngcontent-sc19="" class="dm-cta icon" aria-label="Share to Twitter!"><svg _ngcontent-sc19="" role="img"><use _ngcontent-sc19="" xlink:href="#twitter"></use></svg></a></li><li _ngcontent-sc19="" class="ng-star-inserted"><a _ngcontent-sc19="" class="dm-cta icon" aria-label="Share to Facebook!"><svg _ngcontent-sc19="" role="img"><use _ngcontent-sc19="" xlink:href="#facebook"></use></svg></a></li><li _ngcontent-sc19="" class="ng-star-inserted"><a _ngcontent-sc19="" class="dm-cta icon" aria-label="Share to LinkedIn!"><svg _ngcontent-sc19="" role="img"><use _ngcontent-sc19="" xlink:href="#linkedin"></use></svg></a></li></ul></div></dm-social-share><!----><!----><dm-authors-list _ngcontent-sc49="" _nghost-sc45="" class="ng-star-inserted"><address _ngcontent-sc45="" class="authors-container"><p _ngcontent-sc45="" class="caption title">Authors</p><ul _ngcontent-sc45="" class="authors-list"><!----><li _ngcontent-sc45="" class="ng-star-inserted"><div _ngcontent-sc45="" class="image"><!----><dm-media _ngcontent-sc45="" _nghost-sc9="" class="h-position-default v-position-default ng-star-inserted"><!----><div _ngcontent-sc9="" class="image ng-star-inserted" style="background-image:url('https://lh3.googleusercontent.com/xiThub-xyB4vaes-0suU9VKp5O8sEVXXGscUP7Z9Pq2wbxKloF9cvi4L_QkhP5_nF-m-SzrlSA_qzWPVrMIIpXgmW4IWzMmyzpQ0qA=w2048');background-position:default default;"><!----><!----><!----></div><!----><!----><div _ngcontent-sc9="" class="video ng-star-inserted"><!----></div><!----><!----></dm-media><!----></div><!----><a _ngcontent-sc45="" alt="More articles" class="author-name small ng-star-inserted" routerlink="/research" href="/research?filters=%7B%22authors%22:%5B%226666259235602432%22%5D%7D"> Mustafa Suleyman<!----></a><!----></li><li _ngcontent-sc45="" class="ng-star-inserted"><div _ngcontent-sc45="" class="image"><!----><p _ngcontent-sc45="" class="ng-star-inserted"><small _ngcontent-sc45="">DK</small></p><!----></div><!----><a _ngcontent-sc45="" alt="More articles" class="author-name small ng-star-inserted" routerlink="/research" href="/research?filters=%7B%22authors%22:%5B%225792430976139264%22%5D%7D"> Dominic King<!----></a><!----></li></ul><!----></address></dm-authors-list></aside><div _ngcontent-sc49="" class="page-content"><!----><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content"><div class="cf repositioner">
+<div class="rich-text--applied show" id="block-0">
+<div class="g-sm-col-4 g-lg-col-7 g-lg-push-1">
+<div class="rich-text">
+<p><strong>Artificial intelligence can now predict one of the leading causes of avoidable patient harm up to two days before it happens, as demonstrated by&nbsp;<a href="https://nature.com/articles/s41586-019-1390-1">our latest research published in Nature</a>. Working alongside experts from the US Department of Veterans Affairs (VA), we have developed technology that, in the future, could give doctors a 48-hour head start in treating acute kidney injury (AKI), a condition that is associated with over&nbsp;<a href="https://www.england.nhs.uk/akiprogramme/">100,000 people&nbsp;</a>in the UK every year. These findings come alongside a peer-reviewed service evaluation of Streams, our mobile assistant for clinicians, which shows that patient care can be improved, and health care costs reduced, through the use of digital tools. Together, they form the foundation for a transformative advance in medicine, helping to move from reactive to preventative models of care.</strong></p>
+<p>Millions of people die every year from diseases that could have been prevented with earlier detection. One such disease is acute kidney injury (AKI), a condition where a patient’s kidney suddenly stops working properly. Affecting up to one in five hospitalised patients in&nbsp;<a href="https://improvement.nhs.uk/documents/251/Patient_Safety_Alert_Stage_2_-_AKI_resources.pdf">the UK</a>&nbsp;and&nbsp;<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3362180/">the US</a>, the condition is notoriously difficult to spot, and deterioration can happen quickly.&nbsp;<a href="https://www.ncepod.org.uk/2009aki.html">Experts</a>&nbsp;believe that up to 30% of cases could be prevented if a doctor intervenes early enough.</p>
+</div>
+</div>
+</div>
+</div></div></dm-body-text><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-quote-promo _nghost-sc40="" class="ng-tns-c40-1 ng-trigger ng-trigger-animateIn ng-animate-disabled ng-star-inserted" id="" colour-theme="" style="transform:translateX(0px);opacity:0;"><dm-content-card _ngcontent-sc40="" class="" _nghost-sc37=""><!----><!----><!----><!----><div _ngcontent-sc37="" class="content-card-body"><div _ngcontent-sc40="" class="content-wrapper ng-tns-c40-1"><blockquote _ngcontent-sc40="" class="ng-tns-c40-1"><svg _ngcontent-sc40="" class="ng-tns-c40-1" role="img"><use _ngcontent-sc40="" class="ng-tns-c40-1" xlink:href="#open-quote"></use></svg><!----><h4 _ngcontent-sc40="" class="dm-h4 ng-tns-c40-1 ng-star-inserted" style=""> "Such digital technologies will undoubtedly open up new possibilities for timely clinical interventions and treatments to reduce harm to patients.” </h4><!----></blockquote><!----><!----><!----><picture _ngcontent-sc40="" class="ng-tns-c40-1 ng-star-inserted" style=""><source _ngcontent-sc40="" class="ng-tns-c40-1" type="image/webp" srcset="https://lh3.googleusercontent.com/gE48bdXNAiu86oaevRQPjuWM56bcTFm_NpoHoChdDMd6Isxf-6Nim124PTZS4Rr9DMzAmOvRklOTaN125QQPWdo_K3nGd8Jgh7sr0w=w1440-rw-v1 1x,https://lh3.googleusercontent.com/gE48bdXNAiu86oaevRQPjuWM56bcTFm_NpoHoChdDMd6Isxf-6Nim124PTZS4Rr9DMzAmOvRklOTaN125QQPWdo_K3nGd8Jgh7sr0w=w2048-rw-v1 2x"><source _ngcontent-sc40="" class="ng-tns-c40-1" type="image/jpg" srcset="https://lh3.googleusercontent.com/gE48bdXNAiu86oaevRQPjuWM56bcTFm_NpoHoChdDMd6Isxf-6Nim124PTZS4Rr9DMzAmOvRklOTaN125QQPWdo_K3nGd8Jgh7sr0w=w1440 1x,https://lh3.googleusercontent.com/gE48bdXNAiu86oaevRQPjuWM56bcTFm_NpoHoChdDMd6Isxf-6Nim124PTZS4Rr9DMzAmOvRklOTaN125QQPWdo_K3nGd8Jgh7sr0w=w2048 2x"><img _ngcontent-sc40="" class="ng-tns-c40-1" alt="undefined" srcset="https://lh3.googleusercontent.com/gE48bdXNAiu86oaevRQPjuWM56bcTFm_NpoHoChdDMd6Isxf-6Nim124PTZS4Rr9DMzAmOvRklOTaN125QQPWdo_K3nGd8Jgh7sr0w=w2048 2x" src="https://lh3.googleusercontent.com/gE48bdXNAiu86oaevRQPjuWM56bcTFm_NpoHoChdDMd6Isxf-6Nim124PTZS4Rr9DMzAmOvRklOTaN125QQPWdo_K3nGd8Jgh7sr0w=w1440"></picture><!----><p _ngcontent-sc40="" class="caption title ng-tns-c40-1 ng-star-inserted" style="">Professor Jeremy Hughes</p><!----><p _ngcontent-sc40="" class="caption subtitle ng-tns-c40-1 ng-star-inserted" style="">Chair of Kidney Research UK</p><!----><!----><!----><!----></div></div></dm-content-card><dm-shapes _ngcontent-sc40="" class="ng-tns-c40-1 overflow" _nghost-sc20=""><!----><!----><!----><!----></dm-shapes></dm-quote-promo><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content"><div class="cf repositioner">
+<div class="rich-text--applied show" id="block-3">
+<div class="g-sm-col-4 g-lg-col-7 g-lg-push-1">
+<div class="rich-text">
+<p>Over the last few years, our team at DeepMind has focused on finding an answer to the complex problem of avoidable patient harm, building digital tools that can spot serious conditions earlier and helping doctors and nurses deliver faster, better care to patients in need. This is our team’s biggest healthcare research breakthrough to date, demonstrating the ability to not only spot deterioration more effectively, but actually predict it before it happens.</p>
+<p>Working with the VA, the DeepMind team applied AI technology to a comprehensive de-identified electronic health record dataset collected from a network of over a hundred VA sites. The&nbsp;<a href="https://www.nature.com/articles/s41586-019-1390-1">research</a>&nbsp;shows that the AI could accurately predict AKI in patients up to 48 hours earlier than it is currently diagnosed. Importantly, the model correctly predicted 9 out of 10 patients whose condition deteriorated so severely that they then required dialysis. This could provide a window in the future for earlier preventative treatment and avoid the need for more invasive procedures like kidney dialysis. The model has also been designed so that it might, in the future, generalise to other major causes of diseases and deterioration such as sepsis, a life-threatening infection.</p>
+<p>To address the ‘black box’ problem – one of the key barriers for the implementation of AI in clinical practice – the model also provides the clinical information that was most important in making its predictions of deteriorating kidney function. It also provides predicted future results for several relevant blood tests. This information may help clinicians understand the reasoning behind the AI-enabled alert and anticipate future patient deterioration.</p>
+<p>However, these predictions can’t help real patients without the right tools to&nbsp; alert specialists. Clinicians routinely use pagers, paper records and fax machines to communicate with each other, but better technology is desperately needed so that critical information can be delivered to the right specialist at the right time. That’s why we’re also pleased to report that the results of a peer-reviewed evaluation of our mobile medical assistant Streams have also been published today. This work was conducted by researchers at University College London.</p>
+</div>
+</div>
+</div>
+</div></div></dm-body-text><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-image-gallery _nghost-sc46="" id="" class="ng-star-inserted" colour-theme=""><!----><figure _ngcontent-sc46="" class="ng-star-inserted"><!----><picture _ngcontent-sc46="" class="ng-star-inserted"><source _ngcontent-sc46="" type="image/webp" srcset="https://lh3.googleusercontent.com/uZIYRusSufYzsHJ_i-bRHnXGUJ_fFdqsK8GrjX7a-o1POy2afT7KtEJnX2Km9at5nfIeIdZwdhs7nPnpJv38PVYMrnlqGBLx_WCKnQ=w1440-rw-v1 1x,https://lh3.googleusercontent.com/uZIYRusSufYzsHJ_i-bRHnXGUJ_fFdqsK8GrjX7a-o1POy2afT7KtEJnX2Km9at5nfIeIdZwdhs7nPnpJv38PVYMrnlqGBLx_WCKnQ=w2048-rw-v1 2x"><source _ngcontent-sc46="" type="image/jpg" srcset="https://lh3.googleusercontent.com/uZIYRusSufYzsHJ_i-bRHnXGUJ_fFdqsK8GrjX7a-o1POy2afT7KtEJnX2Km9at5nfIeIdZwdhs7nPnpJv38PVYMrnlqGBLx_WCKnQ=w1440 1x,https://lh3.googleusercontent.com/uZIYRusSufYzsHJ_i-bRHnXGUJ_fFdqsK8GrjX7a-o1POy2afT7KtEJnX2Km9at5nfIeIdZwdhs7nPnpJv38PVYMrnlqGBLx_WCKnQ=w2048 2x"><img _ngcontent-sc46="" alt="" srcset="https://lh3.googleusercontent.com/uZIYRusSufYzsHJ_i-bRHnXGUJ_fFdqsK8GrjX7a-o1POy2afT7KtEJnX2Km9at5nfIeIdZwdhs7nPnpJv38PVYMrnlqGBLx_WCKnQ=w2048 2x" src="https://lh3.googleusercontent.com/uZIYRusSufYzsHJ_i-bRHnXGUJ_fFdqsK8GrjX7a-o1POy2afT7KtEJnX2Km9at5nfIeIdZwdhs7nPnpJv38PVYMrnlqGBLx_WCKnQ=w1440"></picture><!----><figcaption _ngcontent-sc46="" class="caption"> An illustration how an at-risk patient is flagged in the traditional vs. digitally-enabled care pathway </figcaption></figure></dm-image-gallery><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content"><p>Streams is a mobile medical assistant for clinicians, and has been in use at the Royal Free London NHS Foundation Trust since early 2017. The app uses the existing national AKI algorithm to flag patient deterioration, supports the review of medical information at the bedside, and enables instant communication between clinical teams. Shortly after rolling out at the Royal Free, clinicians&nbsp;<a href="https://www.royalfree.nhs.uk/news-media/news/new-app-helping-to-improve-patient-care/">said</a>&nbsp;that Streams was saving them up to two hours a day. We also heard about patients, like&nbsp;<a href="http://www.standard.co.uk/news/health/new-mother-receives-pioneering-kidney-treatment-after-app-detects-lifethreatening-illness-a3476936.html">Afia Ahmad</a>, whose treatment was escalated thanks to the app. But we wanted to quantify these benefits through robust clinical evaluation. Today’s results show that the app saved clinicians’ time, improved care and reduced the number of AKI cases being missed at the hospital.</p>
+<p>By using Streams,&nbsp;<a href="https://www.nature.com/articles/s41746-019-0100-6">specialists reviewed urgent cases within 15 minutes or less</a>(a process that might otherwise have taken several hours) and fewer cases of AKI were missed (3.3% rather than 12.4%).&nbsp;The app also&nbsp;<a href="https://www.jmir.org/2019/7/e13147/">reduced the average cost of admission</a>&nbsp;for a patient with AKI by 17%, demonstrating a huge potential cost saving for hospitals in the future, considering that AKI costs the NHS&nbsp;<a href="https://academic.oup.com/ndt/article/29/7/1362/1844079">more than £1 billion&nbsp;</a>each year.</p></div></dm-body-text><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-quote-promo _nghost-sc40="" class="ng-tns-c40-2 ng-trigger ng-trigger-animateIn ng-animate-disabled ng-star-inserted" id="" colour-theme="" style="transform:translateX(0px);opacity:0;"><dm-content-card _ngcontent-sc40="" class="" _nghost-sc37=""><!----><!----><!----><!----><div _ngcontent-sc37="" class="content-card-body"><div _ngcontent-sc40="" class="content-wrapper ng-tns-c40-2"><blockquote _ngcontent-sc40="" class="ng-tns-c40-2"><svg _ngcontent-sc40="" class="ng-tns-c40-2" role="img"><use _ngcontent-sc40="" class="ng-tns-c40-2" xlink:href="#open-quote"></use></svg><!----><h4 _ngcontent-sc40="" class="dm-h4 ng-tns-c40-2 ng-star-inserted" style=""> This is a game changer that will advance our care and understanding of acute kidney injury. </h4><!----></blockquote><!----><!----><!----><picture _ngcontent-sc40="" class="ng-tns-c40-2 ng-star-inserted" style=""><source _ngcontent-sc40="" class="ng-tns-c40-2" type="image/webp" srcset="https://lh3.googleusercontent.com/PjhvCCloBUae7FNzX8kIrDUZ071j2dxJAz-kozwgwm2BhQ_z765trcLdbs-Gz_BbZnbJyE6WaLIZ-nbAm4aRyiaucROwjlmkzdQXSA=w1440-rw-v1 1x,https://lh3.googleusercontent.com/PjhvCCloBUae7FNzX8kIrDUZ071j2dxJAz-kozwgwm2BhQ_z765trcLdbs-Gz_BbZnbJyE6WaLIZ-nbAm4aRyiaucROwjlmkzdQXSA=w2048-rw-v1 2x"><source _ngcontent-sc40="" class="ng-tns-c40-2" type="image/jpg" srcset="https://lh3.googleusercontent.com/PjhvCCloBUae7FNzX8kIrDUZ071j2dxJAz-kozwgwm2BhQ_z765trcLdbs-Gz_BbZnbJyE6WaLIZ-nbAm4aRyiaucROwjlmkzdQXSA=w1440 1x,https://lh3.googleusercontent.com/PjhvCCloBUae7FNzX8kIrDUZ071j2dxJAz-kozwgwm2BhQ_z765trcLdbs-Gz_BbZnbJyE6WaLIZ-nbAm4aRyiaucROwjlmkzdQXSA=w2048 2x"><img _ngcontent-sc40="" class="ng-tns-c40-2" alt="undefined" srcset="https://lh3.googleusercontent.com/PjhvCCloBUae7FNzX8kIrDUZ071j2dxJAz-kozwgwm2BhQ_z765trcLdbs-Gz_BbZnbJyE6WaLIZ-nbAm4aRyiaucROwjlmkzdQXSA=w2048 2x" src="https://lh3.googleusercontent.com/PjhvCCloBUae7FNzX8kIrDUZ071j2dxJAz-kozwgwm2BhQ_z765trcLdbs-Gz_BbZnbJyE6WaLIZ-nbAm4aRyiaucROwjlmkzdQXSA=w1440"></picture><!----><p _ngcontent-sc40="" class="caption title ng-tns-c40-2 ng-star-inserted" style="">Donal O'Donoghue</p><!----><p _ngcontent-sc40="" class="caption subtitle ng-tns-c40-2 ng-star-inserted" style="">Professor of Renal Medicine at the University of Manchester, Chair of Trustees of Kidney Care UK</p><!----><!----><!----><!----></div></div></dm-content-card><dm-shapes _ngcontent-sc40="" class="ng-tns-c40-2 overflow" _nghost-sc20=""><!----><!----><!----><!----></dm-shapes></dm-quote-promo><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content"><p>Feedback from&nbsp;<a href="https://www.jmir.org/2019/7/e13143/">the qualitative study</a>&nbsp;was positive, with healthcare professionals emphasising the ways in which the app accelerated the detection of patients in need, saved them time in performing administrative tasks, and improved team communication. One respondent said the app “streamlines care, and speeds up the time in which they get a specialist renal review.” Another clinician from the nephrology team stated that “Being able to look up the blood results for anyone in the hospital wherever you are is unparalleled...it must save at least – I don’t know if you could analyse it – but it must save at least a couple of hours in a day.”</p>
+<p>Getting the right information about the right patient at the right time is a huge problem for healthcare systems across the globe. Critically, these early findings from the Royal Free suggest that, in order to improve patient outcomes even further, clinicians need to be able to intervene before AKI can be detected by the current NHS algorithm – which is why our research on AKI is so promising. These results comprise the building blocks for our long-term vision of preventative healthcare, helping doctors to intervene in a proactive, rather than reactive, manner.</p>
+<p>Streams doesn’t use artificial intelligence at the moment, but the team now intends to find ways to safely integrate predictive AI models into Streams in order to provide clinicians with intelligent insights into patient deterioration.</p>
+<p>This is a major milestone for the DeepMind Health team, who will be carrying this work forward as part of Google Health, led by Dr David Feinberg. As we&nbsp;<a href="https://deepmind.com/blog/announcements/scaling-streams-google">announced</a>&nbsp;in November 2018, the Streams team, and colleagues working on translational research in healthcare, will be joining Google in order to make a positive impact on a global scale. The combined experience, infrastructure and expertise of DeepMind Health teams alongside Google’s will help us continue to develop mobile tools that can support more clinicians, address critical patient safety issues and could, we hope, save thousands of lives globally.</p></div></dm-body-text><!----></dm-component-factory></div></div></div><!----><!----><!----></dm-blog-article-page><!----></dm-component-factory></dm-page-loader><div _ngcontent-sc0="" class="svg-elements"></div><dm-footer _ngcontent-sc0="" _nghost-sc3=""><!----><!----><footer _ngcontent-sc3="" colour-theme="ink_dark" class="ng-star-inserted"><div _ngcontent-sc3="" class="body-wrapper dm-section"><div _ngcontent-sc3="" class="logo"><a _ngcontent-sc3="" aria-label="Home page" class="dm-cta" routerlink="/" href="/"><svg _ngcontent-sc3="" role="img"><use _ngcontent-sc3="" xlink:href="#deepmind-logo-text"></use></svg></a></div><div _ngcontent-sc3="" class="body"><!----><div _ngcontent-sc3="" class="categories ng-star-inserted"><!----><div _ngcontent-sc3="" class="column ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/about"> About </a><ul _ngcontent-sc3=""><!----><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/about#our_story"> Our story </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/about#recent_progress"> Recent progress </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/about#our_global_community"> Our global community </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/about#leadership"> Leadership </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/about#teams"> Teams </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/about#access_to_science"> Access to science </a></li><!----></ul></div><div _ngcontent-sc3="" class="column ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/research"> Research </a><ul _ngcontent-sc3=""><!----><!----><li _ngcontent-sc3="" class="ng-star-inserted"><dm-link _ngcontent-sc3="" classlist="nav-cta" _nghost-sc8=""><!----><!----><a _ngcontent-sc8="" aria-label="Read more on DeepMind" class="nav-cta ng-star-inserted" href="/research?filters=%7B%22category%22:%5B%22Research%22%5D%7D"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">Blog</span><!----><!----><!----></a><!----><!----></dm-link></li><li _ngcontent-sc3="" class="ng-star-inserted"><dm-link _ngcontent-sc3="" classlist="nav-cta" _nghost-sc8=""><!----><!----><a _ngcontent-sc8="" aria-label="Read more on DeepMind" class="nav-cta ng-star-inserted" href="/research?filters=%7B%22collection%22:%5B%22OpenSource%22%5D%7D"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">Open source</span><!----><!----><!----></a><!----><!----></dm-link></li><li _ngcontent-sc3="" class="ng-star-inserted"><dm-link _ngcontent-sc3="" classlist="nav-cta" _nghost-sc8=""><!----><!----><a _ngcontent-sc8="" aria-label="Read more on DeepMind" class="nav-cta ng-star-inserted" href="/research?filters=%7B%22collection%22:%5B%22Publications%22%5D%7D"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">Publications</span><!----><!----><!----></a><!----><!----></dm-link></li></ul></div><div _ngcontent-sc3="" class="column ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/impact"> Impact </a><ul _ngcontent-sc3=""><!----><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/impact#real_world_impact"> Real-world impact </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/impact#significant_breakthroughs"> Significant breakthroughs </a></li><!----></ul></div><div _ngcontent-sc3="" class="column ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/blog"> Blog </a><ul _ngcontent-sc3=""><!----><!----><li _ngcontent-sc3="" class="ng-star-inserted"><dm-link _ngcontent-sc3="" classlist="nav-cta" _nghost-sc8=""><!----><!----><a _ngcontent-sc8="" aria-label="Read more on DeepMind" class="nav-cta ng-star-inserted" href="/blog?filters=%7B%22category%22:%5B%22Research%22%5D%7D"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">Research</span><!----><!----><!----></a><!----><!----></dm-link></li><li _ngcontent-sc3="" class="ng-star-inserted"><dm-link _ngcontent-sc3="" classlist="nav-cta" _nghost-sc8=""><!----><!----><a _ngcontent-sc8="" aria-label="Read more on DeepMind" class="nav-cta ng-star-inserted" href="/blog?filters=%7B%22collection%22:%5B%22Announcements%22%5D%7D"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">News</span><!----><!----><!----></a><!----><!----></dm-link></li></ul></div><div _ngcontent-sc3="" class="column ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/safety-and-ethics"> Safety &amp; Ethics </a><ul _ngcontent-sc3=""><!----><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/safety-and-ethics#overview"> Overview </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/safety-and-ethics#technical_safety"> Technical safety </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/safety-and-ethics#ethics_society"> Ethics &amp; Society </a></li><!----></ul></div><div _ngcontent-sc3="" class="column ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/careers"> Careers </a><ul _ngcontent-sc3=""><!----><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/careers#a_unique_mission"> A unique mission </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/careers#teams"> Teams </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/careers#diversity_matters"> Diversity matters </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/careers#locations"> Locations </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/careers#internships"> Internships </a></li><!----></ul></div></div><!----><div _ngcontent-sc3="" class="back-to-top"><svg _ngcontent-sc3="" role="img"><use _ngcontent-sc3="" xlink:href="#arrow"></use></svg></div><div _ngcontent-sc3="" class="information"><div _ngcontent-sc3="" class="legal"><!----><dm-link _ngcontent-sc3="" classlist="dm-cta caption" _nghost-sc8="" class="ng-star-inserted"><!----><!----><a _ngcontent-sc8="" aria-label="Read more on an external page" class="external dm-cta caption ng-star-inserted" rel="noopener" target="_blank" href="mailto:press@deepmind.com"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">Press</span><!----><!----><!----></a><!----><!----><!----></dm-link><dm-link _ngcontent-sc3="" classlist="dm-cta caption" _nghost-sc8="" class="ng-star-inserted"><!----><!----><a _ngcontent-sc8="" aria-label="Read more on DeepMind" class="dm-cta caption ng-star-inserted" href="/terms-and-conditions"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">Terms &amp; Conditions</span><!----><!----><!----></a><!----><!----></dm-link><dm-link _ngcontent-sc3="" classlist="dm-cta caption" _nghost-sc8="" class="ng-star-inserted"><!----><!----><a _ngcontent-sc8="" aria-label="Read more on DeepMind" class="dm-cta caption ng-star-inserted" href="/privacy-policy"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">Privacy Policy</span><!----><!----><!----></a><!----><!----></dm-link><dm-link _ngcontent-sc3="" classlist="dm-cta caption" _nghost-sc8="" class="ng-star-inserted"><!----><!----><a _ngcontent-sc8="" aria-label="Read more on an external page" class="external dm-cta caption ng-star-inserted" rel="noopener" target="_blank" href="https://storage.googleapis.com/deepmind-media/modern_slavery/FINAL_201_Google_Modern_Slavery_Statement.pdf"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">Modern Slavery Statement</span><!----><!----><!----></a><!----><!----><!----></dm-link><dm-link _ngcontent-sc3="" classlist="dm-cta caption" _nghost-sc8="" class="ng-star-inserted"><!----><!----><a _ngcontent-sc8="" aria-label="Read more on an external page" class="external dm-cta caption ng-star-inserted" rel="noopener" target="_blank" href="https://abc.xyz/"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">Alphabet Inc</span><!----><!----><!----></a><!----><!----><!----></dm-link></div><ul _ngcontent-sc3="" class="social"><!----><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta icon" rel="noopener" target="_blank" aria-label="Follow us on Twitter!" href="https://twitter.com/DeepMindAI"><svg _ngcontent-sc3="" role="img"><use _ngcontent-sc3="" xlink:href="#twitter"></use></svg></a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta icon" rel="noopener" target="_blank" aria-label="Follow us on Youtube!" href="https://www.youtube.com/deepmind"><svg _ngcontent-sc3="" role="img"><use _ngcontent-sc3="" xlink:href="#youtube"></use></svg></a></li></ul></div></div><div _ngcontent-sc3="" class="shape"><svg _ngcontent-sc3="" role="img"><use _ngcontent-sc3="" xlink:href="#shape-octa3"></use></svg></div></div></footer></dm-footer></div></dm-app-root>
+<script src="runtime-es2015.858f8dd898b75fe86926.js" type="module" crossorigin="use-credentials"></script><script src="polyfills-es2015.0b2e40f2b7e045bb6031.js" type="module" crossorigin="use-credentials"></script><script src="runtime-es5.741402d1d47331ce975c.js" nomodule=""></script><script src="polyfills-es5.343790ebaac41845eaa3.js" nomodule=""></script><script src="main-es2015.b86475430f0c2e1f65c0.js" type="module" crossorigin="use-credentials"></script><script src="main-es5.90f722d029495b63e37f.js" nomodule=""></script>
+
+</body></html>

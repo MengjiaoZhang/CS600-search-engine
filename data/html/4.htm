@@ -1,0 +1,1548 @@
+<!DOCTYPE html><html class="loading" dir="ltr" lang="ALL"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+  <base href="/">
+
+  <!-- Facebook base meta tags. -->
+  <meta property="og:image:width" content="600">
+  <meta property="og:image:height" content="600">
+  <meta property="og:site_name" content="Deepmind">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter base meta tags. -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@DeepMindAI">
+
+  <!-- Set in Angular. -->
+  <title>Identifying and eliminating bugs in learned predictive models | DeepMind</title>
+  <meta name="description" content="One in a series of posts explaining the theories underpinning our research. Bugs and software have gone hand in hand since the beginning of computer programming. Over time, software developers have established a set of best practices for testing and debugging before deployment, but these practices are not suited for modern deep learning systems. Today, the prevailing practice in machine learning is to train a system on a training data set, and then test it on another set. While this reveals the average-case performance of models, it is also crucial to ensure robustness, or acceptably high performance even in the worst case. &nbsp;In this article, we describe three approaches for rigorously identifying and eliminating bugs in learned predictive models: adversarial testing, robust learning, and formal verification.Machine learning systems are not robust by default. Even systems that outperform humans in a particular domain can fail at solving simple problems if subtle differences are introduced. For example, consider the problem of image perturbations: a neural network that can classify images better than a human can be easily fooled into believing that sloth is a race car if a small amount of carefully calculated noise is added to the input image.">
+
+  <link rel="preconnect" href="https://lh3.googleusercontent.com">
+  <link href="assets/favicon.ico" rel="icon">
+<link rel="stylesheet" href="styles.c25992414036055c2434.css"><style ng-transition="deepmind-website">[_nghost-sc0] {
+  display: flex;
+  flex-direction: column;
+}
+@media (min-width: 1024px) {
+  [_nghost-sc0] {
+    flex-direction: row;
+  }
+}
+[_nghost-sc0]   .dm-body[_ngcontent-sc0] {
+  background-color: #f0f5f5;
+  height: 100%;
+  width: 100%;
+}
+@media (min-width: 1024px) {
+  [_nghost-sc0]   .dm-body[_ngcontent-sc0] {
+    width: calc(100% - 100px);
+  }
+}
+[_nghost-sc0]   .svg-elements[_ngcontent-sc0] {
+  height: 0;
+  position: absolute;
+  visibility: hidden;
+  width: 0;
+}</style><style ng-transition="deepmind-website">[_nghost-sc2] {
+  display: block;
+  position: relative;
+}
+header[_ngcontent-sc2] {
+  background-color: #0053d6;
+  height: 60px;
+  width: 100%;
+}
+@media (min-width: 768px) {
+  header[_ngcontent-sc2] {
+    height: 70px;
+  }
+}
+@media (min-width: 1024px) {
+  header[_ngcontent-sc2] {
+    height: 100%;
+    width: 100px;
+  }
+}
+header[_ngcontent-sc2]::after {
+  background-color: #0053d6;
+  content: "";
+  height: 100%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: right 0.3s ease, width 0.3s ease;
+  width: 0;
+  z-index: 34;
+}
+header.is-peaking[_ngcontent-sc2]::after {
+  right: -10px;
+  width: 10px;
+}
+.header-container[_ngcontent-sc2] {
+  background-color: #0053d6;
+  display: flex;
+  flex-direction: column;
+  height: inherit;
+  justify-content: space-between;
+  left: 0;
+  padding: 0 20px;
+  position: fixed;
+  top: 0;
+  width: inherit;
+  z-index: 35;
+}
+@media (min-width: 1024px) {
+  .header-container[_ngcontent-sc2] {
+    height: 100%;
+    padding: 30px 20px;
+  }
+}
+header.is-menu-open[_ngcontent-sc2]   .header-container[_ngcontent-sc2] {
+  width: 100%;
+}
+@media (min-width: 1024px) {
+  header.is-menu-open[_ngcontent-sc2]   .header-container[_ngcontent-sc2] {
+    width: 100px;
+  }
+}
+.header-container[_ngcontent-sc2]   ul[_ngcontent-sc2] {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.menu-wrapper[_ngcontent-sc2] {
+  display: flex;
+  height: 100%;
+}
+@media (min-width: 1024px) {
+  .menu-wrapper[_ngcontent-sc2] {
+    flex-direction: column;
+    height: auto;
+  }
+}
+.menu-header[_ngcontent-sc2] {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+@media (min-width: 1024px) {
+  .menu-header[_ngcontent-sc2] {
+    display: block;
+  }
+}
+.menu-header[_ngcontent-sc2]   .logo[_ngcontent-sc2] {
+  display: block;
+  margin: 0 0 0 -12px;
+}
+@media (min-width: 768px) {
+  .menu-header[_ngcontent-sc2]   .logo[_ngcontent-sc2] {
+    margin: 0;
+  }
+}
+@media (min-width: 1024px) {
+  .menu-header[_ngcontent-sc2]   .logo[_ngcontent-sc2] {
+    margin: 0 0 30px 0;
+  }
+}
+.menu-header[_ngcontent-sc2]   .logo[_ngcontent-sc2]   svg[_ngcontent-sc2] {
+  display: block;
+  height: 40px;
+  width: 184px;
+}
+@media (min-width: 1024px) {
+  .menu-header[_ngcontent-sc2]   .logo[_ngcontent-sc2]   svg[_ngcontent-sc2] {
+    width: 40px;
+  }
+}
+.menu-header[_ngcontent-sc2]   .logo[_ngcontent-sc2]   svg.full-logo[_ngcontent-sc2] {
+  width: 184px;
+}
+.menu-header[_ngcontent-sc2]   .menu-controls[_ngcontent-sc2] {
+  align-items: center;
+  display: flex;
+  flex-direction: row-reverse;
+}
+@media (min-width: 1024px) {
+  .menu-header[_ngcontent-sc2]   .menu-controls[_ngcontent-sc2] {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+    width: 38px;
+  }
+}
+.menu-header[_ngcontent-sc2]   .menu-controls[_ngcontent-sc2]   button[_ngcontent-sc2]    + button[_ngcontent-sc2] {
+  display: block;
+  margin: 0 20px 0 0;
+}
+@media (min-width: 1024px) {
+  .menu-header[_ngcontent-sc2]   .menu-controls[_ngcontent-sc2]   button[_ngcontent-sc2]    + button[_ngcontent-sc2] {
+    margin: 30px 0 0;
+  }
+}
+nav[_ngcontent-sc2] {
+  display: none;
+}
+@media (min-width: 1024px) {
+  nav[_ngcontent-sc2] {
+    display: flex;
+  }
+}
+@media (min-width: 1024px) {
+  header.is-menu-open[_ngcontent-sc2]   nav[_ngcontent-sc2] {
+    align-items: center;
+    height: 100%;
+    justify-content: center;
+  }
+}
+.pages[_ngcontent-sc2] {
+  display: block;
+  width: 100%;
+}
+header.is-menu-open[_ngcontent-sc2]   .pages[_ngcontent-sc2] {
+  width: auto;
+}
+@media (min-width: 1024px) {
+  header.is-menu-open[_ngcontent-sc2]   .pages[_ngcontent-sc2] {
+    display: flex;
+    flex-direction: row-reverse;
+    -webkit-transform: rotateZ(-90deg);
+            transform: rotateZ(-90deg);
+  }
+}
+.pages[_ngcontent-sc2]   li[_ngcontent-sc2]   a[_ngcontent-sc2] {
+  cursor: pointer;
+  position: relative;
+}
+.pages[_ngcontent-sc2]   li[_ngcontent-sc2]   a[_ngcontent-sc2]::before {
+  border-left: 6px solid transparent;
+  content: "";
+  display: block;
+  height: 100%;
+  left: -20px;
+  position: absolute;
+  top: 0;
+}
+.pages[_ngcontent-sc2]   li[_ngcontent-sc2]   a[_ngcontent-sc2]:focus::before, .pages[_ngcontent-sc2]   li[_ngcontent-sc2]   a[_ngcontent-sc2]:hover::before {
+  border-color: #fff;
+}
+.pages[_ngcontent-sc2]   li.is-active[_ngcontent-sc2]   a[_ngcontent-sc2]::before {
+  border-color: #fff;
+}
+.page-link[_ngcontent-sc2] {
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  display: block;
+  padding: 10px 0;
+}
+.page-link.nav-cta[_ngcontent-sc2]:focus, .page-link.nav-cta[_ngcontent-sc2]:hover {
+  color: #fff;
+}
+.social-media-wrapper[_ngcontent-sc2] {
+  display: none;
+}
+@media (min-width: 1024px) {
+  .social-media-wrapper[_ngcontent-sc2] {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    width: 38px;
+  }
+}
+.social-media-wrapper[_ngcontent-sc2]   li[_ngcontent-sc2]    + li[_ngcontent-sc2] {
+  margin-top: 10px;
+}
+.social-media-wrapper[_ngcontent-sc2]   svg[_ngcontent-sc2] {
+  height: 20px;
+  width: 20px;
+}
+.hamburger-menu[_ngcontent-sc2] {
+  cursor: pointer;
+  display: block;
+  height: 18px;
+  position: relative;
+  width: 22px;
+}
+@media (min-width: 1024px) {
+  .hamburger-menu[_ngcontent-sc2] {
+    width: 30px;
+  }
+}
+@media (hover: hover) {
+  .hamburger-menu[_ngcontent-sc2]:focus   span[_ngcontent-sc2]:nth-child(2), .hamburger-menu[_ngcontent-sc2]:hover   span[_ngcontent-sc2]:nth-child(2) {
+    -webkit-transform: scaleX(0.5);
+            transform: scaleX(0.5);
+  }
+}
+.hamburger-menu[_ngcontent-sc2]   span[_ngcontent-sc2] {
+  background-color: #fff;
+  display: block;
+  height: 2px;
+  margin: 0;
+  position: absolute;
+  -webkit-transform-origin: center;
+          transform-origin: center;
+  transition: width 0.2s ease, -webkit-transform 0.3s ease;
+  transition: transform 0.3s ease, width 0.2s ease;
+  transition: transform 0.3s ease, width 0.2s ease, -webkit-transform 0.3s ease;
+  width: 100%;
+}
+.hamburger-menu[_ngcontent-sc2]   span[_ngcontent-sc2]:first-child {
+  top: 0;
+}
+.hamburger-menu[_ngcontent-sc2]   span[_ngcontent-sc2]:nth-child(2) {
+  top: 8px;
+}
+.hamburger-menu[_ngcontent-sc2]   span[_ngcontent-sc2]:last-child {
+  bottom: 0;
+}
+.hamburger-menu.is-active[_ngcontent-sc2]   span[_ngcontent-sc2]:first-child {
+  -webkit-transform: translateY(8px) rotate(45deg);
+          transform: translateY(8px) rotate(45deg);
+  width: 23px;
+}
+@media (min-width: 1024px) {
+  .hamburger-menu.is-active[_ngcontent-sc2]   span[_ngcontent-sc2]:first-child {
+    width: 29px;
+  }
+}
+.hamburger-menu.is-active[_ngcontent-sc2]   span[_ngcontent-sc2]:nth-child(2) {
+  width: 0;
+}
+.hamburger-menu.is-active[_ngcontent-sc2]   span[_ngcontent-sc2]:last-child {
+  -webkit-transform: translateY(-8px) rotate(-45deg);
+          transform: translateY(-8px) rotate(-45deg);
+  width: 23px;
+}
+@media (min-width: 1024px) {
+  .hamburger-menu.is-active[_ngcontent-sc2]   span[_ngcontent-sc2]:last-child {
+    width: 29px;
+  }
+}
+.search[_ngcontent-sc2] {
+  text-align: center;
+}
+.search.no-focus[_ngcontent-sc2]:focus   g[_ngcontent-sc2] {
+  -webkit-transform: none;
+          transform: none;
+}
+.search[_ngcontent-sc2]:focus   g[_ngcontent-sc2], .search[_ngcontent-sc2]:hover   g[_ngcontent-sc2] {
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
+}
+@media (hover: none) {
+  .search.no-focus[_ngcontent-sc2]:focus   g[_ngcontent-sc2] {
+    -webkit-transform: none;
+            transform: none;
+  }
+  .search.no-focus[_ngcontent-sc2]:hover   g[_ngcontent-sc2] {
+    -webkit-transform: none;
+            transform: none;
+  }
+  .search[_ngcontent-sc2]:focus   g[_ngcontent-sc2], .search[_ngcontent-sc2]:hover   g[_ngcontent-sc2] {
+    -webkit-transform: none;
+            transform: none;
+  }
+}
+.search[_ngcontent-sc2]   svg[_ngcontent-sc2] {
+  height: 22px;
+  vertical-align: middle;
+  width: 22px;
+}
+@media (min-width: 1024px) {
+  .search[_ngcontent-sc2]   svg[_ngcontent-sc2] {
+    height: 28px;
+    width: 30px;
+  }
+}
+.search[_ngcontent-sc2]   svg[_ngcontent-sc2]   g[_ngcontent-sc2] {
+  transition: -webkit-transform 0.3s ease;
+  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, -webkit-transform 0.3s ease;
+}
+.search[_ngcontent-sc2]   svg[_ngcontent-sc2]   g[_ngcontent-sc2]   [_ngcontent-sc2]:first-child {
+  fill: #0053d6;
+}</style><style ng-transition="deepmind-website">[_nghost-sc3] {
+  display: block;
+}
+footer[_ngcontent-sc3] {
+  background-color: #14234b;
+  overflow: hidden;
+  padding: 50px 0 40px;
+  position: relative;
+}
+@media (min-width: 768px) {
+  footer[_ngcontent-sc3] {
+    padding: 60px 0 50px;
+  }
+}
+@media (min-width: 1440px) {
+  footer[_ngcontent-sc3] {
+    padding: 90px 0 100px;
+  }
+}
+.logo[_ngcontent-sc3] {
+  display: none;
+}
+@media (min-width: 1024px) {
+  .logo[_ngcontent-sc3] {
+    display: block;
+    margin: 0 0 45px;
+  }
+}
+.logo[_ngcontent-sc3]   svg[_ngcontent-sc3] {
+  fill: #fff;
+  height: 28px;
+  width: 130px;
+}
+.body[_ngcontent-sc3] {
+  flex: 1 1 0%;
+  position: relative;
+}
+.categories[_ngcontent-sc3] {
+  display: flex;
+  flex-flow: row wrap;
+}
+@media (min-width: 1440px) {
+  .categories[_ngcontent-sc3] {
+    flex-flow: row nowrap;
+  }
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3] {
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .categories[_ngcontent-sc3]   .column[_ngcontent-sc3] {
+    margin: 0 0 30px;
+    max-width: 33.3333333333%;
+  }
+}
+@media (min-width: 1440px) {
+  .categories[_ngcontent-sc3]   .column[_ngcontent-sc3] {
+    max-width: none;
+  }
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3]:last-child {
+  flex-grow: 0;
+}
+@media (min-width: 768px) {
+  .categories[_ngcontent-sc3]   .column[_ngcontent-sc3]:last-child {
+    flex-grow: 1;
+  }
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3]    > .nav-cta[_ngcontent-sc3] {
+  font-size: 16px;
+  font-weight: 700;
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   [dmAccordionTitle][_ngcontent-sc3] {
+  flex-grow: 1;
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   [dmAccordionTitle][_ngcontent-sc3]:focus, .categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   [dmAccordionTitle][_ngcontent-sc3]:hover {
+  border: 0;
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   ul[_ngcontent-sc3] {
+  list-style-type: none;
+  padding: 0 0 20px;
+}
+@media (min-width: 768px) {
+  .categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   ul[_ngcontent-sc3] {
+    border-left: 1px solid #0053d6;
+    margin: 15px 0 0;
+    padding: 0 0 0 8px;
+  }
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   ul[_ngcontent-sc3]   li[_ngcontent-sc3]    + li[_ngcontent-sc3] {
+  margin: 10px 0 0;
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   ul[_ngcontent-sc3]   li[_ngcontent-sc3]   a[_ngcontent-sc3] {
+  display: inherit;
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   ul[_ngcontent-sc3]   li[_ngcontent-sc3]   a[_ngcontent-sc3]:focus, .categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   ul[_ngcontent-sc3]   li[_ngcontent-sc3]   a[_ngcontent-sc3]:hover {
+  border: 0;
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   ul[_ngcontent-sc3]   li[_ngcontent-sc3]   dm-link[_ngcontent-sc3] {
+  line-height: 1;
+}
+.information[_ngcontent-sc3] {
+  display: flex;
+}
+@media (min-width: 768px) {
+  .information[_ngcontent-sc3] {
+    border-top: 1px solid #5c657f;
+    padding: 25px 0;
+  }
+}
+@media (min-width: 1440px) {
+  .information[_ngcontent-sc3] {
+    padding: 35px 0;
+  }
+}
+.information[_ngcontent-sc3]   .legal[_ngcontent-sc3] {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+@media (min-width: 768px) {
+  .information[_ngcontent-sc3]   .legal[_ngcontent-sc3] {
+    align-items: center;
+    flex-direction: row;
+    margin: 0;
+  }
+}
+.information[_ngcontent-sc3]   .legal[_ngcontent-sc3]   dm-link[_ngcontent-sc3] {
+  margin: 0 0 15px;
+}
+@media (min-width: 768px) {
+  .information[_ngcontent-sc3]   .legal[_ngcontent-sc3]   dm-link[_ngcontent-sc3] {
+    margin: 0 45px 0 0;
+  }
+}
+.information[_ngcontent-sc3]   .social[_ngcontent-sc3] {
+  align-items: flex-end;
+  display: flex;
+  justify-content: flex-end;
+  list-style: none;
+}
+@media (min-width: 768px) {
+  .information[_ngcontent-sc3]   .social[_ngcontent-sc3] {
+    align-items: center;
+  }
+}
+.information[_ngcontent-sc3]   .social[_ngcontent-sc3]   li[_ngcontent-sc3] {
+  display: flex;
+}
+.information[_ngcontent-sc3]   .social[_ngcontent-sc3]   a[_ngcontent-sc3] {
+  margin: 0 0 15px;
+  padding: 0 0 0 32px;
+}
+@media (min-width: 768px) {
+  .information[_ngcontent-sc3]   .social[_ngcontent-sc3]   a[_ngcontent-sc3] {
+    margin: 0 0 0 15px;
+    padding: 0;
+  }
+}
+.information[_ngcontent-sc3]   .social[_ngcontent-sc3]   a[_ngcontent-sc3]   svg[_ngcontent-sc3] {
+  height: 20px;
+  vertical-align: middle;
+  width: 20px;
+}
+.shape[_ngcontent-sc3] {
+  height: 100%;
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+@media (min-width: 1440px) {
+  .shape[_ngcontent-sc3] {
+    display: inline;
+  }
+}
+.shape[_ngcontent-sc3]   svg[_ngcontent-sc3] {
+  bottom: -100px;
+  fill: #0053d6;
+  height: 400px;
+  position: absolute;
+  right: -100px;
+  width: 400px;
+}
+@media (min-width: 768px) {
+  .shape[_ngcontent-sc3]   svg[_ngcontent-sc3] {
+    right: -100px;
+    top: 10%;
+  }
+}
+@media (min-width: 1440px) {
+  .shape[_ngcontent-sc3]   svg[_ngcontent-sc3] {
+    bottom: -200px;
+    left: 60%;
+    top: auto;
+  }
+}
+.back-to-top[_ngcontent-sc3] {
+  margin: 30px 0;
+  position: relative;
+  text-align: right;
+}
+@media (min-width: 768px) {
+  .back-to-top[_ngcontent-sc3] {
+    margin: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+}
+@media (min-width: 1024px) {
+  .back-to-top[_ngcontent-sc3] {
+    display: none;
+  }
+}
+.back-to-top[_ngcontent-sc3]   svg[_ngcontent-sc3] {
+  fill: #fff;
+  height: 16px;
+  margin: 0 0 0 auto;
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+  transition: -webkit-transform 0.2s ease;
+  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, -webkit-transform 0.2s ease;
+  width: 25px;
+}
+@media (min-width: 768px) {
+  .back-to-top[_ngcontent-sc3]   svg[_ngcontent-sc3] {
+    margin: auto;
+  }
+}</style><style ng-transition="deepmind-website">[_nghost-sc8] {
+  display: block;
+}
+.media[_ngcontent-sc8] {
+  display: block;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+.link[_ngcontent-sc8]   .icon[_ngcontent-sc8] {
+  height: 30px;
+  min-width: 30px;
+  position: relative;
+  width: 30px;
+}
+.link.external[_ngcontent-sc8]:focus   .icon[_ngcontent-sc8]::before, .link.external[_ngcontent-sc8]:hover   .icon[_ngcontent-sc8]::before {
+  background-color: #0053d6;
+}
+.link.external[_ngcontent-sc8]   .icon[_ngcontent-sc8]::before {
+  background-color: #ffdb13;
+  border-radius: 50%;
+  content: "";
+  display: block;
+  height: 30px;
+  position: absolute;
+  right: 0;
+  width: 30px;
+}
+.link.external[_ngcontent-sc8]   svg[_ngcontent-sc8] {
+  background-color: transparent;
+  border-radius: 0;
+  padding: 8px;
+  position: relative;
+}
+.link.transparent[_ngcontent-sc8]   .icon[_ngcontent-sc8] {
+  line-height: 0;
+}
+.hero-link[_ngcontent-sc8] {
+  align-items: flex-start;
+  font: 500 14px/30px "Deepmind Sans", Helvetica, Arial, sans-serif;
+  letter-spacing: 0;
+}
+@media (min-width: 1024px) {
+  .hero-link[_ngcontent-sc8] {
+    font-size: 18px;
+    line-height: 30px;
+  }
+}
+.cta-text[_ngcontent-sc8] {
+  margin-right: 10px;
+  text-transform: uppercase;
+}</style><style ng-transition="deepmind-website">[_nghost-sc10] {
+  display: block;
+  position: relative;
+  width: 100%;
+}</style><meta property="og:title" content="Towards Robust and Verified AI: Specification Testing, Robust Training, and Formal Verification"><meta property="og:description" content="One in a series of posts explaining the theories underpinning our research. Bugs and software have gone hand in hand since the beginning of computer programming. Over time, software developers have established a set of best practices for testing and debugging before deployment, but these practices are not suited for modern deep learning systems. Today, the prevailing practice in machine learning is to train a system on a training data set, and then test it on another set. While this reveals the average-case performance of models, it is also crucial to ensure robustness, or acceptably high performance even in the worst case. &nbsp;In this article, we describe three approaches for rigorously identifying and eliminating bugs in learned predictive models: adversarial testing, robust learning, and formal verification.Machine learning systems are not robust by default. Even systems that outperform humans in a particular domain can fail at solving simple problems if subtle differences are introduced. For example, consider the problem of image perturbations: a neural network that can classify images better than a human can be easily fooled into believing that sloth is a race car if a small amount of carefully calculated noise is added to the input image."><meta property="og:image" content="https://lh3.googleusercontent.com/jVZ3VN7wwx2dSowqLmhqm0qAzAmcb-1t7ks3HiNnoHknihF5sl9VDEwuCNTSxfx8jFIi7mBQkvHUdnSKXSPgYLNpvCuE4YajJeMnrYA"><meta property="og:url" content="/blog/article/robust-and-verified-ai"><meta name="twitter:title" content="Towards Robust and Verified AI: Specification Testing, Robust Training, and Formal Verification"><meta name="twitter:description" content="One in a series of posts explaining the theories underpinning our research. Bugs and software have gone hand in hand since the beginning of computer programming. Over time, software developers have established a set of best practices for testing and debugging before deployment, but these practices are not suited for modern deep learning systems. Today, the prevailing practice in machine learning is to train a system on a training data set, and then test it on another set. While this reveals the average-case performance of models, it is also crucial to ensure robustness, or acceptably high performance even in the worst case. &nbsp;In this article, we describe three approaches for rigorously identifying and eliminating bugs in learned predictive models: adversarial testing, robust learning, and formal verification.Machine learning systems are not robust by default. Even systems that outperform humans in a particular domain can fail at solving simple problems if subtle differences are introduced. For example, consider the problem of image perturbations: a neural network that can classify images better than a human can be easily fooled into believing that sloth is a race car if a small amount of carefully calculated noise is added to the input image."><meta name="twitter:image:src" content="https://lh3.googleusercontent.com/jVZ3VN7wwx2dSowqLmhqm0qAzAmcb-1t7ks3HiNnoHknihF5sl9VDEwuCNTSxfx8jFIi7mBQkvHUdnSKXSPgYLNpvCuE4YajJeMnrYA"><meta name="twitter:site" content="/blog/article/robust-and-verified-ai"><style ng-transition="deepmind-website">[_nghost-sc49] {
+  display: block;
+  margin-top: 70px;
+}
+@media (min-width: 1024px) {
+  [_nghost-sc49] {
+    margin-top: 100px;
+  }
+}
+dm-breadcrumb[_ngcontent-sc49] {
+  left: 20px;
+  position: absolute;
+  top: -45px;
+}
+@media (min-width: 768px) {
+  dm-breadcrumb[_ngcontent-sc49] {
+    left: 30px;
+  }
+}
+@media (min-width: 1024px) {
+  dm-breadcrumb[_ngcontent-sc49] {
+    left: 60px;
+    margin: 40px 0 25px;
+    top: -100px;
+  }
+}
+@media (min-width: 1440px) {
+  dm-breadcrumb[_ngcontent-sc49] {
+    left: 90px;
+  }
+}
+.blog-article-bg[_ngcontent-sc49] {
+  background: linear-gradient(to right, #fff 50%, #ffe6f0 50%);
+}
+@media (min-width: 1024px) {
+  .blog-article-bg[_ngcontent-sc49] {
+    background: linear-gradient(to right, #ffe6f0 50%, #fff 50%);
+  }
+}
+.page-content-container[_ngcontent-sc49] {
+  display: flex;
+  flex-direction: column-reverse;
+}
+@media (max-width: 1023px) {
+  .page-content-container[_ngcontent-sc49] {
+    padding: 0;
+  }
+}
+@media (min-width: 1024px) {
+  .page-content-container[_ngcontent-sc49] {
+    flex-direction: row;
+  }
+}
+aside[_ngcontent-sc49] {
+  background-color: #ffe6f0;
+  display: flex;
+  flex-direction: column;
+  padding: 50px 0 50px 30px;
+  width: 100%;
+}
+@media (min-width: 768px) {
+  aside[_ngcontent-sc49] {
+    -webkit-column-gap: 0;
+       -moz-column-gap: 0;
+            column-gap: 0;
+    -webkit-columns: 2;
+       -moz-columns: 2;
+            columns: 2;
+    display: inline;
+  }
+}
+@media (min-width: 1024px) {
+  aside[_ngcontent-sc49] {
+    display: flex;
+    max-width: 260px;
+    padding: 0 40px 50px 0;
+  }
+}
+@media (min-width: 1440px) {
+  aside[_ngcontent-sc49] {
+    max-width: 300px;
+  }
+}
+.page-content[_ngcontent-sc49] {
+  background-color: #fff;
+  padding: 20px 20px 0;
+  width: calc(100% - 20px);
+}
+@media (min-width: 768px) {
+  .page-content[_ngcontent-sc49] {
+    padding: 20px 30px 0;
+    width: calc(100% - 125px);
+  }
+}
+@media (min-width: 1024px) {
+  .page-content[_ngcontent-sc49] {
+    padding: 55px 0 55px 30px;
+    width: 100%;
+  }
+}
+@media (min-width: 1440px) {
+  .page-content[_ngcontent-sc49] {
+    padding: 70px 0 70px 100px;
+  }
+}
+dm-social-share[_ngcontent-sc49], dm-authors-list[_ngcontent-sc49], dm-tag-list[_ngcontent-sc49] {
+  margin-bottom: 30px;
+}
+@media (min-width: 768px) {
+  dm-social-share[_ngcontent-sc49], dm-authors-list[_ngcontent-sc49], dm-tag-list[_ngcontent-sc49] {
+    margin: 0 20px 30px 0;
+  }
+}
+@media (min-width: 1024px) {
+  dm-social-share[_ngcontent-sc49], dm-authors-list[_ngcontent-sc49], dm-tag-list[_ngcontent-sc49] {
+    margin: 0 0 30px;
+  }
+}
+dm-authors-list[_ngcontent-sc49] {
+  margin-bottom: 30px;
+}
+@media (min-width: 768px) {
+  dm-authors-list[_ngcontent-sc49] {
+    -webkit-column-break-before: always;
+       -moz-column-break-before: always;
+            break-before: always;
+    margin: 0;
+  }
+}
+@media (min-width: 1024px) {
+  dm-authors-list[_ngcontent-sc49] {
+    -webkit-column-break-before: auto;
+       -moz-column-break-before: auto;
+            break-before: auto;
+    margin-bottom: 30px;
+  }
+}
+dm-tag-list[_ngcontent-sc49] {
+  order: 3;
+}</style><style ng-transition="deepmind-website">[_nghost-sc13] {
+  display: block;
+}
+.theme-dark[_nghost-sc13]   li[_ngcontent-sc13]   a[_ngcontent-sc13] {
+  color: #0053d6;
+}
+.theme-dark[_nghost-sc13]   .logo[_ngcontent-sc13]   svg[_ngcontent-sc13], .theme-dark[_nghost-sc13]   .arrow[_ngcontent-sc13] {
+  fill: #0053d6;
+}
+ul[_ngcontent-sc13] {
+  align-items: center;
+  display: flex;
+  list-style: none;
+}
+ul[_ngcontent-sc13]   li[_ngcontent-sc13] {
+  align-items: center;
+  display: flex;
+}
+ul[_ngcontent-sc13]   li[_ngcontent-sc13]:not(:nth-child(2)) {
+  display: none;
+}
+@media (min-width: 1024px) {
+  ul[_ngcontent-sc13]   li[_ngcontent-sc13]:not(:nth-child(2)) {
+    display: flex;
+  }
+}
+ul[_ngcontent-sc13]   li[_ngcontent-sc13]:last-child   a[_ngcontent-sc13] {
+  font-weight: bold;
+}
+ul[_ngcontent-sc13]   li[_ngcontent-sc13]   .nav-cta[_ngcontent-sc13]:focus, ul[_ngcontent-sc13]   li[_ngcontent-sc13]   .nav-cta[_ngcontent-sc13]:hover {
+  border: 0;
+}
+ul[_ngcontent-sc13]   li[_ngcontent-sc13]   .disabled[_ngcontent-sc13] {
+  cursor: default;
+  pointer-events: none;
+}
+ul[_ngcontent-sc13]   li[_ngcontent-sc13]   .disabled[_ngcontent-sc13]:focus, ul[_ngcontent-sc13]   li[_ngcontent-sc13]   .disabled[_ngcontent-sc13]:hover {
+  color: #fff;
+}
+ul[_ngcontent-sc13]   .logo[_ngcontent-sc13]   svg[_ngcontent-sc13] {
+  display: none;
+  fill: #fff;
+  height: 25px;
+  width: 110px;
+}
+@media (min-width: 1024px) {
+  ul[_ngcontent-sc13]   .logo[_ngcontent-sc13]   svg[_ngcontent-sc13] {
+    display: block;
+    height: 28px;
+    width: 130px;
+  }
+}
+ul[_ngcontent-sc13]   .arrow[_ngcontent-sc13] {
+  fill: #fff;
+  height: 9px;
+  margin: 0 25px 0 0;
+  -webkit-transform: scaleX(-1);
+          transform: scaleX(-1);
+  width: 5px;
+}
+@media (min-width: 1024px) {
+  ul[_ngcontent-sc13]   .arrow[_ngcontent-sc13] {
+    margin: 0 25px;
+    -webkit-transform: scaleX(1);
+            transform: scaleX(1);
+  }
+}
+ul[_ngcontent-sc13]   .arrow.is-last[_ngcontent-sc13] {
+  display: none;
+}
+@media (min-width: 1024px) {
+  ul[_ngcontent-sc13]   .arrow.is-last[_ngcontent-sc13] {
+    display: inline;
+  }
+}</style><style ng-transition="deepmind-website">[_nghost-sc50] {
+  display: block;
+}
+header[_ngcontent-sc50] {
+  position: relative;
+}
+header[_ngcontent-sc50]   .article-image[_ngcontent-sc50] {
+  background: linear-gradient(transparent 60%, #ffe6f0 60%);
+}
+@media (min-width: 768px) {
+  header[_ngcontent-sc50]   .article-image[_ngcontent-sc50] {
+    background: linear-gradient(transparent 30%, #ffe6f0 30%);
+  }
+}
+@media (min-width: 1024px) {
+  header[_ngcontent-sc50]   .article-image[_ngcontent-sc50] {
+    background: transparent;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    z-index: 0;
+  }
+}
+@media (min-width: 2048px) {
+  header[_ngcontent-sc50]   .article-image[_ngcontent-sc50] {
+    max-height: 820px;
+  }
+}
+@media (min-width: 1024px) {
+  header[_ngcontent-sc50]   .article-image[_ngcontent-sc50]   picture[_ngcontent-sc50] {
+    height: auto;
+    position: relative;
+    display: block;
+    margin-left: auto;
+    width: 75%;
+  }
+  header[_ngcontent-sc50]   .article-image[_ngcontent-sc50]   picture[_ngcontent-sc50]::before {
+    content: "";
+    display: block;
+    padding-top: 56.25%;
+    width: 100%;
+  }
+  header[_ngcontent-sc50]   .article-image[_ngcontent-sc50]   picture[_ngcontent-sc50]    > img[_ngcontent-sc50], header[_ngcontent-sc50]   .article-image[_ngcontent-sc50]   picture[_ngcontent-sc50]    > svg[_ngcontent-sc50], header[_ngcontent-sc50]   .article-image[_ngcontent-sc50]   picture[_ngcontent-sc50]    > path[_ngcontent-sc50] {
+    display: block;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+}
+@media (min-width: 2048px) {
+  header[_ngcontent-sc50]   .article-image[_ngcontent-sc50]   picture[_ngcontent-sc50] {
+    width: calc( 1440px - 330px + (100vw - 1440px - 100px) / 2);
+  }
+}
+header[_ngcontent-sc50]   .article-image[_ngcontent-sc50]   picture[_ngcontent-sc50]   img[_ngcontent-sc50] {
+  height: 100%;
+  max-width: none;
+  width: calc(100% - 20px);
+}
+@media (min-width: 768px) {
+  header[_ngcontent-sc50]   .article-image[_ngcontent-sc50]   picture[_ngcontent-sc50]   img[_ngcontent-sc50] {
+    width: calc(100% - 30px);
+  }
+}
+@media (min-width: 1024px) {
+  header[_ngcontent-sc50]   .article-image[_ngcontent-sc50]   picture[_ngcontent-sc50]   img[_ngcontent-sc50] {
+    width: auto;
+  }
+}
+.article-content-container[_ngcontent-sc50] {
+  align-items: flex-start;
+  background-color: #ffe6f0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+@media (min-width: 1024px) {
+  .article-content-container[_ngcontent-sc50] {
+    align-items: flex-end;
+    bottom: 0;
+    margin: 0 auto;
+    position: absolute;
+    z-index: 1;
+  }
+}
+@media (min-width: 1440px) {
+  .article-content-container[_ngcontent-sc50] {
+    padding-left: calc((100% - 1440px) / 2);
+  }
+}
+@media (min-width: 2048px) {
+  .article-content-container[_ngcontent-sc50] {
+    min-width: 745px;
+    width: calc(100% - calc( 1440px - 330px + (100vw - 1440px - 100px) / 2) + 350px);
+  }
+}
+.article-content[_ngcontent-sc50] {
+  padding: 30px 20px 25px;
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .article-content[_ngcontent-sc50] {
+    padding: 25px 125px 25px 30px;
+  }
+}
+@media (min-width: 1024px) {
+  .article-content[_ngcontent-sc50] {
+    margin: 0;
+    max-width: 485px;
+    padding: 50px 50px 30px 60px;
+  }
+}
+@media (min-width: 1440px) {
+  .article-content[_ngcontent-sc50] {
+    max-width: 745px;
+    padding: 50px 50px 30px 90px;
+  }
+}
+.article-meta-container[_ngcontent-sc50] {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.article-meta-container[_ngcontent-sc50]   svg[_ngcontent-sc50] {
+  background-color: #e1144b;
+  border-radius: 50%;
+  fill: #fff;
+  height: 40px;
+  margin: 0 9px 0 0;
+  width: 40px;
+}
+.article-meta-container[_ngcontent-sc50]   .article-category-container[_ngcontent-sc50] {
+  align-items: center;
+  display: flex;
+}
+.dm-h2[_ngcontent-sc50] {
+  margin: 30px 0;
+}
+
+@media (min-width: 1024px) {
+  .article-description[_ngcontent-sc50] {
+    font-size: 36px;
+    line-height: 48px;
+  }
+}
+@media (min-width: 1440px) {
+  .article-description[_ngcontent-sc50] {
+    font-size: 55px;
+    line-height: 65px;
+  }
+}</style><style ng-transition="deepmind-website">[_nghost-sc19] {
+  display: block;
+}
+
+.social-share[_ngcontent-sc19] {
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  padding-top: 15px;
+  text-align: left;
+}
+
+.social-share[_ngcontent-sc19]   p[_ngcontent-sc19] {
+  margin-bottom: 15px;
+}
+
+.social-media[_ngcontent-sc19] {
+  display: flex;
+  list-style: none;
+  padding: 0;
+}
+
+.social-media[_ngcontent-sc19]   li[_ngcontent-sc19] {
+  margin-right: 10px;
+}
+
+.social-media[_ngcontent-sc19]   li[_ngcontent-sc19]:last-child {
+  margin: 0;
+}
+
+.social-media[_ngcontent-sc19]   svg[_ngcontent-sc19] {
+  height: 30px;
+  width: 30px;
+}</style><style ng-transition="deepmind-website">[_nghost-sc45] {
+  display: block;
+}
+.authors-container[_ngcontent-sc45] {
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  padding-top: 15px;
+  text-align: left;
+}
+.authors-container[_ngcontent-sc45]   .title[_ngcontent-sc45] {
+  margin-bottom: 15px;
+}
+.authors-list[_ngcontent-sc45] {
+  display: flex;
+  flex-flow: row wrap;
+  list-style: none;
+  padding: 0;
+}
+@media (min-width: 768px) {
+  .authors-list[_ngcontent-sc45] {
+    display: block;
+  }
+}
+.authors-list[_ngcontent-sc45]   li[_ngcontent-sc45] {
+  align-items: center;
+  display: flex;
+  flex-basis: 50%;
+  margin-bottom: 5px;
+}
+.authors-list[_ngcontent-sc45]   li[_ngcontent-sc45]   .image[_ngcontent-sc45] {
+  align-items: center;
+  background-color: #0053d6;
+  border-radius: 50%;
+  display: flex;
+  height: 50px;
+  justify-content: center;
+  margin-right: 10px;
+  min-width: 50px;
+  overflow: hidden;
+  position: relative;
+  width: 50px;
+  z-index: 0;
+}
+.authors-list[_ngcontent-sc45]   li[_ngcontent-sc45]   .image[_ngcontent-sc45]   p[_ngcontent-sc45] {
+  color: #fff;
+  margin: 0;
+}
+li[_ngcontent-sc45]:not(.external)   .author-name[_ngcontent-sc45] {
+  border: 0;
+  position: relative;
+}
+li[_ngcontent-sc45]:not(.external)   .author-name[_ngcontent-sc45]::before {
+  background-color: #0053d6;
+  bottom: 0;
+  content: "";
+  height: 1px;
+  left: 0;
+  position: absolute;
+  right: 0;
+  -webkit-transform: scaleX(0);
+          transform: scaleX(0);
+  -webkit-transform-origin: bottom right;
+          transform-origin: bottom right;
+  transition: -webkit-transform 0.5s ease;
+  transition: transform 0.5s ease;
+  transition: transform 0.5s ease, -webkit-transform 0.5s ease;
+}
+li[_ngcontent-sc45]:not(.external)   .author-name[_ngcontent-sc45]:hover {
+  color: #0053d6;
+}
+li[_ngcontent-sc45]:not(.external)   .author-name[_ngcontent-sc45]:hover::before {
+  -webkit-transform: scaleX(1);
+          transform: scaleX(1);
+  -webkit-transform-origin: bottom left;
+          transform-origin: bottom left;
+}
+.authors-list[_ngcontent-sc45]   li.external[_ngcontent-sc45]   .image[_ngcontent-sc45] {
+  background-color: #fff;
+}
+.authors-list[_ngcontent-sc45]   li.external[_ngcontent-sc45]   .image[_ngcontent-sc45]   p[_ngcontent-sc45] {
+  color: #123693;
+  font-weight: 700;
+}
+.authors-list[_ngcontent-sc45]   li.external[_ngcontent-sc45]   .author-name[_ngcontent-sc45] {
+  color: #123693;
+}
+.authors-list[_ngcontent-sc45]   li.external[_ngcontent-sc45]   .author-name[_ngcontent-sc45]:hover {
+  color: #123693;
+}
+.footnote[_ngcontent-sc45] {
+  margin: 15px 0 0;
+}
+.footnote[_ngcontent-sc45]   small[_ngcontent-sc45]   sup[_ngcontent-sc45] {
+  top: -1px;
+}</style><style ng-transition="deepmind-website">[_nghost-sc18] {
+  background-color: #f0f5f5;
+  display: block;
+  padding: 60px 0;
+}
+@media (min-width: 768px) {
+  [_nghost-sc18] {
+    padding: 70px 0;
+  }
+}
+@media (min-width: 1024px) {
+  [_nghost-sc18] {
+    padding: 80px 0;
+  }
+}
+@media (min-width: 1440px) {
+  [_nghost-sc18] {
+    padding: 100px 0;
+  }
+}
+.footer-promos[_ngcontent-sc18] {
+  display: flex;
+  flex-direction: column;
+}
+@media (min-width: 1440px) {
+  .footer-promos.is-case-study[_ngcontent-sc18] {
+    flex-direction: row;
+  }
+}
+@media (min-width: 1440px) {
+  .footer-promos.is-case-study[_ngcontent-sc18]   .dm-h5[_ngcontent-sc18] {
+    margin: 0 100px 0 0;
+    min-width: 325px;
+  }
+}
+@media (min-width: 2048px) {
+  .footer-promos.is-case-study[_ngcontent-sc18]   .dm-h5[_ngcontent-sc18] {
+    min-width: 375px;
+  }
+}
+.footer-promos[_ngcontent-sc18]   .dm-h5[_ngcontent-sc18] {
+  margin: 0 0 30px;
+  min-width: 100%;
+}
+.promo-wrapper[_ngcontent-sc18] {
+  display: flex;
+  flex-flow: row wrap;
+  width: 100%;
+}
+.promo-wrapper[_ngcontent-sc18]   .footer-promo[_ngcontent-sc18] {
+  flex-grow: 1;
+  margin: 0 0 30px;
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .promo-wrapper[_ngcontent-sc18]   .footer-promo[_ngcontent-sc18] {
+    max-width: calc(50% - 15px);
+    width: calc(50% - 15px);
+  }
+}
+@media (min-width: 768px) {
+  .promo-wrapper[_ngcontent-sc18]   .footer-promo[_ngcontent-sc18]:nth-child(2n) {
+    margin: 0 0 30px 30px;
+  }
+}
+.promo-wrapper[_ngcontent-sc18]   dm-component-factory[_ngcontent-sc18] {
+  height: 100%;
+}</style><style ng-transition="deepmind-website">[_nghost-sc42] {
+  display: block;
+  position: relative;
+}
+.user-content.is-homepage-intro[_ngcontent-sc42] {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  left: 0;
+  margin: 40px auto;
+  max-width: 835px;
+  right: 0;
+  text-align: center;
+}</style><style ng-transition="deepmind-website">[_nghost-sc46] {
+  display: block;
+  margin: 30px 0;
+  position: relative;
+  width: 100%;
+}
+.full-width[_nghost-sc46] {
+  margin: 30px 0 30px -30px;
+  width: calc(100% + 80px);
+}
+@media (min-width: 768px) {
+  .full-width[_nghost-sc46] {
+    width: calc(100% + 215px);
+  }
+}
+@media (min-width: 1024px) {
+  .full-width[_nghost-sc46] {
+    margin: 30px 0 30px calc((312px + 100px) * -1);
+    width: calc(100% + 312px + 100px);
+  }
+}
+@media (min-width: 2048px) {
+  .full-width[_nghost-sc46] {
+    margin: 30px 0 30px calc((100vw - 775px) / -2);
+    width: calc(1440px + ((100vw - 1440px) / 2));
+  }
+}
+img[_ngcontent-sc46] {
+  left: 0;
+  position: relative;
+  width: 100%;
+}
+figcaption[_ngcontent-sc46] {
+  margin: 17px 0 0;
+}</style><style ng-transition="deepmind-website">[_nghost-sc36] {
+  display: flex;
+  flex: 1 1 0%;
+  height: 100%;
+  position: relative;
+}
+.is-featured-card   [_nghost-sc36]   .article-card-container[_ngcontent-sc36] {
+  background-color: transparent;
+}
+.article-card-container[_ngcontent-sc36] {
+  background-color: #ffe6f0;
+  display: flex;
+  height: 100%;
+  min-height: 525px;
+  min-width: 280px;
+  width: 100%;
+}
+.article-card-container.is-blog-article[_ngcontent-sc36] {
+  max-width: none;
+  min-height: auto;
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .article-card-container.is-blog-article[_ngcontent-sc36] {
+    min-height: 525px;
+  }
+}
+.caption[_ngcontent-sc36] {
+  margin: 0;
+}
+.header[_ngcontent-sc36] {
+  display: flex;
+  margin-bottom: 22px;
+}
+.header[_ngcontent-sc36]    > svg[_ngcontent-sc36] {
+  background-color: #e1144b;
+  border-radius: 50%;
+  fill: #fff;
+  height: 40px;
+  margin: 0 9px 0 0;
+  min-width: 40px;
+  width: 40px;
+}
+.header[_ngcontent-sc36]   .category[_ngcontent-sc36] {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.body[_ngcontent-sc36]   h4[_ngcontent-sc36] {
+  margin: 0 0 10px;
+}
+.body[_ngcontent-sc36]   p[_ngcontent-sc36] {
+  margin: 0 0 10px;
+}
+.footer[_ngcontent-sc36] {
+  align-items: center;
+  display: flex;
+  margin: auto 0 0;
+  padding: 15px 0 0;
+}
+.footer[_ngcontent-sc36]   .read-more[_ngcontent-sc36]   svg[_ngcontent-sc36] {
+  height: 30px;
+  width: 30px;
+}
+.footer[_ngcontent-sc36]   .dm-cta[_ngcontent-sc36]:last-child {
+  left: 0;
+  margin: 0 0 0 auto;
+}</style><style ng-transition="deepmind-website">[_nghost-sc37] {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+  z-index: 0;
+}
+.image-left[_nghost-sc37]   .content-card-body[_ngcontent-sc37], .image-right[_nghost-sc37]   .content-card-body[_ngcontent-sc37] {
+  width: 100%;
+}
+@media (min-width: 1440px) {
+  .image-left[_nghost-sc37]   .content-card-body[_ngcontent-sc37], .image-right[_nghost-sc37]   .content-card-body[_ngcontent-sc37] {
+    width: 50%;
+  }
+}
+@media (min-width: 1440px) {
+  .image-left[_nghost-sc37]   .image[_ngcontent-sc37], .image-right[_nghost-sc37]   .image[_ngcontent-sc37] {
+    height: auto;
+    max-height: none;
+    min-height: auto;
+    width: 50%;
+  }
+}
+@media (min-width: 1440px) {
+  .image-left[_nghost-sc37]   .content-card-body[_ngcontent-sc37], .image-right[_nghost-sc37]   .content-card-body[_ngcontent-sc37] {
+    width: 50%;
+  }
+}
+@media (min-width: 1440px) {
+  .image-left[_nghost-sc37] {
+    flex-direction: row;
+  }
+}
+@media (min-width: 1440px) {
+  .image-right[_nghost-sc37] {
+    flex-direction: row-reverse;
+  }
+}
+.content-card-body[_ngcontent-sc37] {
+  align-items: inherit;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: inherit;
+  padding: 20px;
+}
+@media (min-width: 1024px) {
+  .content-card-body[_ngcontent-sc37] {
+    padding: 25px;
+  }
+}
+.content-card-body.has-border[_ngcontent-sc37] {
+  position: relative;
+}
+.content-card-body.has-border[_ngcontent-sc37]:before {
+  background-color: #d8d8d8;
+  bottom: 0;
+  content: "";
+  height: 1px;
+  left: 20px;
+  position: absolute;
+  width: calc(100% - 40px);
+}
+@media (min-width: 1024px) {
+  .content-card-body.has-border[_ngcontent-sc37]:before {
+    left: 25px;
+    width: calc(100% - 50px);
+  }
+}
+.image[_ngcontent-sc37] {
+  height: auto;
+  position: relative;
+  display: block;
+  min-height: 200px;
+  position: relative;
+  width: 100%;
+}
+.image[_ngcontent-sc37]::before {
+  content: "";
+  display: block;
+  padding-top: 56.25%;
+  width: 100%;
+}
+.image[_ngcontent-sc37]    > img[_ngcontent-sc37], .image[_ngcontent-sc37]    > svg[_ngcontent-sc37], .image[_ngcontent-sc37]    > path[_ngcontent-sc37] {
+  display: block;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}</style><style ng-transition="deepmind-website">[_nghost-sc9] {
+  display: block;
+  height: 100%;
+  left: 0;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+.image[_ngcontent-sc9], .video[_ngcontent-sc9] {
+  background: center/cover no-repeat;
+  display: block;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: -1;
+}
+.image[_ngcontent-sc9]   img[_ngcontent-sc9], .video[_ngcontent-sc9]   video[_ngcontent-sc9] {
+  max-width: none;
+  min-height: 100%;
+  min-width: 103%;
+  position: absolute;
+  width: 100%;
+}
+@supports ((-o-object-fit: cover) or (object-fit: cover)) {
+  .image[_ngcontent-sc9]   img[_ngcontent-sc9], .video[_ngcontent-sc9]   video[_ngcontent-sc9] {
+    -o-object-fit: cover;
+       object-fit: cover;
+  }
+}
+.v-position-default[_nghost-sc9]   .image[_ngcontent-sc9]   img[_ngcontent-sc9], .v-position-top[_nghost-sc9]   .image[_ngcontent-sc9]   img[_ngcontent-sc9], .v-position-default[_nghost-sc9]   .video[_ngcontent-sc9]   video[_ngcontent-sc9], .v-position-top[_nghost-sc9]   .video[_ngcontent-sc9]   video[_ngcontent-sc9] {
+  top: 0;
+}
+.v-position-bottom[_nghost-sc9]   .image[_ngcontent-sc9]   img[_ngcontent-sc9], .v-position-bottom[_nghost-sc9]   .video[_ngcontent-sc9]   video[_ngcontent-sc9] {
+  bottom: 0;
+}
+.v-position-center[_nghost-sc9]   .image[_ngcontent-sc9]   img[_ngcontent-sc9], .v-position-center[_nghost-sc9]   .video[_ngcontent-sc9]   video[_ngcontent-sc9] {
+  top: 50%;
+  -webkit-transform: translate(0, -50%);
+          transform: translate(0, -50%);
+}
+.h-position-default[_nghost-sc9]   .image[_ngcontent-sc9]   img[_ngcontent-sc9], .h-position-left[_nghost-sc9]   .image[_ngcontent-sc9]   img[_ngcontent-sc9], .h-position-default[_nghost-sc9]   .video[_ngcontent-sc9]   video[_ngcontent-sc9], .h-position-left[_nghost-sc9]   .video[_ngcontent-sc9]   video[_ngcontent-sc9] {
+  left: 0;
+}
+.h-position-right[_nghost-sc9]   .image[_ngcontent-sc9]   img[_ngcontent-sc9], .h-position-right[_nghost-sc9]   .video[_ngcontent-sc9]   video[_ngcontent-sc9] {
+  right: 0;
+}
+.h-position-center[_nghost-sc9]   .image[_ngcontent-sc9]   img[_ngcontent-sc9], .h-position-center[_nghost-sc9]   .video[_ngcontent-sc9]   video[_ngcontent-sc9] {
+  left: 50%;
+  -webkit-transform: translate(-50%, 0);
+          transform: translate(-50%, 0);
+}
+.h-position-center.v-position-center[_nghost-sc9]   .image[_ngcontent-sc9]   img[_ngcontent-sc9], .h-position-center.v-position-center[_nghost-sc9]   .video[_ngcontent-sc9]   video[_ngcontent-sc9] {
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+dm-modal[_ngcontent-sc9] {
+  pointer-events: auto;
+}</style></head>
+<body>
+  <script data-gtm-id="GTM-MWTBMKX" src="https://www.gstatic.com/brandstudio/kato/google_tag_manager_component/google_tag_manager_component.js">
+  </script>
+  <noscript>
+    <iframe class="gtm-iframe"
+            height="0"
+            src="https://www.googletagmanager.com/ns.html?id=GTM-MWTBMKX"
+            width="0">
+    </iframe>
+  </noscript>
+
+  <script src="https://www.gstatic.com/brandstudio/kato/cookie_choice_component/cookie_consent_bar.v2.js">
+  </script>
+
+  <dm-app-root _nghost-sc0="" ng-version="8.0.0"><!----><dm-header _ngcontent-sc0="" _nghost-sc2="" class="ng-tns-c2-0"><!----><!----><header _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted"><div _ngcontent-sc2="" class="header-container"><div _ngcontent-sc2="" class="menu-wrapper"><div _ngcontent-sc2="" class="menu-header"><a _ngcontent-sc2="" class="nav-cta logo" aria-label="Home page" routerlink="/" href="/"><!----><svg _ngcontent-sc2="" class="full-logo ng-tns-c2-0 ng-star-inserted" role="img"><use _ngcontent-sc2="" class="ng-tns-c2-0" xlink:href="#deepmind-logo"></use></svg><!----></a><div _ngcontent-sc2="" class="menu-controls"><button _ngcontent-sc2="" class="nav-cta hamburger-menu" aria-label="Toggle menu" aria-pressed="true" role="button"><span _ngcontent-sc2="" class="ng-tns-c2-0"></span><span _ngcontent-sc2="" class="ng-tns-c2-0"></span><span _ngcontent-sc2="" class="ng-tns-c2-0"></span></button><button _ngcontent-sc2="" class="nav-cta search" aria-label="Search publications" aria-pressed="true" role="button"><svg _ngcontent-sc2="" class="ng-tns-c2-0" role="img" viewBox="0 0 27 28"><path _ngcontent-sc2="" class="ng-tns-c2-0" d="M17.537 20.034l1.414-1.414 7.854 7.854-1.414 1.415z"></path><g _ngcontent-sc2="" class="ng-tns-c2-0"><path _ngcontent-sc2="" class="ng-tns-c2-0" d="M11.292 20.583a9.292 9.292 0 1 0 0-18.583 9.292 9.292 0 0 0 0 18.583z"></path><path _ngcontent-sc2="" class="ng-tns-c2-0" d="M11.292 22.583C5.055 22.583 0 17.528 0 11.292 0 5.055 5.055 0 11.292 0c6.236 0 11.291 5.055 11.291 11.292 0 6.236-5.055 11.291-11.291 11.291zm0-2a9.292 9.292 0 1 0 0-18.583 9.292 9.292 0 0 0 0 18.583z"></path></g></svg></button></div></div><!----><nav _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted"><ul _ngcontent-sc2="" class="pages"><!----><li _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted"><a _ngcontent-sc2="" class="nav-cta page-link" href="/about"> About </a></li><li _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted"><a _ngcontent-sc2="" class="nav-cta page-link" href="/research"> Research </a></li><li _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted"><a _ngcontent-sc2="" class="nav-cta page-link" href="/impact"> Impact </a></li><li _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted is-active"><a _ngcontent-sc2="" class="nav-cta page-link" href="/blog"> Blog </a></li><li _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted"><a _ngcontent-sc2="" class="nav-cta page-link" href="/safety-and-ethics"> Safety &amp; Ethics </a></li><li _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted"><a _ngcontent-sc2="" class="nav-cta page-link" href="/careers"> Careers </a></li></ul></nav></div><div _ngcontent-sc2="" class="social-media-wrapper"><ul _ngcontent-sc2="" class="ng-tns-c2-0"><!----><li _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted"><a _ngcontent-sc2="" class="nav-cta icon" rel="noopener" target="_blank" aria-label="Follow us on Twitter!" href="https://twitter.com/DeepMindAI"><svg _ngcontent-sc2="" class="ng-tns-c2-0" role="img"><use _ngcontent-sc2="" class="ng-tns-c2-0" xlink:href="#twitter"></use></svg></a></li><li _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted"><a _ngcontent-sc2="" class="nav-cta icon" rel="noopener" target="_blank" aria-label="Follow us on Youtube!" href="https://www.youtube.com/deepmind"><svg _ngcontent-sc2="" class="ng-tns-c2-0" role="img"><use _ngcontent-sc2="" class="ng-tns-c2-0" xlink:href="#youtube"></use></svg></a></li></ul></div></div></header><!----><!----><!----></dm-header><div _ngcontent-sc0="" class="dm-body"><router-outlet _ngcontent-sc0=""></router-outlet><dm-page-loader class="ng-star-inserted"><dm-component-factory _nghost-sc10=""><!----><dm-blog-article-page _nghost-sc49="" id="" class="ng-star-inserted"><!----><!----><div _ngcontent-sc49="" class="dm-section ng-star-inserted"><dm-breadcrumb _ngcontent-sc49="" _nghost-sc13="" class="theme-dark"><!----><ul _ngcontent-sc13="" class="ng-star-inserted"><!----><li _ngcontent-sc13="" class="ng-star-inserted"><!----><a _ngcontent-sc13="" class="nav-cta logo ng-star-inserted" href="/"><svg _ngcontent-sc13="" role="img"><use _ngcontent-sc13="" xlink:href="#deepmind-logo-text"></use></svg></a><!----></li><li _ngcontent-sc13="" class="ng-star-inserted"><!----><a _ngcontent-sc13="" class="nav-cta ng-star-inserted" tab-index="0" href="/blog"><svg _ngcontent-sc13="" class="arrow" role="img"><use _ngcontent-sc13="" xlink:href="#breadcrumb-arrow"></use></svg> Blog </a><!----></li><li _ngcontent-sc13="" class="ng-star-inserted"><!----><a _ngcontent-sc13="" class="nav-cta disabled ng-star-inserted" tab-index="-1" href="/blog/article/robust-and-verified-ai"><svg _ngcontent-sc13="" class="arrow is-last" role="img"><use _ngcontent-sc13="" xlink:href="#breadcrumb-arrow"></use></svg> Identifying and eliminating bugs in learned predictive models </a><!----></li></ul></dm-breadcrumb></div><dm-blog-article-hero _ngcontent-sc49="" _nghost-sc50="" class="ng-star-inserted"><header _ngcontent-sc50=""><!----><div _ngcontent-sc50="" class="article-image ng-star-inserted"><picture _ngcontent-sc50=""><source _ngcontent-sc50="" type="image/webp" srcset="https://lh3.googleusercontent.com/FDgEFuLgJ4tCOCvbakg0sY3M_N-yJEEd19Cp44Go4RrkG2uYyxVdmCBLl0nqheOlNdd88SvysUyYwFwWd9Gcv7gLd5blgi-9vnDSSw=w1440-rw-v1 1x,https://lh3.googleusercontent.com/FDgEFuLgJ4tCOCvbakg0sY3M_N-yJEEd19Cp44Go4RrkG2uYyxVdmCBLl0nqheOlNdd88SvysUyYwFwWd9Gcv7gLd5blgi-9vnDSSw=w2048-rw-v1 2x"><source _ngcontent-sc50="" type="image/jpg" srcset="https://lh3.googleusercontent.com/FDgEFuLgJ4tCOCvbakg0sY3M_N-yJEEd19Cp44Go4RrkG2uYyxVdmCBLl0nqheOlNdd88SvysUyYwFwWd9Gcv7gLd5blgi-9vnDSSw=w1440 1x,https://lh3.googleusercontent.com/FDgEFuLgJ4tCOCvbakg0sY3M_N-yJEEd19Cp44Go4RrkG2uYyxVdmCBLl0nqheOlNdd88SvysUyYwFwWd9Gcv7gLd5blgi-9vnDSSw=w2048 2x"><img _ngcontent-sc50="" alt="" srcset="https://lh3.googleusercontent.com/FDgEFuLgJ4tCOCvbakg0sY3M_N-yJEEd19Cp44Go4RrkG2uYyxVdmCBLl0nqheOlNdd88SvysUyYwFwWd9Gcv7gLd5blgi-9vnDSSw=w2048 2x" src="https://lh3.googleusercontent.com/FDgEFuLgJ4tCOCvbakg0sY3M_N-yJEEd19Cp44Go4RrkG2uYyxVdmCBLl0nqheOlNdd88SvysUyYwFwWd9Gcv7gLd5blgi-9vnDSSw=w1440"></picture></div><div _ngcontent-sc50="" class="article-content-container"><div _ngcontent-sc50="" class="article-content"><div _ngcontent-sc50="" class="article-meta-container"><div _ngcontent-sc50="" class="article-category-container"><svg _ngcontent-sc50="" role="img"><use _ngcontent-sc50="" xlink:href="#article"></use></svg><div _ngcontent-sc50="" class="category"><p _ngcontent-sc50="" class="caption title">Blog post</p><!----><p _ngcontent-sc50="" class="caption ng-star-inserted"> Research </p></div></div><p _ngcontent-sc50="" class="caption date">28 Mar 2019</p></div><h2 _ngcontent-sc50="" class="dm-h2 article-description"> Identifying and eliminating bugs in learned predictive models </h2></div></div></header></dm-blog-article-hero><div _ngcontent-sc49="" class="blog-article-bg ng-star-inserted"><div _ngcontent-sc49="" class="page-content-container dm-section"><aside _ngcontent-sc49=""><dm-social-share _ngcontent-sc49="" _nghost-sc19=""><!----><!----><div _ngcontent-sc19="" class="social-share ng-star-inserted"><p _ngcontent-sc19="" class="caption title">Share</p><ul _ngcontent-sc19="" class="social-media"><!----><li _ngcontent-sc19="" class="ng-star-inserted"><a _ngcontent-sc19="" class="dm-cta icon" aria-label="Share to Twitter!"><svg _ngcontent-sc19="" role="img"><use _ngcontent-sc19="" xlink:href="#twitter"></use></svg></a></li><li _ngcontent-sc19="" class="ng-star-inserted"><a _ngcontent-sc19="" class="dm-cta icon" aria-label="Share to Facebook!"><svg _ngcontent-sc19="" role="img"><use _ngcontent-sc19="" xlink:href="#facebook"></use></svg></a></li><li _ngcontent-sc19="" class="ng-star-inserted"><a _ngcontent-sc19="" class="dm-cta icon" aria-label="Share to LinkedIn!"><svg _ngcontent-sc19="" role="img"><use _ngcontent-sc19="" xlink:href="#linkedin"></use></svg></a></li></ul></div></dm-social-share><!----><!----><dm-authors-list _ngcontent-sc49="" _nghost-sc45="" class="ng-star-inserted"><address _ngcontent-sc45="" class="authors-container"><p _ngcontent-sc45="" class="caption title">Authors</p><ul _ngcontent-sc45="" class="authors-list"><!----><li _ngcontent-sc45="" class="ng-star-inserted"><div _ngcontent-sc45="" class="image"><!----><p _ngcontent-sc45="" class="ng-star-inserted"><small _ngcontent-sc45="">PK</small></p><!----></div><!----><a _ngcontent-sc45="" alt="More articles" class="author-name small ng-star-inserted" routerlink="/research" href="/research?filters=%7B%22authors%22:%5B%226569282967699456%22%5D%7D"> Pushmeet Kohli<!----></a><!----></li><li _ngcontent-sc45="" class="ng-star-inserted"><div _ngcontent-sc45="" class="image"><!----><p _ngcontent-sc45="" class="ng-star-inserted"><small _ngcontent-sc45="">KD</small></p><!----></div><!----><a _ngcontent-sc45="" alt="More articles" class="author-name small ng-star-inserted" routerlink="/research" href="/research?filters=%7B%22authors%22:%5B%224830398550376448%22%5D%7D"> Krishnamurthy (Dj) Dvijotham<!----></a><!----></li><li _ngcontent-sc45="" class="ng-star-inserted"><div _ngcontent-sc45="" class="image"><!----><p _ngcontent-sc45="" class="ng-star-inserted"><small _ngcontent-sc45="">JU</small></p><!----></div><!----><a _ngcontent-sc45="" alt="More articles" class="author-name small ng-star-inserted" routerlink="/research" href="/research?filters=%7B%22authors%22:%5B%225170924764004352%22%5D%7D"> Jonathan Uesato<!----></a><!----></li><li _ngcontent-sc45="" class="ng-star-inserted"><div _ngcontent-sc45="" class="image"><!----><p _ngcontent-sc45="" class="ng-star-inserted"><small _ngcontent-sc45="">SG</small></p><!----></div><!----><a _ngcontent-sc45="" alt="More articles" class="author-name small ng-star-inserted" routerlink="/research" href="/research?filters=%7B%22authors%22:%5B%225977046706028544%22%5D%7D"> Sven Gowal<!----></a><!----></li></ul><!----></address></dm-authors-list></aside><div _ngcontent-sc49="" class="page-content"><!----><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content"><div class="g-sm-col-4 g-lg-col-7 g-lg-push-1">
+<div class="rich-text">
+<p><em>One in a series of posts explaining the theories underpinning our research.&nbsp;</em></p>
+<p><strong>Bugs and software have gone hand in hand since the beginning of computer programming. Over time, software developers have established a set of best practices for testing and debugging before deployment, but these practices are not suited for modern deep learning systems. Today, the prevailing practice in machine learning is to train a system on a training data set, and then test it on another set. While this reveals the average-case performance of models, it is also crucial to ensure robustness, or acceptably high performance even in the worst case. &nbsp;In this article, we describe three approaches for rigorously identifying and eliminating bugs in learned predictive models: adversarial testing, robust learning, and formal verification.</strong></p>
+<p>Machine learning systems are not robust by default. Even systems that outperform humans in a particular domain can fail at solving simple problems if subtle differences are introduced. For example, consider the problem of image perturbations: a neural network that can classify images better than a human can be easily fooled into believing that sloth is a race car if a small amount of carefully calculated noise is added to the input image.</p>
+</div>
+</div></div></dm-body-text><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-image-gallery _nghost-sc46="" id="" class="ng-star-inserted" colour-theme=""><!----><figure _ngcontent-sc46="" class="ng-star-inserted"><!----><picture _ngcontent-sc46="" class="ng-star-inserted"><source _ngcontent-sc46="" type="image/webp" srcset="https://lh3.googleusercontent.com/jxv7eWTuX9W9eD3eetYe5aMmnZGTdLfp-qnwk7CjukVM9GHXJaTN41YJQ3lRyCzR_b593NQXvEo7zOpwyoDBsYJZXC2IpAkGZceYv68=w1440-rw-v1 1x,https://lh3.googleusercontent.com/jxv7eWTuX9W9eD3eetYe5aMmnZGTdLfp-qnwk7CjukVM9GHXJaTN41YJQ3lRyCzR_b593NQXvEo7zOpwyoDBsYJZXC2IpAkGZceYv68=w2048-rw-v1 2x"><source _ngcontent-sc46="" type="image/jpg" srcset="https://lh3.googleusercontent.com/jxv7eWTuX9W9eD3eetYe5aMmnZGTdLfp-qnwk7CjukVM9GHXJaTN41YJQ3lRyCzR_b593NQXvEo7zOpwyoDBsYJZXC2IpAkGZceYv68=w1440 1x,https://lh3.googleusercontent.com/jxv7eWTuX9W9eD3eetYe5aMmnZGTdLfp-qnwk7CjukVM9GHXJaTN41YJQ3lRyCzR_b593NQXvEo7zOpwyoDBsYJZXC2IpAkGZceYv68=w2048 2x"><img _ngcontent-sc46="" alt="" srcset="https://lh3.googleusercontent.com/jxv7eWTuX9W9eD3eetYe5aMmnZGTdLfp-qnwk7CjukVM9GHXJaTN41YJQ3lRyCzR_b593NQXvEo7zOpwyoDBsYJZXC2IpAkGZceYv68=w2048 2x" src="https://lh3.googleusercontent.com/jxv7eWTuX9W9eD3eetYe5aMmnZGTdLfp-qnwk7CjukVM9GHXJaTN41YJQ3lRyCzR_b593NQXvEo7zOpwyoDBsYJZXC2IpAkGZceYv68=w1440"></picture><!----><figcaption _ngcontent-sc46="" class="caption"> An adversarial input, overlaid on a typical image, can cause a classifier to miscategorise a sloth as a race car. The two images differ by at most 0.0078 in each pixel. The first one is classified as a three-toed sloth with &gt;99% confidence. The second one is classified as a race car with &gt;99% probability. </figcaption></figure></dm-image-gallery><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content"><div class="g-sm-col-4 g-lg-col-7 g-lg-push-1">
+<div class="rich-text">
+<p>This is not an entirely new problem. Computer programs have always had bugs. Over decades, software engineers have assembled an impressive toolkit of techniques, ranging from unit testing to formal verification. These methods work well on traditional software, but adapting these approaches to rigorously test machine learning models like neural networks is extremely challenging due to the scale and lack of structure in these models, which may contain hundreds of millions of parameters. This necessitates the need for developing novel approaches for ensuring that machine learning systems are robust at deployment.</p>
+<p>From a programmer’s perspective, a bug is any behaviour that is inconsistent with the <a href="https://medium.com/@deepmindsafetyresearch/building-safe-artificial-intelligence-52f5f75058f1">specification</a>, i.e. the intended functionality, of a system. As part of our mission of solving intelligence, we conduct research into techniques for evaluating whether machine learning systems are consistent not only with the train and test set, but also with a list of specifications describing desirable properties of a system. Such properties might include robustness to sufficiently small perturbations in inputs, safety constraints to avoid catastrophic failures, or producing predictions consistent with the laws of physics.</p>
+<p>In this article, we discuss three important technical challenges for the machine learning community to take on, as we collectively work towards rigorous development and deployment of machine learning systems that are reliably consistent with desired specifications:</p>
+<ol>
+<li><p><strong>Testing consistency with specifications efficiently.</strong> We explore efficient ways to test that machine learning systems are consistent with properties (such as invariance or robustness) desired by the designer and users of the system. One approach to uncover cases where the model might be inconsistent with the desired behaviour is to systematically search for worst-case outcomes during evaluation.</p></li>
+<li><p><strong>Training machine learning models to be specification-consistent.</strong> Even with copious training data, standard machine learning algorithms can produce predictive models that make predictions inconsistent with desirable specifications like robustness or fairness - this requires us to reconsider training algorithms that produce models that not only fit training data well, but also are consistent with a list of specifications.</p></li>
+<li><p><strong>Formally proving that machine learning models are specification-consistent.</strong> There is a need for algorithms that can verify that the model predictions are provably consistent with a specification of interest for all possible inputs. While the field of formal verification has studied such algorithms for several decades, these approaches do not easily scale to modern deep learning systems despite impressive progress.</p></li>
+</ol>
+<h4>Testing consistency with specifications</h4>
+<p>Robustness to adversarial examples is a relatively well-studied problem in deep learning. One major theme that has come out of this work is the importance of evaluating against strong attacks, and designing transparent models which can be efficiently analysed. Alongside other researchers from the community, we have found that many models appear robust when evaluated against weak adversaries. However, they show essentially 0% adversarial accuracy when evaluated against stronger adversaries (<a href="https://arxiv.org/abs/1802.00420">Athalye et al., 2018</a>, <a href="https://arxiv.org/abs/1802.05666">Uesato et al., 2018</a>, <a href="https://arxiv.org/abs/1802.00420">Carlini and Wagner, 2017</a>).</p>
+<p>While most work has focused on rare failures in the context of supervised learning (largely image classification), there is a need to extend these ideas to other settings. In recent work on adversarial approaches for uncovering catastrophic failures, we apply these ideas towards testing reinforcement learning agents intended for use in safety-critical settings. One challenge in developing autonomous systems is that because a single mistake may have large consequences, very small failure probabilities are unacceptable.</p>
+<p>Our objective is to design an “adversary” to allow us to detect such failures in advance (e.g., in a controlled environment). If the adversary can efficiently identify the worst-case input for a given model, this allows us to catch rare failure cases before deploying a model. As with image classifiers, evaluating against a weak adversary provides a false sense of security during deployment. This is similar to the software practice of red-teaming, though extends beyond failures caused by malicious adversaries, and also includes failures which arise naturally, for example due to lack of generalization.</p>
+<p>We developed two complementary approaches for adversarial testing of RL agents. In the first, we use a derivative-free optimisation to directly minimise the expected reward of an agent. In the second, we learn an adversarial value function which predicts from experience which situations are most likely to cause failures for the agent. We then use this learned function for optimisation to focus the evaluation on the most problematic inputs. These approaches form only a small part of a rich, growing space of potential algorithms, and we are excited about future development in rigorous evaluation of agents.</p>
+<p>Already, both approaches result in large improvements over random testing. Using our method, failures that would have taken days to uncover, or even gone undetected entirely, can be detected in minutes (<a href="https://arxiv.org/abs/1812.01647">Uesato et al., 2018b</a>). We also found that adversarial testing may uncover qualitatively different behaviour in our agents from what might be expected from evaluation on a random test set. In particular, using adversarial environment construction we found that agents performing a 3D navigation task, which match human-level performance on average, still failed to find the goal completely on surprisingly simple mazes (<a href="https://openreview.net/forum?id=SkgZNnR5tX">Ruderman et al., 2018</a>). Our work also highlights that we need to design systems that are secure against natural failures, not only against adversaries.</p>
+</div>
+</div></div></dm-body-text><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-image-gallery _nghost-sc46="" id="" class="ng-star-inserted" colour-theme=""><!----><figure _ngcontent-sc46="" class="ng-star-inserted"><!----><picture _ngcontent-sc46="" class="ng-star-inserted"><source _ngcontent-sc46="" type="image/webp" srcset="https://lh3.googleusercontent.com/4xK9MbNBbtm-MTA7eCwkzTiNAH4AKG9AFGPqkXRI0i1Ajs6QKdCZMyk21tAUUI7MUZD-SGG4od28ls8QI437LlNSRBxtZxVn8Ndz2Q=w1440-rw-v1 1x,https://lh3.googleusercontent.com/4xK9MbNBbtm-MTA7eCwkzTiNAH4AKG9AFGPqkXRI0i1Ajs6QKdCZMyk21tAUUI7MUZD-SGG4od28ls8QI437LlNSRBxtZxVn8Ndz2Q=w2048-rw-v1 2x"><source _ngcontent-sc46="" type="image/jpg" srcset="https://lh3.googleusercontent.com/4xK9MbNBbtm-MTA7eCwkzTiNAH4AKG9AFGPqkXRI0i1Ajs6QKdCZMyk21tAUUI7MUZD-SGG4od28ls8QI437LlNSRBxtZxVn8Ndz2Q=w1440 1x,https://lh3.googleusercontent.com/4xK9MbNBbtm-MTA7eCwkzTiNAH4AKG9AFGPqkXRI0i1Ajs6QKdCZMyk21tAUUI7MUZD-SGG4od28ls8QI437LlNSRBxtZxVn8Ndz2Q=w2048 2x"><img _ngcontent-sc46="" alt="" srcset="https://lh3.googleusercontent.com/4xK9MbNBbtm-MTA7eCwkzTiNAH4AKG9AFGPqkXRI0i1Ajs6QKdCZMyk21tAUUI7MUZD-SGG4od28ls8QI437LlNSRBxtZxVn8Ndz2Q=w2048 2x" src="https://lh3.googleusercontent.com/4xK9MbNBbtm-MTA7eCwkzTiNAH4AKG9AFGPqkXRI0i1Ajs6QKdCZMyk21tAUUI7MUZD-SGG4od28ls8QI437LlNSRBxtZxVn8Ndz2Q=w1440"></picture><!----><figcaption _ngcontent-sc46="" class="caption"> With random sampling, we almost never observe maps with high failure probabilities, but adversarial testing reveals such maps do exist. These maps retain high failure probabilities even after many walls are removed, yielding simpler maps than the original. </figcaption></figure></dm-image-gallery><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content"><div class="g-sm-col-4 g-lg-col-7 g-lg-push-1">
+<div class="rich-text">
+<h4>Training specification-consistent models</h4>
+<p>Adversarial testing aims to find a counter example that violates specifications. As such, it often leads to overestimating the consistency of models with respect to these specifications. Mathematically, a specification is some relationship that has to hold between the inputs and outputs of a neural network. This can take the form of upper and lower bounds on certain key input and output parameters.</p>
+<p>Motivated by this observation, several researchers (<a href="https://arxiv.org/abs/1801.09344">Raghunathan et al., 2018</a>; <a href="https://arxiv.org/abs/1805.12514">Wong et al., 2018</a>; <a href="http://proceedings.mlr.press/v80/mirman18b">Mirman et al., 2018</a>; <a href="https://arxiv.org/abs/1811.02625">Wang et al., 2018</a>) including our team at DeepMind (<a href="https://arxiv.org/abs/1805.10265">Dvijotham et al., 2018</a>; <a href="https://arxiv.org/abs/1810.12715">Gowal et al., 2018</a>), have worked on algorithms that are agnostic to the adversarial testing procedure (used to assess consistency with the specification). This can be understood geometrically - we can bound (e.g., using interval bound propagation; <a href="https://arxiv.org/abs/1705.01320">Ehlers 2017</a>, <a href="https://arxiv.org/pdf/1702.01135.pdf">Katz et al. 2017</a>, <a href="http://proceedings.mlr.press/v80/mirman18b">Mirman et al., 2018</a>) the worst violation of a specification by bounding the space of outputs given a set of inputs. If this bound is differentiable with respect to network parameters and can be computed quickly, it can be used during training. The original bounding box can then be propagated through each layer of the network.</p>
+</div>
+</div></div></dm-body-text><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-image-gallery _nghost-sc46="" id="" class="ng-star-inserted" colour-theme=""><!----><figure _ngcontent-sc46="" class="ng-star-inserted"><!----><picture _ngcontent-sc46="" class="ng-star-inserted"><source _ngcontent-sc46="" type="image/webp" srcset="https://lh3.googleusercontent.com/CvKJV-rAl3wgkpSwzjYkq9Iga2cFG4jzeVIfqMWsxXHlC57P1Vha-e0Ze1zv3yUmvzn_xklYGasJhGrIDWCkup5r_w18G56t1qQk=w1440-rw-v1 1x,https://lh3.googleusercontent.com/CvKJV-rAl3wgkpSwzjYkq9Iga2cFG4jzeVIfqMWsxXHlC57P1Vha-e0Ze1zv3yUmvzn_xklYGasJhGrIDWCkup5r_w18G56t1qQk=w2048-rw-v1 2x"><source _ngcontent-sc46="" type="image/jpg" srcset="https://lh3.googleusercontent.com/CvKJV-rAl3wgkpSwzjYkq9Iga2cFG4jzeVIfqMWsxXHlC57P1Vha-e0Ze1zv3yUmvzn_xklYGasJhGrIDWCkup5r_w18G56t1qQk=w1440 1x,https://lh3.googleusercontent.com/CvKJV-rAl3wgkpSwzjYkq9Iga2cFG4jzeVIfqMWsxXHlC57P1Vha-e0Ze1zv3yUmvzn_xklYGasJhGrIDWCkup5r_w18G56t1qQk=w2048 2x"><img _ngcontent-sc46="" alt="" srcset="https://lh3.googleusercontent.com/CvKJV-rAl3wgkpSwzjYkq9Iga2cFG4jzeVIfqMWsxXHlC57P1Vha-e0Ze1zv3yUmvzn_xklYGasJhGrIDWCkup5r_w18G56t1qQk=w2048 2x" src="https://lh3.googleusercontent.com/CvKJV-rAl3wgkpSwzjYkq9Iga2cFG4jzeVIfqMWsxXHlC57P1Vha-e0Ze1zv3yUmvzn_xklYGasJhGrIDWCkup5r_w18G56t1qQk=w1440"></picture><!----><figcaption _ngcontent-sc46="" class="caption">  </figcaption></figure></dm-image-gallery><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content"><div class="g-sm-col-4 g-lg-col-7 g-lg-push-1">
+<div class="rich-text">
+<p>We show that interval bound propagation is fast, efficient, and — contrary to prior belief — can achieve strong results (<a href="https://arxiv.org/abs/1810.12715">Gowal et al., 2018</a>). In particular, we demonstrate that it can decrease the provable error rate (i.e., maximal error rate achievable by any adversary) over state-of-the-art in image classification on both MNIST and CIFAR-10 datasets.</p>
+<p>Going forward, the next frontier will be to learn the right geometric abstractions to compute <a href="https://arxiv.org/abs/1805.10265">tighter overapproximations</a> of the space of outputs. We also want to train networks to be consistent with more complex specifications capturing desirable behavior, such as above mentioned invariances and consistency with physical laws.</p>
+<h4>Formal verification</h4>
+<p>Rigorous testing and training can go a long way towards building robust machine learning systems. However, no amount of testing can formally guarantee that a system will behave as we want. In large-scale models, enumerating all possible outputs for a given set of inputs (for example, infinitesimal perturbations to an image) is intractable due to the astronomical number of choices for the input perturbation. However, as in the case of training, we can find more efficient approaches by setting geometric bounds on the set of outputs. Formal verification is a subject of ongoing research at DeepMind.</p>
+<p>The machine learning community has developed several interesting ideas on how to compute precise geometric bounds on the space of outputs of the network (<a href="https://arxiv.org/abs/1702.01135">Katz et al. 2017</a>, <a href="https://arxiv.org/abs/1804.09699">Weng et al., 2018</a>; <a href="http://papers.nips.cc/paper/8278-fast-and-effective-robustness-certification">Singh et al., 2018</a>). Our approach (<a href="https://arxiv.org/abs/1803.06567">Dvijotham et al., 2018</a>), based on optimisation and duality, consists of formulating the verification problem as an optimisation problem that tries to find the largest violation of the property being verified. By using ideas from duality in optimisation, the problem becomes computationally tractable. This results in additional constraints that refine the bounding boxes computed by interval bound propagation, using so-called cutting planes. This approach is sound but incomplete: there may be cases where the property of interest is true, but the bound computed by this algorithm is not tight enough to prove the property. However, once we obtain a bound, this formally guarantees that there can be no violation of the property. The figure below graphically illustrates the approach.</p>
+</div>
+</div></div></dm-body-text><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-image-gallery _nghost-sc46="" id="" class="ng-star-inserted" colour-theme=""><!----><figure _ngcontent-sc46="" class="ng-star-inserted"><!----><picture _ngcontent-sc46="" class="ng-star-inserted"><source _ngcontent-sc46="" type="image/webp" srcset="https://lh3.googleusercontent.com/IM14_zvhLdlx_drzJa41_yz139BIqRe2IU9-ff3ZN6-s34WSYN60W8EFEaOUyPCJkMs-WjutB7G_87Fg-A-jTiRzxVTMmtrQpFsGQ9Y=w1440-rw-v1 1x,https://lh3.googleusercontent.com/IM14_zvhLdlx_drzJa41_yz139BIqRe2IU9-ff3ZN6-s34WSYN60W8EFEaOUyPCJkMs-WjutB7G_87Fg-A-jTiRzxVTMmtrQpFsGQ9Y=w2048-rw-v1 2x"><source _ngcontent-sc46="" type="image/jpg" srcset="https://lh3.googleusercontent.com/IM14_zvhLdlx_drzJa41_yz139BIqRe2IU9-ff3ZN6-s34WSYN60W8EFEaOUyPCJkMs-WjutB7G_87Fg-A-jTiRzxVTMmtrQpFsGQ9Y=w1440 1x,https://lh3.googleusercontent.com/IM14_zvhLdlx_drzJa41_yz139BIqRe2IU9-ff3ZN6-s34WSYN60W8EFEaOUyPCJkMs-WjutB7G_87Fg-A-jTiRzxVTMmtrQpFsGQ9Y=w2048 2x"><img _ngcontent-sc46="" alt="" srcset="https://lh3.googleusercontent.com/IM14_zvhLdlx_drzJa41_yz139BIqRe2IU9-ff3ZN6-s34WSYN60W8EFEaOUyPCJkMs-WjutB7G_87Fg-A-jTiRzxVTMmtrQpFsGQ9Y=w2048 2x" src="https://lh3.googleusercontent.com/IM14_zvhLdlx_drzJa41_yz139BIqRe2IU9-ff3ZN6-s34WSYN60W8EFEaOUyPCJkMs-WjutB7G_87Fg-A-jTiRzxVTMmtrQpFsGQ9Y=w1440"></picture><!----><figcaption _ngcontent-sc46="" class="caption">  </figcaption></figure></dm-image-gallery><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content"><div class="g-sm-col-4 g-lg-col-7 g-lg-push-1">
+<div class="rich-text">
+<p>This approach enables us to extend the applicability of verification algorithms to more general networks (activation functions, architectures), general specifications and more sophisticated deep learning models (generative models, neural processes, etc.) and specifications beyond adversarial robustness (<a href="https://openreview.net/forum?id=HyeFAsRctQ">Qin, 2018</a>).</p>
+<h4>Outlook</h4>
+<p>Deployment of machine learning in high-stakes situations presents unique challenges, and requires the development of evaluation techniques that reliably detect unlikely failure modes. More broadly, we believe that learning consistency with specifications can provide large efficiency improvements over approaches where specifications only arise implicitly from training data. We are excited about ongoing research into adversarial evaluation, learning robust models, and verification of formal specifications.</p>
+<p>Much more work is needed to build automated tools for ensuring that AI systems in the real world will do the “right thing”. In particular, we are excited about progress in the following directions:</p>
+<ol>
+<li><p><strong>Learning for adversarial evaluation and verification:</strong> As AI systems scale and become more complex, it will become increasingly difficult to design adversarial evaluation and verification algorithms that are well-adapted to the AI model. If we can leverage the power of AI to facilitate evaluation and verification, this process can be bootstrapped to scale.</p></li>
+<li><p><strong>Development of publicly-available tools for adversarial evaluation and verification: </strong>It is important to provide AI engineers and practitioners with easy-to-use tools that shed light on the possible failure modes of the AI system before it leads to widespread negative impact. This would require some degree of standardisation of adversarial evaluation and verification algorithms.</p></li>
+<li><p><strong>Broadening the scope of adversarial examples:</strong> To date, most work on adversarial examples has focused on model invariances to small perturbations, typically of images. This has provided an excellent testbed for developing approaches to adversarial evaluation, robust learning, and verification. We have begun to explore alternate specifications for properties directly relevant in the real world, and are excited by future research in this direction.</p></li>
+<li><p><strong>Learning specifications:</strong> Specifications that capture “correct” behavior in AI systems are often difficult to precisely state. Building systems that can use partial human specifications and learn further specifications from evaluative feedback would be required as we build increasingly intelligent agents capable of exhibiting complex behaviors and &nbsp;acting in unstructured environments.</p></li>
+</ol>
+<p>DeepMind is dedicated to positive social impact through responsible development and deployment of machine learning systems. To make sure that the contributions of developers are reliably positive, we need to tackle many technical challenges. We are committed to taking part in this effort and are excited to work with the community on solving these challenges.</p>
+<p><em>This post describes the work of the Robust and Verified Deep Learning group (Pushmeet Kohli, DJ Krishnamurthy, Jonathan Uesato, Sven Gowal, Chongli Qin, Robert Stanforth, Po-Sen Huang) performed in collaboration with various contributors across DeepMind including Avraham Ruderman, Alhussein Fawzi, Ananya Kumar, Brendan O'Donoghue, Bristy Sikder, Chenglong Wang, Csaba Szepesvari, Hubert Soyer, Relja Arandjelovic, Richard Everett, Rudy Bunel, Timothy Mann,&nbsp;Grzegorz Swirszcz,</em><em>&nbsp;and Tom Erez.</em></p>
+<p><em>Thanks to Vishal Maini, Aleš Flidr, Damien Boudot, and Jan Leike for their contributions to the post.</em></p>
+</div>
+</div></div></dm-body-text><!----></dm-component-factory></div></div></div><!----><dm-footer-promos _ngcontent-sc49="" _nghost-sc18="" class="ng-star-inserted"><div _ngcontent-sc18="" class="dm-section footer-promos"><!----><h5 _ngcontent-sc18="" class="dm-h5 ng-star-inserted">Further reading</h5><div _ngcontent-sc18="" class="promo-wrapper"><!----><div _ngcontent-sc18="" class="footer-promo ng-star-inserted"><dm-component-factory _ngcontent-sc18="" _nghost-sc10=""><!----><dm-article-card _nghost-sc36="" class="ng-tns-c36-1 ng-trigger ng-trigger-animateIn ng-star-inserted" id="" style="transform:translateX(0px);opacity:0;"><div _ngcontent-sc36="" class="article-card-container"><!----><dm-content-card _ngcontent-sc36="" _nghost-sc37="" class="ng-star-inserted" style=""><!----><!----><!----><dm-link _ngcontent-sc37="" class="image blog-post-img ng-star-inserted" classlist="media" _nghost-sc8=""><!----><!----><a _ngcontent-sc8="" aria-label="Read more on DeepMind" class="media ng-star-inserted" href="/blog/article/replay-in-biological-and-artificial-neural-networks"><!----><!----><!----><!----><!----><dm-media _ngcontent-sc8="" _nghost-sc9="" class="h-position-default v-position-default ng-star-inserted"><!----><div _ngcontent-sc9="" class="image ng-star-inserted" style="background-image:url('https://lh3.googleusercontent.com/eohzdDYYI-2LrdsULD1rGc31h-aTo6gMaWryEdCkGEA7xqjHvjymHq2N1X40rXDM63A-Y0rKqJ94tcTxn1SyLJa53hEV5vxnrE21CQ=w2048');background-position:default default;"><!----><!----><!----></div><!----><!----><div _ngcontent-sc9="" class="video ng-star-inserted"><!----></div><!----><!----></dm-media><!----></a><!----><!----></dm-link><!----><!----><div _ngcontent-sc37="" class="content-card-body"><div _ngcontent-sc36="" class="header ng-tns-c36-1"><svg _ngcontent-sc36="" class="ng-tns-c36-1" role="img"><use _ngcontent-sc36="" class="ng-tns-c36-1" xlink:href="#article"></use></svg><!----><div _ngcontent-sc36="" class="category ng-tns-c36-1 ng-star-inserted"><p _ngcontent-sc36="" class="caption title"> Blog post </p><p _ngcontent-sc36="" class="caption"> Research </p></div></div><div _ngcontent-sc36="" class="body ng-tns-c36-1"><h4 _ngcontent-sc36="" class="dm-h4"><a _ngcontent-sc36="" class="ng-tns-c36-1" href="/blog/article/replay-in-biological-and-artificial-neural-networks"> Replay in biological and artificial neural networks </a></h4><p _ngcontent-sc36="" class="small">Our waking and sleeping lives are punctuated by fragments of recalled memories: a sudden connection in the shower...</p></div><div _ngcontent-sc36="" class="footer ng-tns-c36-1"><p _ngcontent-sc36="" class="caption date">06 Sep 2019</p><a _ngcontent-sc36="" class="dm-cta link" aria-label="Replay in biological and artificial neural networks" href="/blog/article/replay-in-biological-and-artificial-neural-networks"><svg _ngcontent-sc36="" class="ng-tns-c36-1" role="img"><use _ngcontent-sc36="" class="ng-tns-c36-1" xlink:href="#read-more"></use></svg></a></div></div></dm-content-card><!----></div></dm-article-card><!----></dm-component-factory></div><div _ngcontent-sc18="" class="footer-promo ng-star-inserted"><dm-component-factory _ngcontent-sc18="" _nghost-sc10=""><!----><dm-article-card _nghost-sc36="" class="ng-tns-c36-2 ng-trigger ng-trigger-animateIn ng-star-inserted" id="" style="transform:translateX(0px);opacity:0;"><div _ngcontent-sc36="" class="article-card-container"><!----><dm-content-card _ngcontent-sc36="" _nghost-sc37="" class="ng-star-inserted" style=""><!----><!----><!----><dm-link _ngcontent-sc37="" class="image blog-post-img ng-star-inserted" classlist="media" _nghost-sc8=""><!----><!----><a _ngcontent-sc8="" aria-label="Read more on DeepMind" class="media ng-star-inserted" href="/blog/article/unsupervised-learning"><!----><!----><!----><!----><!----><dm-media _ngcontent-sc8="" _nghost-sc9="" class="h-position-default v-position-default ng-star-inserted"><!----><div _ngcontent-sc9="" class="image ng-star-inserted" style="background-image:url('https://lh3.googleusercontent.com/jtV2skXd1cv4k_oTgE_4AsEfRu54-MwnMxg2aXh3zeFjCG250yhpKiqZfDVbibuaQoF-UWmoSardIH24Wphx-Q0Lf-Slqd2oKfFZNw=w2048');background-position:default default;"><!----><!----><!----></div><!----><!----><div _ngcontent-sc9="" class="video ng-star-inserted"><!----></div><!----><!----></dm-media><!----></a><!----><!----></dm-link><!----><!----><div _ngcontent-sc37="" class="content-card-body"><div _ngcontent-sc36="" class="header ng-tns-c36-2"><svg _ngcontent-sc36="" class="ng-tns-c36-2" role="img"><use _ngcontent-sc36="" class="ng-tns-c36-2" xlink:href="#article"></use></svg><!----><div _ngcontent-sc36="" class="category ng-tns-c36-2 ng-star-inserted"><p _ngcontent-sc36="" class="caption title"> Blog post </p><p _ngcontent-sc36="" class="caption"> Research </p></div></div><div _ngcontent-sc36="" class="body ng-tns-c36-2"><h4 _ngcontent-sc36="" class="dm-h4"><a _ngcontent-sc36="" class="ng-tns-c36-2" href="/blog/article/unsupervised-learning"> Unsupervised learning: The curious pupil </a></h4><p _ngcontent-sc36="" class="small">One in a series of posts explaining the theories underpinning our research. Over the last decade, machine learning has...</p></div><div _ngcontent-sc36="" class="footer ng-tns-c36-2"><p _ngcontent-sc36="" class="caption date">25 Jun 2019</p><a _ngcontent-sc36="" class="dm-cta link" aria-label="Unsupervised learning: The curious pupil" href="/blog/article/unsupervised-learning"><svg _ngcontent-sc36="" class="ng-tns-c36-2" role="img"><use _ngcontent-sc36="" class="ng-tns-c36-2" xlink:href="#read-more"></use></svg></a></div></div></dm-content-card><!----></div></dm-article-card><!----></dm-component-factory></div></div></div></dm-footer-promos><!----><!----></dm-blog-article-page><!----></dm-component-factory></dm-page-loader><div _ngcontent-sc0="" class="svg-elements"></div><dm-footer _ngcontent-sc0="" _nghost-sc3=""><!----><!----><footer _ngcontent-sc3="" colour-theme="ink_dark" class="ng-star-inserted"><div _ngcontent-sc3="" class="body-wrapper dm-section"><div _ngcontent-sc3="" class="logo"><a _ngcontent-sc3="" aria-label="Home page" class="dm-cta" routerlink="/" href="/"><svg _ngcontent-sc3="" role="img"><use _ngcontent-sc3="" xlink:href="#deepmind-logo-text"></use></svg></a></div><div _ngcontent-sc3="" class="body"><!----><div _ngcontent-sc3="" class="categories ng-star-inserted"><!----><div _ngcontent-sc3="" class="column ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/about"> About </a><ul _ngcontent-sc3=""><!----><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/about#our_story"> Our story </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/about#recent_progress"> Recent progress </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/about#our_global_community"> Our global community </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/about#leadership"> Leadership </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/about#teams"> Teams </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/about#access_to_science"> Access to science </a></li><!----></ul></div><div _ngcontent-sc3="" class="column ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/research"> Research </a><ul _ngcontent-sc3=""><!----><!----><li _ngcontent-sc3="" class="ng-star-inserted"><dm-link _ngcontent-sc3="" classlist="nav-cta" _nghost-sc8=""><!----><!----><a _ngcontent-sc8="" aria-label="Read more on DeepMind" class="nav-cta ng-star-inserted" href="/research?filters=%7B%22category%22:%5B%22Research%22%5D%7D"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">Blog</span><!----><!----><!----></a><!----><!----></dm-link></li><li _ngcontent-sc3="" class="ng-star-inserted"><dm-link _ngcontent-sc3="" classlist="nav-cta" _nghost-sc8=""><!----><!----><a _ngcontent-sc8="" aria-label="Read more on DeepMind" class="nav-cta ng-star-inserted" href="/research?filters=%7B%22collection%22:%5B%22OpenSource%22%5D%7D"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">Open source</span><!----><!----><!----></a><!----><!----></dm-link></li><li _ngcontent-sc3="" class="ng-star-inserted"><dm-link _ngcontent-sc3="" classlist="nav-cta" _nghost-sc8=""><!----><!----><a _ngcontent-sc8="" aria-label="Read more on DeepMind" class="nav-cta ng-star-inserted" href="/research?filters=%7B%22collection%22:%5B%22Publications%22%5D%7D"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">Publications</span><!----><!----><!----></a><!----><!----></dm-link></li></ul></div><div _ngcontent-sc3="" class="column ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/impact"> Impact </a><ul _ngcontent-sc3=""><!----><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/impact#real_world_impact"> Real-world impact </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/impact#significant_breakthroughs"> Significant breakthroughs </a></li><!----></ul></div><div _ngcontent-sc3="" class="column ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/blog"> Blog </a><ul _ngcontent-sc3=""><!----><!----><li _ngcontent-sc3="" class="ng-star-inserted"><dm-link _ngcontent-sc3="" classlist="nav-cta" _nghost-sc8=""><!----><!----><a _ngcontent-sc8="" aria-label="Read more on DeepMind" class="nav-cta ng-star-inserted" href="/blog?filters=%7B%22category%22:%5B%22Research%22%5D%7D"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">Research</span><!----><!----><!----></a><!----><!----></dm-link></li><li _ngcontent-sc3="" class="ng-star-inserted"><dm-link _ngcontent-sc3="" classlist="nav-cta" _nghost-sc8=""><!----><!----><a _ngcontent-sc8="" aria-label="Read more on DeepMind" class="nav-cta ng-star-inserted" href="/blog?filters=%7B%22collection%22:%5B%22Announcements%22%5D%7D"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">News</span><!----><!----><!----></a><!----><!----></dm-link></li></ul></div><div _ngcontent-sc3="" class="column ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/safety-and-ethics"> Safety &amp; Ethics </a><ul _ngcontent-sc3=""><!----><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/safety-and-ethics#overview"> Overview </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/safety-and-ethics#technical_safety"> Technical safety </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/safety-and-ethics#ethics_society"> Ethics &amp; Society </a></li><!----></ul></div><div _ngcontent-sc3="" class="column ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/careers"> Careers </a><ul _ngcontent-sc3=""><!----><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/careers#a_unique_mission"> A unique mission </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/careers#teams"> Teams </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/careers#diversity_matters"> Diversity matters </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/careers#locations"> Locations </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/careers#internships"> Internships </a></li><!----></ul></div></div><!----><div _ngcontent-sc3="" class="back-to-top"><svg _ngcontent-sc3="" role="img"><use _ngcontent-sc3="" xlink:href="#arrow"></use></svg></div><div _ngcontent-sc3="" class="information"><div _ngcontent-sc3="" class="legal"><!----><dm-link _ngcontent-sc3="" classlist="dm-cta caption" _nghost-sc8="" class="ng-star-inserted"><!----><!----><a _ngcontent-sc8="" aria-label="Read more on an external page" class="external dm-cta caption ng-star-inserted" rel="noopener" target="_blank" href="mailto:press@deepmind.com"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">Press</span><!----><!----><!----></a><!----><!----><!----></dm-link><dm-link _ngcontent-sc3="" classlist="dm-cta caption" _nghost-sc8="" class="ng-star-inserted"><!----><!----><a _ngcontent-sc8="" aria-label="Read more on DeepMind" class="dm-cta caption ng-star-inserted" href="/terms-and-conditions"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">Terms &amp; Conditions</span><!----><!----><!----></a><!----><!----></dm-link><dm-link _ngcontent-sc3="" classlist="dm-cta caption" _nghost-sc8="" class="ng-star-inserted"><!----><!----><a _ngcontent-sc8="" aria-label="Read more on DeepMind" class="dm-cta caption ng-star-inserted" href="/privacy-policy"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">Privacy Policy</span><!----><!----><!----></a><!----><!----></dm-link><dm-link _ngcontent-sc3="" classlist="dm-cta caption" _nghost-sc8="" class="ng-star-inserted"><!----><!----><a _ngcontent-sc8="" aria-label="Read more on an external page" class="external dm-cta caption ng-star-inserted" rel="noopener" target="_blank" href="https://storage.googleapis.com/deepmind-media/modern_slavery/FINAL_201_Google_Modern_Slavery_Statement.pdf"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">Modern Slavery Statement</span><!----><!----><!----></a><!----><!----><!----></dm-link><dm-link _ngcontent-sc3="" classlist="dm-cta caption" _nghost-sc8="" class="ng-star-inserted"><!----><!----><a _ngcontent-sc8="" aria-label="Read more on an external page" class="external dm-cta caption ng-star-inserted" rel="noopener" target="_blank" href="https://abc.xyz/"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">Alphabet Inc</span><!----><!----><!----></a><!----><!----><!----></dm-link></div><ul _ngcontent-sc3="" class="social"><!----><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta icon" rel="noopener" target="_blank" aria-label="Follow us on Twitter!" href="https://twitter.com/DeepMindAI"><svg _ngcontent-sc3="" role="img"><use _ngcontent-sc3="" xlink:href="#twitter"></use></svg></a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta icon" rel="noopener" target="_blank" aria-label="Follow us on Youtube!" href="https://www.youtube.com/deepmind"><svg _ngcontent-sc3="" role="img"><use _ngcontent-sc3="" xlink:href="#youtube"></use></svg></a></li></ul></div></div><div _ngcontent-sc3="" class="shape"><svg _ngcontent-sc3="" role="img"><use _ngcontent-sc3="" xlink:href="#shape-octa3"></use></svg></div></div></footer></dm-footer></div></dm-app-root>
+<script src="runtime-es2015.858f8dd898b75fe86926.js" type="module" crossorigin="use-credentials"></script><script src="polyfills-es2015.0b2e40f2b7e045bb6031.js" type="module" crossorigin="use-credentials"></script><script src="runtime-es5.741402d1d47331ce975c.js" nomodule=""></script><script src="polyfills-es5.343790ebaac41845eaa3.js" nomodule=""></script><script src="main-es2015.b86475430f0c2e1f65c0.js" type="module" crossorigin="use-credentials"></script><script src="main-es5.90f722d029495b63e37f.js" nomodule=""></script>
+
+</body></html>

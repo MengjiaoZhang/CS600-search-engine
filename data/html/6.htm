@@ -1,0 +1,1618 @@
+<!DOCTYPE html><html class="loading" dir="ltr" lang="ALL"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+  <base href="/">
+
+  <!-- Facebook base meta tags. -->
+  <meta property="og:image:width" content="600">
+  <meta property="og:image:height" content="600">
+  <meta property="og:site_name" content="Deepmind">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter base meta tags. -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@DeepMindAI">
+
+  <!-- Set in Angular. -->
+  <title>AlphaStar: Mastering the Real-Time Strategy Game StarCraft II | DeepMind</title>
+  <meta name="description" content="
+
+Games have been used for decades as an important way to test and evaluate the performance of artificial intelligence systems. As capabilities have increased, the research community has sought games with increasing complexity that capture different elements of intelligence required to solve scientific and real-world problems. In recent years, StarCraft, considered to be one of the most challenging Real-Time Strategy (RTS) games and one of the longest-played esports of all time, has emerged by consensus as a “grand challenge” for AI research.
+
+">
+
+  <link rel="preconnect" href="https://lh3.googleusercontent.com">
+  <link href="assets/favicon.ico" rel="icon">
+<link rel="stylesheet" href="styles.c25992414036055c2434.css"><style ng-transition="deepmind-website">[_nghost-sc0] {
+  display: flex;
+  flex-direction: column;
+}
+@media (min-width: 1024px) {
+  [_nghost-sc0] {
+    flex-direction: row;
+  }
+}
+[_nghost-sc0]   .dm-body[_ngcontent-sc0] {
+  background-color: #f0f5f5;
+  height: 100%;
+  width: 100%;
+}
+@media (min-width: 1024px) {
+  [_nghost-sc0]   .dm-body[_ngcontent-sc0] {
+    width: calc(100% - 100px);
+  }
+}
+[_nghost-sc0]   .svg-elements[_ngcontent-sc0] {
+  height: 0;
+  position: absolute;
+  visibility: hidden;
+  width: 0;
+}</style><style ng-transition="deepmind-website">[_nghost-sc2] {
+  display: block;
+  position: relative;
+}
+header[_ngcontent-sc2] {
+  background-color: #0053d6;
+  height: 60px;
+  width: 100%;
+}
+@media (min-width: 768px) {
+  header[_ngcontent-sc2] {
+    height: 70px;
+  }
+}
+@media (min-width: 1024px) {
+  header[_ngcontent-sc2] {
+    height: 100%;
+    width: 100px;
+  }
+}
+header[_ngcontent-sc2]::after {
+  background-color: #0053d6;
+  content: "";
+  height: 100%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: right 0.3s ease, width 0.3s ease;
+  width: 0;
+  z-index: 34;
+}
+header.is-peaking[_ngcontent-sc2]::after {
+  right: -10px;
+  width: 10px;
+}
+.header-container[_ngcontent-sc2] {
+  background-color: #0053d6;
+  display: flex;
+  flex-direction: column;
+  height: inherit;
+  justify-content: space-between;
+  left: 0;
+  padding: 0 20px;
+  position: fixed;
+  top: 0;
+  width: inherit;
+  z-index: 35;
+}
+@media (min-width: 1024px) {
+  .header-container[_ngcontent-sc2] {
+    height: 100%;
+    padding: 30px 20px;
+  }
+}
+header.is-menu-open[_ngcontent-sc2]   .header-container[_ngcontent-sc2] {
+  width: 100%;
+}
+@media (min-width: 1024px) {
+  header.is-menu-open[_ngcontent-sc2]   .header-container[_ngcontent-sc2] {
+    width: 100px;
+  }
+}
+.header-container[_ngcontent-sc2]   ul[_ngcontent-sc2] {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.menu-wrapper[_ngcontent-sc2] {
+  display: flex;
+  height: 100%;
+}
+@media (min-width: 1024px) {
+  .menu-wrapper[_ngcontent-sc2] {
+    flex-direction: column;
+    height: auto;
+  }
+}
+.menu-header[_ngcontent-sc2] {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+@media (min-width: 1024px) {
+  .menu-header[_ngcontent-sc2] {
+    display: block;
+  }
+}
+.menu-header[_ngcontent-sc2]   .logo[_ngcontent-sc2] {
+  display: block;
+  margin: 0 0 0 -12px;
+}
+@media (min-width: 768px) {
+  .menu-header[_ngcontent-sc2]   .logo[_ngcontent-sc2] {
+    margin: 0;
+  }
+}
+@media (min-width: 1024px) {
+  .menu-header[_ngcontent-sc2]   .logo[_ngcontent-sc2] {
+    margin: 0 0 30px 0;
+  }
+}
+.menu-header[_ngcontent-sc2]   .logo[_ngcontent-sc2]   svg[_ngcontent-sc2] {
+  display: block;
+  height: 40px;
+  width: 184px;
+}
+@media (min-width: 1024px) {
+  .menu-header[_ngcontent-sc2]   .logo[_ngcontent-sc2]   svg[_ngcontent-sc2] {
+    width: 40px;
+  }
+}
+.menu-header[_ngcontent-sc2]   .logo[_ngcontent-sc2]   svg.full-logo[_ngcontent-sc2] {
+  width: 184px;
+}
+.menu-header[_ngcontent-sc2]   .menu-controls[_ngcontent-sc2] {
+  align-items: center;
+  display: flex;
+  flex-direction: row-reverse;
+}
+@media (min-width: 1024px) {
+  .menu-header[_ngcontent-sc2]   .menu-controls[_ngcontent-sc2] {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+    width: 38px;
+  }
+}
+.menu-header[_ngcontent-sc2]   .menu-controls[_ngcontent-sc2]   button[_ngcontent-sc2]    + button[_ngcontent-sc2] {
+  display: block;
+  margin: 0 20px 0 0;
+}
+@media (min-width: 1024px) {
+  .menu-header[_ngcontent-sc2]   .menu-controls[_ngcontent-sc2]   button[_ngcontent-sc2]    + button[_ngcontent-sc2] {
+    margin: 30px 0 0;
+  }
+}
+nav[_ngcontent-sc2] {
+  display: none;
+}
+@media (min-width: 1024px) {
+  nav[_ngcontent-sc2] {
+    display: flex;
+  }
+}
+@media (min-width: 1024px) {
+  header.is-menu-open[_ngcontent-sc2]   nav[_ngcontent-sc2] {
+    align-items: center;
+    height: 100%;
+    justify-content: center;
+  }
+}
+.pages[_ngcontent-sc2] {
+  display: block;
+  width: 100%;
+}
+header.is-menu-open[_ngcontent-sc2]   .pages[_ngcontent-sc2] {
+  width: auto;
+}
+@media (min-width: 1024px) {
+  header.is-menu-open[_ngcontent-sc2]   .pages[_ngcontent-sc2] {
+    display: flex;
+    flex-direction: row-reverse;
+    -webkit-transform: rotateZ(-90deg);
+            transform: rotateZ(-90deg);
+  }
+}
+.pages[_ngcontent-sc2]   li[_ngcontent-sc2]   a[_ngcontent-sc2] {
+  cursor: pointer;
+  position: relative;
+}
+.pages[_ngcontent-sc2]   li[_ngcontent-sc2]   a[_ngcontent-sc2]::before {
+  border-left: 6px solid transparent;
+  content: "";
+  display: block;
+  height: 100%;
+  left: -20px;
+  position: absolute;
+  top: 0;
+}
+.pages[_ngcontent-sc2]   li[_ngcontent-sc2]   a[_ngcontent-sc2]:focus::before, .pages[_ngcontent-sc2]   li[_ngcontent-sc2]   a[_ngcontent-sc2]:hover::before {
+  border-color: #fff;
+}
+.pages[_ngcontent-sc2]   li.is-active[_ngcontent-sc2]   a[_ngcontent-sc2]::before {
+  border-color: #fff;
+}
+.page-link[_ngcontent-sc2] {
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  display: block;
+  padding: 10px 0;
+}
+.page-link.nav-cta[_ngcontent-sc2]:focus, .page-link.nav-cta[_ngcontent-sc2]:hover {
+  color: #fff;
+}
+.social-media-wrapper[_ngcontent-sc2] {
+  display: none;
+}
+@media (min-width: 1024px) {
+  .social-media-wrapper[_ngcontent-sc2] {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    width: 38px;
+  }
+}
+.social-media-wrapper[_ngcontent-sc2]   li[_ngcontent-sc2]    + li[_ngcontent-sc2] {
+  margin-top: 10px;
+}
+.social-media-wrapper[_ngcontent-sc2]   svg[_ngcontent-sc2] {
+  height: 20px;
+  width: 20px;
+}
+.hamburger-menu[_ngcontent-sc2] {
+  cursor: pointer;
+  display: block;
+  height: 18px;
+  position: relative;
+  width: 22px;
+}
+@media (min-width: 1024px) {
+  .hamburger-menu[_ngcontent-sc2] {
+    width: 30px;
+  }
+}
+@media (hover: hover) {
+  .hamburger-menu[_ngcontent-sc2]:focus   span[_ngcontent-sc2]:nth-child(2), .hamburger-menu[_ngcontent-sc2]:hover   span[_ngcontent-sc2]:nth-child(2) {
+    -webkit-transform: scaleX(0.5);
+            transform: scaleX(0.5);
+  }
+}
+.hamburger-menu[_ngcontent-sc2]   span[_ngcontent-sc2] {
+  background-color: #fff;
+  display: block;
+  height: 2px;
+  margin: 0;
+  position: absolute;
+  -webkit-transform-origin: center;
+          transform-origin: center;
+  transition: width 0.2s ease, -webkit-transform 0.3s ease;
+  transition: transform 0.3s ease, width 0.2s ease;
+  transition: transform 0.3s ease, width 0.2s ease, -webkit-transform 0.3s ease;
+  width: 100%;
+}
+.hamburger-menu[_ngcontent-sc2]   span[_ngcontent-sc2]:first-child {
+  top: 0;
+}
+.hamburger-menu[_ngcontent-sc2]   span[_ngcontent-sc2]:nth-child(2) {
+  top: 8px;
+}
+.hamburger-menu[_ngcontent-sc2]   span[_ngcontent-sc2]:last-child {
+  bottom: 0;
+}
+.hamburger-menu.is-active[_ngcontent-sc2]   span[_ngcontent-sc2]:first-child {
+  -webkit-transform: translateY(8px) rotate(45deg);
+          transform: translateY(8px) rotate(45deg);
+  width: 23px;
+}
+@media (min-width: 1024px) {
+  .hamburger-menu.is-active[_ngcontent-sc2]   span[_ngcontent-sc2]:first-child {
+    width: 29px;
+  }
+}
+.hamburger-menu.is-active[_ngcontent-sc2]   span[_ngcontent-sc2]:nth-child(2) {
+  width: 0;
+}
+.hamburger-menu.is-active[_ngcontent-sc2]   span[_ngcontent-sc2]:last-child {
+  -webkit-transform: translateY(-8px) rotate(-45deg);
+          transform: translateY(-8px) rotate(-45deg);
+  width: 23px;
+}
+@media (min-width: 1024px) {
+  .hamburger-menu.is-active[_ngcontent-sc2]   span[_ngcontent-sc2]:last-child {
+    width: 29px;
+  }
+}
+.search[_ngcontent-sc2] {
+  text-align: center;
+}
+.search.no-focus[_ngcontent-sc2]:focus   g[_ngcontent-sc2] {
+  -webkit-transform: none;
+          transform: none;
+}
+.search[_ngcontent-sc2]:focus   g[_ngcontent-sc2], .search[_ngcontent-sc2]:hover   g[_ngcontent-sc2] {
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
+}
+@media (hover: none) {
+  .search.no-focus[_ngcontent-sc2]:focus   g[_ngcontent-sc2] {
+    -webkit-transform: none;
+            transform: none;
+  }
+  .search.no-focus[_ngcontent-sc2]:hover   g[_ngcontent-sc2] {
+    -webkit-transform: none;
+            transform: none;
+  }
+  .search[_ngcontent-sc2]:focus   g[_ngcontent-sc2], .search[_ngcontent-sc2]:hover   g[_ngcontent-sc2] {
+    -webkit-transform: none;
+            transform: none;
+  }
+}
+.search[_ngcontent-sc2]   svg[_ngcontent-sc2] {
+  height: 22px;
+  vertical-align: middle;
+  width: 22px;
+}
+@media (min-width: 1024px) {
+  .search[_ngcontent-sc2]   svg[_ngcontent-sc2] {
+    height: 28px;
+    width: 30px;
+  }
+}
+.search[_ngcontent-sc2]   svg[_ngcontent-sc2]   g[_ngcontent-sc2] {
+  transition: -webkit-transform 0.3s ease;
+  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, -webkit-transform 0.3s ease;
+}
+.search[_ngcontent-sc2]   svg[_ngcontent-sc2]   g[_ngcontent-sc2]   [_ngcontent-sc2]:first-child {
+  fill: #0053d6;
+}</style><style ng-transition="deepmind-website">[_nghost-sc3] {
+  display: block;
+}
+footer[_ngcontent-sc3] {
+  background-color: #14234b;
+  overflow: hidden;
+  padding: 50px 0 40px;
+  position: relative;
+}
+@media (min-width: 768px) {
+  footer[_ngcontent-sc3] {
+    padding: 60px 0 50px;
+  }
+}
+@media (min-width: 1440px) {
+  footer[_ngcontent-sc3] {
+    padding: 90px 0 100px;
+  }
+}
+.logo[_ngcontent-sc3] {
+  display: none;
+}
+@media (min-width: 1024px) {
+  .logo[_ngcontent-sc3] {
+    display: block;
+    margin: 0 0 45px;
+  }
+}
+.logo[_ngcontent-sc3]   svg[_ngcontent-sc3] {
+  fill: #fff;
+  height: 28px;
+  width: 130px;
+}
+.body[_ngcontent-sc3] {
+  flex: 1 1 0%;
+  position: relative;
+}
+.categories[_ngcontent-sc3] {
+  display: flex;
+  flex-flow: row wrap;
+}
+@media (min-width: 1440px) {
+  .categories[_ngcontent-sc3] {
+    flex-flow: row nowrap;
+  }
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3] {
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .categories[_ngcontent-sc3]   .column[_ngcontent-sc3] {
+    margin: 0 0 30px;
+    max-width: 33.3333333333%;
+  }
+}
+@media (min-width: 1440px) {
+  .categories[_ngcontent-sc3]   .column[_ngcontent-sc3] {
+    max-width: none;
+  }
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3]:last-child {
+  flex-grow: 0;
+}
+@media (min-width: 768px) {
+  .categories[_ngcontent-sc3]   .column[_ngcontent-sc3]:last-child {
+    flex-grow: 1;
+  }
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3]    > .nav-cta[_ngcontent-sc3] {
+  font-size: 16px;
+  font-weight: 700;
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   [dmAccordionTitle][_ngcontent-sc3] {
+  flex-grow: 1;
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   [dmAccordionTitle][_ngcontent-sc3]:focus, .categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   [dmAccordionTitle][_ngcontent-sc3]:hover {
+  border: 0;
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   ul[_ngcontent-sc3] {
+  list-style-type: none;
+  padding: 0 0 20px;
+}
+@media (min-width: 768px) {
+  .categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   ul[_ngcontent-sc3] {
+    border-left: 1px solid #0053d6;
+    margin: 15px 0 0;
+    padding: 0 0 0 8px;
+  }
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   ul[_ngcontent-sc3]   li[_ngcontent-sc3]    + li[_ngcontent-sc3] {
+  margin: 10px 0 0;
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   ul[_ngcontent-sc3]   li[_ngcontent-sc3]   a[_ngcontent-sc3] {
+  display: inherit;
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   ul[_ngcontent-sc3]   li[_ngcontent-sc3]   a[_ngcontent-sc3]:focus, .categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   ul[_ngcontent-sc3]   li[_ngcontent-sc3]   a[_ngcontent-sc3]:hover {
+  border: 0;
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   ul[_ngcontent-sc3]   li[_ngcontent-sc3]   dm-link[_ngcontent-sc3] {
+  line-height: 1;
+}
+.information[_ngcontent-sc3] {
+  display: flex;
+}
+@media (min-width: 768px) {
+  .information[_ngcontent-sc3] {
+    border-top: 1px solid #5c657f;
+    padding: 25px 0;
+  }
+}
+@media (min-width: 1440px) {
+  .information[_ngcontent-sc3] {
+    padding: 35px 0;
+  }
+}
+.information[_ngcontent-sc3]   .legal[_ngcontent-sc3] {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+@media (min-width: 768px) {
+  .information[_ngcontent-sc3]   .legal[_ngcontent-sc3] {
+    align-items: center;
+    flex-direction: row;
+    margin: 0;
+  }
+}
+.information[_ngcontent-sc3]   .legal[_ngcontent-sc3]   dm-link[_ngcontent-sc3] {
+  margin: 0 0 15px;
+}
+@media (min-width: 768px) {
+  .information[_ngcontent-sc3]   .legal[_ngcontent-sc3]   dm-link[_ngcontent-sc3] {
+    margin: 0 45px 0 0;
+  }
+}
+.information[_ngcontent-sc3]   .social[_ngcontent-sc3] {
+  align-items: flex-end;
+  display: flex;
+  justify-content: flex-end;
+  list-style: none;
+}
+@media (min-width: 768px) {
+  .information[_ngcontent-sc3]   .social[_ngcontent-sc3] {
+    align-items: center;
+  }
+}
+.information[_ngcontent-sc3]   .social[_ngcontent-sc3]   li[_ngcontent-sc3] {
+  display: flex;
+}
+.information[_ngcontent-sc3]   .social[_ngcontent-sc3]   a[_ngcontent-sc3] {
+  margin: 0 0 15px;
+  padding: 0 0 0 32px;
+}
+@media (min-width: 768px) {
+  .information[_ngcontent-sc3]   .social[_ngcontent-sc3]   a[_ngcontent-sc3] {
+    margin: 0 0 0 15px;
+    padding: 0;
+  }
+}
+.information[_ngcontent-sc3]   .social[_ngcontent-sc3]   a[_ngcontent-sc3]   svg[_ngcontent-sc3] {
+  height: 20px;
+  vertical-align: middle;
+  width: 20px;
+}
+.shape[_ngcontent-sc3] {
+  height: 100%;
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+@media (min-width: 1440px) {
+  .shape[_ngcontent-sc3] {
+    display: inline;
+  }
+}
+.shape[_ngcontent-sc3]   svg[_ngcontent-sc3] {
+  bottom: -100px;
+  fill: #0053d6;
+  height: 400px;
+  position: absolute;
+  right: -100px;
+  width: 400px;
+}
+@media (min-width: 768px) {
+  .shape[_ngcontent-sc3]   svg[_ngcontent-sc3] {
+    right: -100px;
+    top: 10%;
+  }
+}
+@media (min-width: 1440px) {
+  .shape[_ngcontent-sc3]   svg[_ngcontent-sc3] {
+    bottom: -200px;
+    left: 60%;
+    top: auto;
+  }
+}
+.back-to-top[_ngcontent-sc3] {
+  margin: 30px 0;
+  position: relative;
+  text-align: right;
+}
+@media (min-width: 768px) {
+  .back-to-top[_ngcontent-sc3] {
+    margin: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+}
+@media (min-width: 1024px) {
+  .back-to-top[_ngcontent-sc3] {
+    display: none;
+  }
+}
+.back-to-top[_ngcontent-sc3]   svg[_ngcontent-sc3] {
+  fill: #fff;
+  height: 16px;
+  margin: 0 0 0 auto;
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+  transition: -webkit-transform 0.2s ease;
+  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, -webkit-transform 0.2s ease;
+  width: 25px;
+}
+@media (min-width: 768px) {
+  .back-to-top[_ngcontent-sc3]   svg[_ngcontent-sc3] {
+    margin: auto;
+  }
+}</style><style ng-transition="deepmind-website">[_nghost-sc8] {
+  display: block;
+}
+.media[_ngcontent-sc8] {
+  display: block;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+.link[_ngcontent-sc8]   .icon[_ngcontent-sc8] {
+  height: 30px;
+  min-width: 30px;
+  position: relative;
+  width: 30px;
+}
+.link.external[_ngcontent-sc8]:focus   .icon[_ngcontent-sc8]::before, .link.external[_ngcontent-sc8]:hover   .icon[_ngcontent-sc8]::before {
+  background-color: #0053d6;
+}
+.link.external[_ngcontent-sc8]   .icon[_ngcontent-sc8]::before {
+  background-color: #ffdb13;
+  border-radius: 50%;
+  content: "";
+  display: block;
+  height: 30px;
+  position: absolute;
+  right: 0;
+  width: 30px;
+}
+.link.external[_ngcontent-sc8]   svg[_ngcontent-sc8] {
+  background-color: transparent;
+  border-radius: 0;
+  padding: 8px;
+  position: relative;
+}
+.link.transparent[_ngcontent-sc8]   .icon[_ngcontent-sc8] {
+  line-height: 0;
+}
+.hero-link[_ngcontent-sc8] {
+  align-items: flex-start;
+  font: 500 14px/30px "Deepmind Sans", Helvetica, Arial, sans-serif;
+  letter-spacing: 0;
+}
+@media (min-width: 1024px) {
+  .hero-link[_ngcontent-sc8] {
+    font-size: 18px;
+    line-height: 30px;
+  }
+}
+.cta-text[_ngcontent-sc8] {
+  margin-right: 10px;
+  text-transform: uppercase;
+}</style><style ng-transition="deepmind-website">[_nghost-sc10] {
+  display: block;
+  position: relative;
+  width: 100%;
+}</style><meta property="og:title" content="AlphaStar: Mastering the Real-Time Strategy Game StarCraft II"><meta property="og:description" content="
+
+Games have been used for decades as an important way to test and evaluate the performance of artificial intelligence systems. As capabilities have increased, the research community has sought games with increasing complexity that capture different elements of intelligence required to solve scientific and real-world problems. In recent years, StarCraft, considered to be one of the most challenging Real-Time Strategy (RTS) games and one of the longest-played esports of all time, has emerged by consensus as a “grand challenge” for AI research.
+
+"><meta property="og:image" content="https://lh3.googleusercontent.com/jVZ3VN7wwx2dSowqLmhqm0qAzAmcb-1t7ks3HiNnoHknihF5sl9VDEwuCNTSxfx8jFIi7mBQkvHUdnSKXSPgYLNpvCuE4YajJeMnrYA"><meta property="og:url" content="/blog/article/alphastar-mastering-real-time-strategy-game-starcraft-ii"><meta name="twitter:title" content="AlphaStar: Mastering the Real-Time Strategy Game StarCraft II"><meta name="twitter:description" content="
+
+Games have been used for decades as an important way to test and evaluate the performance of artificial intelligence systems. As capabilities have increased, the research community has sought games with increasing complexity that capture different elements of intelligence required to solve scientific and real-world problems. In recent years, StarCraft, considered to be one of the most challenging Real-Time Strategy (RTS) games and one of the longest-played esports of all time, has emerged by consensus as a “grand challenge” for AI research.
+
+"><meta name="twitter:image:src" content="https://lh3.googleusercontent.com/jVZ3VN7wwx2dSowqLmhqm0qAzAmcb-1t7ks3HiNnoHknihF5sl9VDEwuCNTSxfx8jFIi7mBQkvHUdnSKXSPgYLNpvCuE4YajJeMnrYA"><meta name="twitter:site" content="/blog/article/alphastar-mastering-real-time-strategy-game-starcraft-ii"><style ng-transition="deepmind-website">[_nghost-sc49] {
+  display: block;
+  margin-top: 70px;
+}
+@media (min-width: 1024px) {
+  [_nghost-sc49] {
+    margin-top: 100px;
+  }
+}
+dm-breadcrumb[_ngcontent-sc49] {
+  left: 20px;
+  position: absolute;
+  top: -45px;
+}
+@media (min-width: 768px) {
+  dm-breadcrumb[_ngcontent-sc49] {
+    left: 30px;
+  }
+}
+@media (min-width: 1024px) {
+  dm-breadcrumb[_ngcontent-sc49] {
+    left: 60px;
+    margin: 40px 0 25px;
+    top: -100px;
+  }
+}
+@media (min-width: 1440px) {
+  dm-breadcrumb[_ngcontent-sc49] {
+    left: 90px;
+  }
+}
+.blog-article-bg[_ngcontent-sc49] {
+  background: linear-gradient(to right, #fff 50%, #ffe6f0 50%);
+}
+@media (min-width: 1024px) {
+  .blog-article-bg[_ngcontent-sc49] {
+    background: linear-gradient(to right, #ffe6f0 50%, #fff 50%);
+  }
+}
+.page-content-container[_ngcontent-sc49] {
+  display: flex;
+  flex-direction: column-reverse;
+}
+@media (max-width: 1023px) {
+  .page-content-container[_ngcontent-sc49] {
+    padding: 0;
+  }
+}
+@media (min-width: 1024px) {
+  .page-content-container[_ngcontent-sc49] {
+    flex-direction: row;
+  }
+}
+aside[_ngcontent-sc49] {
+  background-color: #ffe6f0;
+  display: flex;
+  flex-direction: column;
+  padding: 50px 0 50px 30px;
+  width: 100%;
+}
+@media (min-width: 768px) {
+  aside[_ngcontent-sc49] {
+    -webkit-column-gap: 0;
+       -moz-column-gap: 0;
+            column-gap: 0;
+    -webkit-columns: 2;
+       -moz-columns: 2;
+            columns: 2;
+    display: inline;
+  }
+}
+@media (min-width: 1024px) {
+  aside[_ngcontent-sc49] {
+    display: flex;
+    max-width: 260px;
+    padding: 0 40px 50px 0;
+  }
+}
+@media (min-width: 1440px) {
+  aside[_ngcontent-sc49] {
+    max-width: 300px;
+  }
+}
+.page-content[_ngcontent-sc49] {
+  background-color: #fff;
+  padding: 20px 20px 0;
+  width: calc(100% - 20px);
+}
+@media (min-width: 768px) {
+  .page-content[_ngcontent-sc49] {
+    padding: 20px 30px 0;
+    width: calc(100% - 125px);
+  }
+}
+@media (min-width: 1024px) {
+  .page-content[_ngcontent-sc49] {
+    padding: 55px 0 55px 30px;
+    width: 100%;
+  }
+}
+@media (min-width: 1440px) {
+  .page-content[_ngcontent-sc49] {
+    padding: 70px 0 70px 100px;
+  }
+}
+dm-social-share[_ngcontent-sc49], dm-authors-list[_ngcontent-sc49], dm-tag-list[_ngcontent-sc49] {
+  margin-bottom: 30px;
+}
+@media (min-width: 768px) {
+  dm-social-share[_ngcontent-sc49], dm-authors-list[_ngcontent-sc49], dm-tag-list[_ngcontent-sc49] {
+    margin: 0 20px 30px 0;
+  }
+}
+@media (min-width: 1024px) {
+  dm-social-share[_ngcontent-sc49], dm-authors-list[_ngcontent-sc49], dm-tag-list[_ngcontent-sc49] {
+    margin: 0 0 30px;
+  }
+}
+dm-authors-list[_ngcontent-sc49] {
+  margin-bottom: 30px;
+}
+@media (min-width: 768px) {
+  dm-authors-list[_ngcontent-sc49] {
+    -webkit-column-break-before: always;
+       -moz-column-break-before: always;
+            break-before: always;
+    margin: 0;
+  }
+}
+@media (min-width: 1024px) {
+  dm-authors-list[_ngcontent-sc49] {
+    -webkit-column-break-before: auto;
+       -moz-column-break-before: auto;
+            break-before: auto;
+    margin-bottom: 30px;
+  }
+}
+dm-tag-list[_ngcontent-sc49] {
+  order: 3;
+}</style><style ng-transition="deepmind-website">[_nghost-sc13] {
+  display: block;
+}
+.theme-dark[_nghost-sc13]   li[_ngcontent-sc13]   a[_ngcontent-sc13] {
+  color: #0053d6;
+}
+.theme-dark[_nghost-sc13]   .logo[_ngcontent-sc13]   svg[_ngcontent-sc13], .theme-dark[_nghost-sc13]   .arrow[_ngcontent-sc13] {
+  fill: #0053d6;
+}
+ul[_ngcontent-sc13] {
+  align-items: center;
+  display: flex;
+  list-style: none;
+}
+ul[_ngcontent-sc13]   li[_ngcontent-sc13] {
+  align-items: center;
+  display: flex;
+}
+ul[_ngcontent-sc13]   li[_ngcontent-sc13]:not(:nth-child(2)) {
+  display: none;
+}
+@media (min-width: 1024px) {
+  ul[_ngcontent-sc13]   li[_ngcontent-sc13]:not(:nth-child(2)) {
+    display: flex;
+  }
+}
+ul[_ngcontent-sc13]   li[_ngcontent-sc13]:last-child   a[_ngcontent-sc13] {
+  font-weight: bold;
+}
+ul[_ngcontent-sc13]   li[_ngcontent-sc13]   .nav-cta[_ngcontent-sc13]:focus, ul[_ngcontent-sc13]   li[_ngcontent-sc13]   .nav-cta[_ngcontent-sc13]:hover {
+  border: 0;
+}
+ul[_ngcontent-sc13]   li[_ngcontent-sc13]   .disabled[_ngcontent-sc13] {
+  cursor: default;
+  pointer-events: none;
+}
+ul[_ngcontent-sc13]   li[_ngcontent-sc13]   .disabled[_ngcontent-sc13]:focus, ul[_ngcontent-sc13]   li[_ngcontent-sc13]   .disabled[_ngcontent-sc13]:hover {
+  color: #fff;
+}
+ul[_ngcontent-sc13]   .logo[_ngcontent-sc13]   svg[_ngcontent-sc13] {
+  display: none;
+  fill: #fff;
+  height: 25px;
+  width: 110px;
+}
+@media (min-width: 1024px) {
+  ul[_ngcontent-sc13]   .logo[_ngcontent-sc13]   svg[_ngcontent-sc13] {
+    display: block;
+    height: 28px;
+    width: 130px;
+  }
+}
+ul[_ngcontent-sc13]   .arrow[_ngcontent-sc13] {
+  fill: #fff;
+  height: 9px;
+  margin: 0 25px 0 0;
+  -webkit-transform: scaleX(-1);
+          transform: scaleX(-1);
+  width: 5px;
+}
+@media (min-width: 1024px) {
+  ul[_ngcontent-sc13]   .arrow[_ngcontent-sc13] {
+    margin: 0 25px;
+    -webkit-transform: scaleX(1);
+            transform: scaleX(1);
+  }
+}
+ul[_ngcontent-sc13]   .arrow.is-last[_ngcontent-sc13] {
+  display: none;
+}
+@media (min-width: 1024px) {
+  ul[_ngcontent-sc13]   .arrow.is-last[_ngcontent-sc13] {
+    display: inline;
+  }
+}</style><style ng-transition="deepmind-website">[_nghost-sc50] {
+  display: block;
+}
+header[_ngcontent-sc50] {
+  position: relative;
+}
+header[_ngcontent-sc50]   .article-image[_ngcontent-sc50] {
+  background: linear-gradient(transparent 60%, #ffe6f0 60%);
+}
+@media (min-width: 768px) {
+  header[_ngcontent-sc50]   .article-image[_ngcontent-sc50] {
+    background: linear-gradient(transparent 30%, #ffe6f0 30%);
+  }
+}
+@media (min-width: 1024px) {
+  header[_ngcontent-sc50]   .article-image[_ngcontent-sc50] {
+    background: transparent;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    z-index: 0;
+  }
+}
+@media (min-width: 2048px) {
+  header[_ngcontent-sc50]   .article-image[_ngcontent-sc50] {
+    max-height: 820px;
+  }
+}
+@media (min-width: 1024px) {
+  header[_ngcontent-sc50]   .article-image[_ngcontent-sc50]   picture[_ngcontent-sc50] {
+    height: auto;
+    position: relative;
+    display: block;
+    margin-left: auto;
+    width: 75%;
+  }
+  header[_ngcontent-sc50]   .article-image[_ngcontent-sc50]   picture[_ngcontent-sc50]::before {
+    content: "";
+    display: block;
+    padding-top: 56.25%;
+    width: 100%;
+  }
+  header[_ngcontent-sc50]   .article-image[_ngcontent-sc50]   picture[_ngcontent-sc50]    > img[_ngcontent-sc50], header[_ngcontent-sc50]   .article-image[_ngcontent-sc50]   picture[_ngcontent-sc50]    > svg[_ngcontent-sc50], header[_ngcontent-sc50]   .article-image[_ngcontent-sc50]   picture[_ngcontent-sc50]    > path[_ngcontent-sc50] {
+    display: block;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+}
+@media (min-width: 2048px) {
+  header[_ngcontent-sc50]   .article-image[_ngcontent-sc50]   picture[_ngcontent-sc50] {
+    width: calc( 1440px - 330px + (100vw - 1440px - 100px) / 2);
+  }
+}
+header[_ngcontent-sc50]   .article-image[_ngcontent-sc50]   picture[_ngcontent-sc50]   img[_ngcontent-sc50] {
+  height: 100%;
+  max-width: none;
+  width: calc(100% - 20px);
+}
+@media (min-width: 768px) {
+  header[_ngcontent-sc50]   .article-image[_ngcontent-sc50]   picture[_ngcontent-sc50]   img[_ngcontent-sc50] {
+    width: calc(100% - 30px);
+  }
+}
+@media (min-width: 1024px) {
+  header[_ngcontent-sc50]   .article-image[_ngcontent-sc50]   picture[_ngcontent-sc50]   img[_ngcontent-sc50] {
+    width: auto;
+  }
+}
+.article-content-container[_ngcontent-sc50] {
+  align-items: flex-start;
+  background-color: #ffe6f0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+@media (min-width: 1024px) {
+  .article-content-container[_ngcontent-sc50] {
+    align-items: flex-end;
+    bottom: 0;
+    margin: 0 auto;
+    position: absolute;
+    z-index: 1;
+  }
+}
+@media (min-width: 1440px) {
+  .article-content-container[_ngcontent-sc50] {
+    padding-left: calc((100% - 1440px) / 2);
+  }
+}
+@media (min-width: 2048px) {
+  .article-content-container[_ngcontent-sc50] {
+    min-width: 745px;
+    width: calc(100% - calc( 1440px - 330px + (100vw - 1440px - 100px) / 2) + 350px);
+  }
+}
+.article-content[_ngcontent-sc50] {
+  padding: 30px 20px 25px;
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .article-content[_ngcontent-sc50] {
+    padding: 25px 125px 25px 30px;
+  }
+}
+@media (min-width: 1024px) {
+  .article-content[_ngcontent-sc50] {
+    margin: 0;
+    max-width: 485px;
+    padding: 50px 50px 30px 60px;
+  }
+}
+@media (min-width: 1440px) {
+  .article-content[_ngcontent-sc50] {
+    max-width: 745px;
+    padding: 50px 50px 30px 90px;
+  }
+}
+.article-meta-container[_ngcontent-sc50] {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.article-meta-container[_ngcontent-sc50]   svg[_ngcontent-sc50] {
+  background-color: #e1144b;
+  border-radius: 50%;
+  fill: #fff;
+  height: 40px;
+  margin: 0 9px 0 0;
+  width: 40px;
+}
+.article-meta-container[_ngcontent-sc50]   .article-category-container[_ngcontent-sc50] {
+  align-items: center;
+  display: flex;
+}
+.dm-h2[_ngcontent-sc50] {
+  margin: 30px 0;
+}
+
+@media (min-width: 1024px) {
+  .article-description[_ngcontent-sc50] {
+    font-size: 36px;
+    line-height: 48px;
+  }
+}
+@media (min-width: 1440px) {
+  .article-description[_ngcontent-sc50] {
+    font-size: 55px;
+    line-height: 65px;
+  }
+}</style><style ng-transition="deepmind-website">[_nghost-sc19] {
+  display: block;
+}
+
+.social-share[_ngcontent-sc19] {
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  padding-top: 15px;
+  text-align: left;
+}
+
+.social-share[_ngcontent-sc19]   p[_ngcontent-sc19] {
+  margin-bottom: 15px;
+}
+
+.social-media[_ngcontent-sc19] {
+  display: flex;
+  list-style: none;
+  padding: 0;
+}
+
+.social-media[_ngcontent-sc19]   li[_ngcontent-sc19] {
+  margin-right: 10px;
+}
+
+.social-media[_ngcontent-sc19]   li[_ngcontent-sc19]:last-child {
+  margin: 0;
+}
+
+.social-media[_ngcontent-sc19]   svg[_ngcontent-sc19] {
+  height: 30px;
+  width: 30px;
+}</style><style ng-transition="deepmind-website">[_nghost-sc45] {
+  display: block;
+}
+.authors-container[_ngcontent-sc45] {
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  padding-top: 15px;
+  text-align: left;
+}
+.authors-container[_ngcontent-sc45]   .title[_ngcontent-sc45] {
+  margin-bottom: 15px;
+}
+.authors-list[_ngcontent-sc45] {
+  display: flex;
+  flex-flow: row wrap;
+  list-style: none;
+  padding: 0;
+}
+@media (min-width: 768px) {
+  .authors-list[_ngcontent-sc45] {
+    display: block;
+  }
+}
+.authors-list[_ngcontent-sc45]   li[_ngcontent-sc45] {
+  align-items: center;
+  display: flex;
+  flex-basis: 50%;
+  margin-bottom: 5px;
+}
+.authors-list[_ngcontent-sc45]   li[_ngcontent-sc45]   .image[_ngcontent-sc45] {
+  align-items: center;
+  background-color: #0053d6;
+  border-radius: 50%;
+  display: flex;
+  height: 50px;
+  justify-content: center;
+  margin-right: 10px;
+  min-width: 50px;
+  overflow: hidden;
+  position: relative;
+  width: 50px;
+  z-index: 0;
+}
+.authors-list[_ngcontent-sc45]   li[_ngcontent-sc45]   .image[_ngcontent-sc45]   p[_ngcontent-sc45] {
+  color: #fff;
+  margin: 0;
+}
+li[_ngcontent-sc45]:not(.external)   .author-name[_ngcontent-sc45] {
+  border: 0;
+  position: relative;
+}
+li[_ngcontent-sc45]:not(.external)   .author-name[_ngcontent-sc45]::before {
+  background-color: #0053d6;
+  bottom: 0;
+  content: "";
+  height: 1px;
+  left: 0;
+  position: absolute;
+  right: 0;
+  -webkit-transform: scaleX(0);
+          transform: scaleX(0);
+  -webkit-transform-origin: bottom right;
+          transform-origin: bottom right;
+  transition: -webkit-transform 0.5s ease;
+  transition: transform 0.5s ease;
+  transition: transform 0.5s ease, -webkit-transform 0.5s ease;
+}
+li[_ngcontent-sc45]:not(.external)   .author-name[_ngcontent-sc45]:hover {
+  color: #0053d6;
+}
+li[_ngcontent-sc45]:not(.external)   .author-name[_ngcontent-sc45]:hover::before {
+  -webkit-transform: scaleX(1);
+          transform: scaleX(1);
+  -webkit-transform-origin: bottom left;
+          transform-origin: bottom left;
+}
+.authors-list[_ngcontent-sc45]   li.external[_ngcontent-sc45]   .image[_ngcontent-sc45] {
+  background-color: #fff;
+}
+.authors-list[_ngcontent-sc45]   li.external[_ngcontent-sc45]   .image[_ngcontent-sc45]   p[_ngcontent-sc45] {
+  color: #123693;
+  font-weight: 700;
+}
+.authors-list[_ngcontent-sc45]   li.external[_ngcontent-sc45]   .author-name[_ngcontent-sc45] {
+  color: #123693;
+}
+.authors-list[_ngcontent-sc45]   li.external[_ngcontent-sc45]   .author-name[_ngcontent-sc45]:hover {
+  color: #123693;
+}
+.footnote[_ngcontent-sc45] {
+  margin: 15px 0 0;
+}
+.footnote[_ngcontent-sc45]   small[_ngcontent-sc45]   sup[_ngcontent-sc45] {
+  top: -1px;
+}</style><style ng-transition="deepmind-website">[_nghost-sc42] {
+  display: block;
+  position: relative;
+}
+.user-content.is-homepage-intro[_ngcontent-sc42] {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  left: 0;
+  margin: 40px auto;
+  max-width: 835px;
+  right: 0;
+  text-align: center;
+}</style><style ng-transition="deepmind-website">[_nghost-sc41] {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+  z-index: 0;
+}
+@media (min-width: 768px) {
+  [_nghost-sc41] {
+    flex-direction: row;
+  }
+}
+@media (min-width: 1440px) {
+  [_nghost-sc41] {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+.is-homepage[_nghost-sc41] {
+  margin: 0 0 40px;
+}
+.video-player-active[_nghost-sc41] {
+  z-index: 40;
+}
+[_nghost-sc41]   .dm-h3[_ngcontent-sc41], [_nghost-sc41]   span[_ngcontent-sc41] {
+  text-align: center;
+}
+.video-wrapper[_ngcontent-sc41] {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.video-container[_ngcontent-sc41] {
+  height: auto;
+  position: relative;
+  display: flex;
+  width: 100%;
+}
+.video-container[_ngcontent-sc41]::before {
+  content: "";
+  display: block;
+  padding-top: 56.25%;
+  width: 100%;
+}
+.video-container[_ngcontent-sc41]    > img[_ngcontent-sc41], .video-container[_ngcontent-sc41]    > svg[_ngcontent-sc41], .video-container[_ngcontent-sc41]    > path[_ngcontent-sc41] {
+  display: block;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+.play[_ngcontent-sc41] {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+button.icon-play[_ngcontent-sc41] {
+  background-color: #ffdb13;
+  border: 0;
+  position: absolute;
+  z-index: 1;
+}
+button.icon-play[_ngcontent-sc41]   svg[_ngcontent-sc41] {
+  fill: #0053d6;
+  height: 50px;
+  padding: 15px 13px 15px 19px;
+  width: 50px;
+}
+@media (min-width: 1440px) {
+  button.icon-play[_ngcontent-sc41]   svg[_ngcontent-sc41] {
+    height: 75px;
+    padding: 25px 23px 25px 29px;
+    width: 75px;
+  }
+}
+button.icon-play[_ngcontent-sc41]:focus, button.icon-play[_ngcontent-sc41]:hover {
+  background-color: #0053d6;
+}
+button.icon-play[_ngcontent-sc41]:focus   svg[_ngcontent-sc41], button.icon-play[_ngcontent-sc41]:hover   svg[_ngcontent-sc41] {
+  fill: #fff;
+}
+.video-copy[_ngcontent-sc41] {
+  padding: 30px 50px;
+  width: 100%;
+}
+@media (min-width: 1024px) {
+  .video-copy[_ngcontent-sc41] {
+    bottom: 0;
+    left: 0;
+    pointer-events: none;
+    position: absolute;
+  }
+}
+.read-time[_ngcontent-sc41] {
+  display: flex;
+  justify-content: center;
+}
+.read-time[_ngcontent-sc41]   svg.clock[_ngcontent-sc41] {
+  height: 17px;
+  margin-right: 8px;
+  width: 17px;
+}</style><style ng-transition="deepmind-website">[_nghost-sc9] {
+  display: block;
+  height: 100%;
+  left: 0;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+.image[_ngcontent-sc9], .video[_ngcontent-sc9] {
+  background: center/cover no-repeat;
+  display: block;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: -1;
+}
+.image[_ngcontent-sc9]   img[_ngcontent-sc9], .video[_ngcontent-sc9]   video[_ngcontent-sc9] {
+  max-width: none;
+  min-height: 100%;
+  min-width: 103%;
+  position: absolute;
+  width: 100%;
+}
+@supports ((-o-object-fit: cover) or (object-fit: cover)) {
+  .image[_ngcontent-sc9]   img[_ngcontent-sc9], .video[_ngcontent-sc9]   video[_ngcontent-sc9] {
+    -o-object-fit: cover;
+       object-fit: cover;
+  }
+}
+.v-position-default[_nghost-sc9]   .image[_ngcontent-sc9]   img[_ngcontent-sc9], .v-position-top[_nghost-sc9]   .image[_ngcontent-sc9]   img[_ngcontent-sc9], .v-position-default[_nghost-sc9]   .video[_ngcontent-sc9]   video[_ngcontent-sc9], .v-position-top[_nghost-sc9]   .video[_ngcontent-sc9]   video[_ngcontent-sc9] {
+  top: 0;
+}
+.v-position-bottom[_nghost-sc9]   .image[_ngcontent-sc9]   img[_ngcontent-sc9], .v-position-bottom[_nghost-sc9]   .video[_ngcontent-sc9]   video[_ngcontent-sc9] {
+  bottom: 0;
+}
+.v-position-center[_nghost-sc9]   .image[_ngcontent-sc9]   img[_ngcontent-sc9], .v-position-center[_nghost-sc9]   .video[_ngcontent-sc9]   video[_ngcontent-sc9] {
+  top: 50%;
+  -webkit-transform: translate(0, -50%);
+          transform: translate(0, -50%);
+}
+.h-position-default[_nghost-sc9]   .image[_ngcontent-sc9]   img[_ngcontent-sc9], .h-position-left[_nghost-sc9]   .image[_ngcontent-sc9]   img[_ngcontent-sc9], .h-position-default[_nghost-sc9]   .video[_ngcontent-sc9]   video[_ngcontent-sc9], .h-position-left[_nghost-sc9]   .video[_ngcontent-sc9]   video[_ngcontent-sc9] {
+  left: 0;
+}
+.h-position-right[_nghost-sc9]   .image[_ngcontent-sc9]   img[_ngcontent-sc9], .h-position-right[_nghost-sc9]   .video[_ngcontent-sc9]   video[_ngcontent-sc9] {
+  right: 0;
+}
+.h-position-center[_nghost-sc9]   .image[_ngcontent-sc9]   img[_ngcontent-sc9], .h-position-center[_nghost-sc9]   .video[_ngcontent-sc9]   video[_ngcontent-sc9] {
+  left: 50%;
+  -webkit-transform: translate(-50%, 0);
+          transform: translate(-50%, 0);
+}
+.h-position-center.v-position-center[_nghost-sc9]   .image[_ngcontent-sc9]   img[_ngcontent-sc9], .h-position-center.v-position-center[_nghost-sc9]   .video[_ngcontent-sc9]   video[_ngcontent-sc9] {
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+dm-modal[_ngcontent-sc9] {
+  pointer-events: auto;
+}</style><style ng-transition="deepmind-website">[_nghost-sc46] {
+  display: block;
+  margin: 30px 0;
+  position: relative;
+  width: 100%;
+}
+.full-width[_nghost-sc46] {
+  margin: 30px 0 30px -30px;
+  width: calc(100% + 80px);
+}
+@media (min-width: 768px) {
+  .full-width[_nghost-sc46] {
+    width: calc(100% + 215px);
+  }
+}
+@media (min-width: 1024px) {
+  .full-width[_nghost-sc46] {
+    margin: 30px 0 30px calc((312px + 100px) * -1);
+    width: calc(100% + 312px + 100px);
+  }
+}
+@media (min-width: 2048px) {
+  .full-width[_nghost-sc46] {
+    margin: 30px 0 30px calc((100vw - 775px) / -2);
+    width: calc(1440px + ((100vw - 1440px) / 2));
+  }
+}
+img[_ngcontent-sc46] {
+  left: 0;
+  position: relative;
+  width: 100%;
+}
+figcaption[_ngcontent-sc46] {
+  margin: 17px 0 0;
+}</style><style ng-transition="deepmind-website">[_nghost-sc39] {
+  display: block;
+  position: relative;
+}
+[_nghost-sc39]   figure[_ngcontent-sc39] {
+  margin: auto;
+}
+[_nghost-sc39]   .iframe-container[_ngcontent-sc39] {
+  height: auto;
+  position: relative;
+  overflow: hidden;
+}
+[_nghost-sc39]   .iframe-container[_ngcontent-sc39]::before {
+  content: "";
+  display: block;
+  padding-top: 56.25%;
+  width: 100%;
+}
+[_nghost-sc39]   .iframe-container[_ngcontent-sc39]    > img[_ngcontent-sc39], [_nghost-sc39]   .iframe-container[_ngcontent-sc39]    > svg[_ngcontent-sc39], [_nghost-sc39]   .iframe-container[_ngcontent-sc39]    > path[_ngcontent-sc39] {
+  display: block;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+[_nghost-sc39]   .iframe-container.portrait[_ngcontent-sc39] {
+  height: auto;
+  position: relative;
+}
+[_nghost-sc39]   .iframe-container.portrait[_ngcontent-sc39]::before {
+  content: "";
+  display: block;
+  padding-top: 177.7777777778%;
+  width: 100%;
+}
+[_nghost-sc39]   .iframe-container.portrait[_ngcontent-sc39]    > img[_ngcontent-sc39], [_nghost-sc39]   .iframe-container.portrait[_ngcontent-sc39]    > svg[_ngcontent-sc39], [_nghost-sc39]   .iframe-container.portrait[_ngcontent-sc39]    > path[_ngcontent-sc39] {
+  display: block;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+[_nghost-sc39]   .iframe-container.square[_ngcontent-sc39] {
+  height: auto;
+  position: relative;
+}
+[_nghost-sc39]   .iframe-container.square[_ngcontent-sc39]::before {
+  content: "";
+  display: block;
+  padding-top: 100%;
+  width: 100%;
+}
+[_nghost-sc39]   .iframe-container.square[_ngcontent-sc39]    > img[_ngcontent-sc39], [_nghost-sc39]   .iframe-container.square[_ngcontent-sc39]    > svg[_ngcontent-sc39], [_nghost-sc39]   .iframe-container.square[_ngcontent-sc39]    > path[_ngcontent-sc39] {
+  display: block;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+[_nghost-sc39]   iframe[_ngcontent-sc39] {
+  display: block;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}</style><style ng-transition="deepmind-website">[_nghost-sc51] {
+  display: block;
+  padding: 45px 0;
+  position: relative;
+}
+@media (min-width: 768px) {
+  [_nghost-sc51] {
+    padding: 50px 0;
+  }
+}
+@media (min-width: 1440px) {
+  [_nghost-sc51] {
+    padding: 70px 0;
+  }
+}
+.text-block[_ngcontent-sc51] {
+  display: flex;
+  flex-direction: column;
+}
+@media (min-width: 1024px) {
+  .text-block[_ngcontent-sc51] {
+    align-items: baseline;
+    flex-direction: row;
+  }
+}
+.text-block[_ngcontent-sc51]   .dm-h3[_ngcontent-sc51] {
+  min-width: 100%;
+}
+@media (min-width: 1024px) {
+  .text-block[_ngcontent-sc51]   .dm-h3[_ngcontent-sc51] {
+    margin: 0 85px 0 0;
+    min-width: 280px;
+  }
+}
+@media (min-width: 1440px) {
+  .text-block[_ngcontent-sc51]   .dm-h3[_ngcontent-sc51] {
+    margin: 0 100px 0 0;
+    min-width: 325px;
+  }
+}
+@media (min-width: 2048px) {
+  .text-block[_ngcontent-sc51]   .dm-h3[_ngcontent-sc51] {
+    min-width: 375px;
+  }
+}
+.text-block[_ngcontent-sc51]   .body[_ngcontent-sc51] {
+  display: flex;
+  flex-direction: column;
+}
+.text-block[_ngcontent-sc51]   .body[_ngcontent-sc51]   dm-link[_ngcontent-sc51] {
+  margin: 0 0 5px;
+}</style></head>
+<body>
+  <script data-gtm-id="GTM-MWTBMKX" src="https://www.gstatic.com/brandstudio/kato/google_tag_manager_component/google_tag_manager_component.js">
+  </script>
+  <noscript>
+    <iframe class="gtm-iframe"
+            height="0"
+            src="https://www.googletagmanager.com/ns.html?id=GTM-MWTBMKX"
+            width="0">
+    </iframe>
+  </noscript>
+
+  <script src="https://www.gstatic.com/brandstudio/kato/cookie_choice_component/cookie_consent_bar.v2.js">
+  </script>
+
+  <dm-app-root _nghost-sc0="" ng-version="8.0.0"><!----><dm-header _ngcontent-sc0="" _nghost-sc2="" class="ng-tns-c2-0"><!----><!----><header _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted"><div _ngcontent-sc2="" class="header-container"><div _ngcontent-sc2="" class="menu-wrapper"><div _ngcontent-sc2="" class="menu-header"><a _ngcontent-sc2="" class="nav-cta logo" aria-label="Home page" routerlink="/" href="/"><!----><svg _ngcontent-sc2="" class="full-logo ng-tns-c2-0 ng-star-inserted" role="img"><use _ngcontent-sc2="" class="ng-tns-c2-0" xlink:href="#deepmind-logo"></use></svg><!----></a><div _ngcontent-sc2="" class="menu-controls"><button _ngcontent-sc2="" class="nav-cta hamburger-menu" aria-label="Toggle menu" aria-pressed="true" role="button"><span _ngcontent-sc2="" class="ng-tns-c2-0"></span><span _ngcontent-sc2="" class="ng-tns-c2-0"></span><span _ngcontent-sc2="" class="ng-tns-c2-0"></span></button><button _ngcontent-sc2="" class="nav-cta search" aria-label="Search publications" aria-pressed="true" role="button"><svg _ngcontent-sc2="" class="ng-tns-c2-0" role="img" viewBox="0 0 27 28"><path _ngcontent-sc2="" class="ng-tns-c2-0" d="M17.537 20.034l1.414-1.414 7.854 7.854-1.414 1.415z"></path><g _ngcontent-sc2="" class="ng-tns-c2-0"><path _ngcontent-sc2="" class="ng-tns-c2-0" d="M11.292 20.583a9.292 9.292 0 1 0 0-18.583 9.292 9.292 0 0 0 0 18.583z"></path><path _ngcontent-sc2="" class="ng-tns-c2-0" d="M11.292 22.583C5.055 22.583 0 17.528 0 11.292 0 5.055 5.055 0 11.292 0c6.236 0 11.291 5.055 11.291 11.292 0 6.236-5.055 11.291-11.291 11.291zm0-2a9.292 9.292 0 1 0 0-18.583 9.292 9.292 0 0 0 0 18.583z"></path></g></svg></button></div></div><!----><nav _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted"><ul _ngcontent-sc2="" class="pages"><!----><li _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted"><a _ngcontent-sc2="" class="nav-cta page-link" href="/about"> About </a></li><li _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted"><a _ngcontent-sc2="" class="nav-cta page-link" href="/research"> Research </a></li><li _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted"><a _ngcontent-sc2="" class="nav-cta page-link" href="/impact"> Impact </a></li><li _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted is-active"><a _ngcontent-sc2="" class="nav-cta page-link" href="/blog"> Blog </a></li><li _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted"><a _ngcontent-sc2="" class="nav-cta page-link" href="/safety-and-ethics"> Safety &amp; Ethics </a></li><li _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted"><a _ngcontent-sc2="" class="nav-cta page-link" href="/careers"> Careers </a></li></ul></nav></div><div _ngcontent-sc2="" class="social-media-wrapper"><ul _ngcontent-sc2="" class="ng-tns-c2-0"><!----><li _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted"><a _ngcontent-sc2="" class="nav-cta icon" rel="noopener" target="_blank" aria-label="Follow us on Twitter!" href="https://twitter.com/DeepMindAI"><svg _ngcontent-sc2="" class="ng-tns-c2-0" role="img"><use _ngcontent-sc2="" class="ng-tns-c2-0" xlink:href="#twitter"></use></svg></a></li><li _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted"><a _ngcontent-sc2="" class="nav-cta icon" rel="noopener" target="_blank" aria-label="Follow us on Youtube!" href="https://www.youtube.com/deepmind"><svg _ngcontent-sc2="" class="ng-tns-c2-0" role="img"><use _ngcontent-sc2="" class="ng-tns-c2-0" xlink:href="#youtube"></use></svg></a></li></ul></div></div></header><!----><!----><!----></dm-header><div _ngcontent-sc0="" class="dm-body"><router-outlet _ngcontent-sc0=""></router-outlet><dm-page-loader class="ng-star-inserted"><dm-component-factory _nghost-sc10=""><!----><dm-blog-article-page _nghost-sc49="" id="" class="ng-star-inserted"><!----><!----><div _ngcontent-sc49="" class="dm-section ng-star-inserted"><dm-breadcrumb _ngcontent-sc49="" _nghost-sc13="" class="theme-dark"><!----><ul _ngcontent-sc13="" class="ng-star-inserted"><!----><li _ngcontent-sc13="" class="ng-star-inserted"><!----><a _ngcontent-sc13="" class="nav-cta logo ng-star-inserted" href="/"><svg _ngcontent-sc13="" role="img"><use _ngcontent-sc13="" xlink:href="#deepmind-logo-text"></use></svg></a><!----></li><li _ngcontent-sc13="" class="ng-star-inserted"><!----><a _ngcontent-sc13="" class="nav-cta ng-star-inserted" tab-index="0" href="/blog"><svg _ngcontent-sc13="" class="arrow" role="img"><use _ngcontent-sc13="" xlink:href="#breadcrumb-arrow"></use></svg> Blog </a><!----></li><li _ngcontent-sc13="" class="ng-star-inserted"><!----><a _ngcontent-sc13="" class="nav-cta disabled ng-star-inserted" tab-index="-1" href="/blog/article/alphastar-mastering-real-time-strategy-game-starcraft-ii"><svg _ngcontent-sc13="" class="arrow is-last" role="img"><use _ngcontent-sc13="" xlink:href="#breadcrumb-arrow"></use></svg> AlphaStar: Mastering the Real-Time Strategy Game StarCraft II </a><!----></li></ul></dm-breadcrumb></div><dm-blog-article-hero _ngcontent-sc49="" _nghost-sc50="" class="ng-star-inserted"><header _ngcontent-sc50=""><!----><div _ngcontent-sc50="" class="article-image ng-star-inserted"><picture _ngcontent-sc50=""><source _ngcontent-sc50="" type="image/webp" srcset="https://lh3.googleusercontent.com/F9E1RhCUcBQG168eZ4ULApN7WiVZrc4uW13aYkiAvCkhOACorHIxr-vseMO981z1hFXpRQxGfXCDikrzwJkDYwN10ZkuPITB-rDA=w1440-rw-v1 1x,https://lh3.googleusercontent.com/F9E1RhCUcBQG168eZ4ULApN7WiVZrc4uW13aYkiAvCkhOACorHIxr-vseMO981z1hFXpRQxGfXCDikrzwJkDYwN10ZkuPITB-rDA=w2048-rw-v1 2x"><source _ngcontent-sc50="" type="image/jpg" srcset="https://lh3.googleusercontent.com/F9E1RhCUcBQG168eZ4ULApN7WiVZrc4uW13aYkiAvCkhOACorHIxr-vseMO981z1hFXpRQxGfXCDikrzwJkDYwN10ZkuPITB-rDA=w1440 1x,https://lh3.googleusercontent.com/F9E1RhCUcBQG168eZ4ULApN7WiVZrc4uW13aYkiAvCkhOACorHIxr-vseMO981z1hFXpRQxGfXCDikrzwJkDYwN10ZkuPITB-rDA=w2048 2x"><img _ngcontent-sc50="" alt="" srcset="https://lh3.googleusercontent.com/F9E1RhCUcBQG168eZ4ULApN7WiVZrc4uW13aYkiAvCkhOACorHIxr-vseMO981z1hFXpRQxGfXCDikrzwJkDYwN10ZkuPITB-rDA=w2048 2x" src="https://lh3.googleusercontent.com/F9E1RhCUcBQG168eZ4ULApN7WiVZrc4uW13aYkiAvCkhOACorHIxr-vseMO981z1hFXpRQxGfXCDikrzwJkDYwN10ZkuPITB-rDA=w1440"></picture></div><div _ngcontent-sc50="" class="article-content-container"><div _ngcontent-sc50="" class="article-content"><div _ngcontent-sc50="" class="article-meta-container"><div _ngcontent-sc50="" class="article-category-container"><svg _ngcontent-sc50="" role="img"><use _ngcontent-sc50="" xlink:href="#article"></use></svg><div _ngcontent-sc50="" class="category"><p _ngcontent-sc50="" class="caption title">Blog post</p><!----><p _ngcontent-sc50="" class="caption ng-star-inserted"> Research </p></div></div><p _ngcontent-sc50="" class="caption date">24 Jan 2019</p></div><h2 _ngcontent-sc50="" class="dm-h2 article-description"> AlphaStar: Mastering the Real-Time Strategy Game StarCraft II </h2></div></div></header></dm-blog-article-hero><div _ngcontent-sc49="" class="blog-article-bg ng-star-inserted"><div _ngcontent-sc49="" class="page-content-container dm-section"><aside _ngcontent-sc49=""><dm-social-share _ngcontent-sc49="" _nghost-sc19=""><!----><!----><div _ngcontent-sc19="" class="social-share ng-star-inserted"><p _ngcontent-sc19="" class="caption title">Share</p><ul _ngcontent-sc19="" class="social-media"><!----><li _ngcontent-sc19="" class="ng-star-inserted"><a _ngcontent-sc19="" class="dm-cta icon" aria-label="Share to Twitter!"><svg _ngcontent-sc19="" role="img"><use _ngcontent-sc19="" xlink:href="#twitter"></use></svg></a></li><li _ngcontent-sc19="" class="ng-star-inserted"><a _ngcontent-sc19="" class="dm-cta icon" aria-label="Share to Facebook!"><svg _ngcontent-sc19="" role="img"><use _ngcontent-sc19="" xlink:href="#facebook"></use></svg></a></li><li _ngcontent-sc19="" class="ng-star-inserted"><a _ngcontent-sc19="" class="dm-cta icon" aria-label="Share to LinkedIn!"><svg _ngcontent-sc19="" role="img"><use _ngcontent-sc19="" xlink:href="#linkedin"></use></svg></a></li></ul></div></dm-social-share><!----><!----><dm-authors-list _ngcontent-sc49="" _nghost-sc45="" class="ng-star-inserted"><address _ngcontent-sc45="" class="authors-container"><p _ngcontent-sc45="" class="caption title">Authors</p><ul _ngcontent-sc45="" class="authors-list"><!----><li _ngcontent-sc45="" class="ng-star-inserted"><div _ngcontent-sc45="" class="image"><!----><p _ngcontent-sc45="" class="ng-star-inserted"><small _ngcontent-sc45="">TAt</small></p><!----></div><!----><a _ngcontent-sc45="" alt="More articles" class="author-name small ng-star-inserted" routerlink="/research" href="/research?filters=%7B%22authors%22:%5B%224794757586354176%22%5D%7D"> The AlphaStar team<!----></a><!----></li></ul><!----></address></dm-authors-list></aside><div _ngcontent-sc49="" class="page-content"><!----><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content">
+
+<div class="g-sm-col-4 g-lg-col-7 g-lg-push-1">
+<div class="rich-text"><p><b>Games have been used for decades as an important way to test and evaluate the performance of artificial intelligence systems. As capabilities have increased, the research community has sought games with increasing complexity that capture different elements of intelligence required to solve scientific and real-world problems. In recent years, StarCraft, considered to be one of the most challenging Real-Time Strategy (RTS) games and one of the longest-played esports of all time, has emerged by consensus as a “grand challenge” for AI research.</b></p></div>
+</div>
+
+</div></dm-body-text><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content"><div class="g-sm-col-4 g-lg-col-7 g-lg-push-1">
+<div class="rich-text">
+<p>Now, we introduce our&nbsp;<a href="https://starcraft2.com/en-us/">StarCraft II</a>&nbsp;program AlphaStar, the first Artificial Intelligence to defeat a top professional player. In a series of test matches held on 19 December, AlphaStar decisively beat&nbsp;<a href="https://www.teamliquid.com/">Team Liquid’s</a>&nbsp;Grzegorz "<a href="https://liquipedia.net/starcraft2/MaNa">MaNa</a>" Komincz,&nbsp;<a href="https://liquipedia.net/starcraft2/2018_StarCraft_II_World_Championship_Series_Circuit/Standings">one of the world’s strongest professional StarCraft players</a>, 5-0, following a successful benchmark match against his team-mate Dario “<a href="https://liquipedia.net/starcraft2/TLO">TLO</a>” Wünsch. The matches took place under professional match conditions on a competitive ladder&nbsp;<a href="https://liquipedia.net/starcraft2/Catalyst_LE">map</a>&nbsp;and without any game restrictions.</p>
+<p>Although there have been significant successes in video games such as&nbsp;<a href="../../../../../../../research/publications/playing-atari-deep-reinforcement-learning/">Atari</a>,&nbsp;<a href="https://www.youtube.com/watch?v=qv6UVOQ0F44&amp;feature=youtu.be&amp;a=">Mario</a>,&nbsp;<a href="https://deepmind.com/blog/article/capture-the-flag-science">Quake III Arena Capture the Flag</a>, and&nbsp;<a href="https://openai.com/blog/openai-five/">Dota 2</a>, until now, AI techniques have struggled to cope with the complexity of StarCraft. The best&nbsp;<a href="https://www.researchgate.net/publication/329202945_StarCraft_AI_Competitions_Bots_and_Tournament_Manager_Software">results</a>&nbsp;were made possible by hand-crafting major elements of the system, imposing significant restrictions on the game rules, giving systems superhuman capabilities, or by playing on simplified maps. Even with these modifications, no system has come anywhere close to rivalling the skill of professional players. In contrast, AlphaStar plays the full game of StarCraft II, using a deep neural network that is trained directly from raw game data by&nbsp;<a href="https://en.wikipedia.org/wiki/Supervised_learning">supervised learning&nbsp;</a>and&nbsp;<a href="https://en.wikipedia.org/wiki/Reinforcement_learning">reinforcement learning</a>.</p>
+</div>
+</div></div></dm-body-text><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-hero-video _nghost-sc41="" class="ng-tns-c41-1 ng-trigger ng-trigger-animateIn ng-star-inserted" id="" colour-theme="ink_dark" style="transform:translateX(0px);opacity:0;"><div _ngcontent-sc41="" class="video-wrapper"><div _ngcontent-sc41="" class="video-container"><div _ngcontent-sc41="" class="play"><button _ngcontent-sc41="" class="dm-cta icon icon-play" aria-label="Play video" role="button"><svg _ngcontent-sc41="" class="ng-tns-c41-1" role="img"><use _ngcontent-sc41="" class="ng-tns-c41-1" xlink:href="#play"></use></svg></button></div><dm-media _ngcontent-sc41="" class="h-position-default v-position-default" _nghost-sc9=""><!----><div _ngcontent-sc9="" class="image ng-star-inserted" style="background-image: url('https://lh3.googleusercontent.com/OSxy7_ofXqKApbD5PPaUZTTge0Lg9FCoM3LufCz5t4KiVc4kY3JiwT_82ikFUmROiy2k0wIWaG34AuADVlnikbj3jnHWJmPFKjhY=w2048');"><!----><!----><!----></div><!----><!----><div _ngcontent-sc9="" class="video ng-star-inserted" style=""><!----></div><!----><!----></dm-media></div><div _ngcontent-sc41="" class="video-copy"><h3 _ngcontent-sc41="" class="dm-h3"> Demonstration game against MaNa </h3><!----></div></div></dm-hero-video><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content">
+
+<div class="g-sm-col-4 g-lg-col-7 g-lg-push-1">
+<div class="rich-text"><h4>The Challenge of StarCraft</h4><p>StarCraft II, created by <a href="https://www.blizzard.com/en-gb/">Blizzard Entertainment</a>, is set in a fictional sci-fi universe and features rich, multi-layered gameplay designed to challenge human intellect. Along with the original title, it is among the biggest and most successful games of all time, with players competing in esports tournaments for more than 20 years.</p></div>
+</div>
+
+</div></dm-body-text><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-image-gallery _nghost-sc46="" id="" class="ng-star-inserted" colour-theme=""><!----><figure _ngcontent-sc46="" class="ng-star-inserted"><!----><picture _ngcontent-sc46="" class="ng-star-inserted"><source _ngcontent-sc46="" type="image/webp" srcset="https://lh3.googleusercontent.com/zaS3shqAQkJGQmpBFFzy3ONM8z4JFkbV_0aZwiIgPqrf03YigClyxzo3qza-IZ8hZqLk8N3_wVPQzbuVU35wXAtm3988QZIRD9v1=w1440-rw-v1 1x,https://lh3.googleusercontent.com/zaS3shqAQkJGQmpBFFzy3ONM8z4JFkbV_0aZwiIgPqrf03YigClyxzo3qza-IZ8hZqLk8N3_wVPQzbuVU35wXAtm3988QZIRD9v1=w2048-rw-v1 2x"><source _ngcontent-sc46="" type="image/jpg" srcset="https://lh3.googleusercontent.com/zaS3shqAQkJGQmpBFFzy3ONM8z4JFkbV_0aZwiIgPqrf03YigClyxzo3qza-IZ8hZqLk8N3_wVPQzbuVU35wXAtm3988QZIRD9v1=w1440 1x,https://lh3.googleusercontent.com/zaS3shqAQkJGQmpBFFzy3ONM8z4JFkbV_0aZwiIgPqrf03YigClyxzo3qza-IZ8hZqLk8N3_wVPQzbuVU35wXAtm3988QZIRD9v1=w2048 2x"><img _ngcontent-sc46="" alt="" srcset="https://lh3.googleusercontent.com/zaS3shqAQkJGQmpBFFzy3ONM8z4JFkbV_0aZwiIgPqrf03YigClyxzo3qza-IZ8hZqLk8N3_wVPQzbuVU35wXAtm3988QZIRD9v1=w2048 2x" src="https://lh3.googleusercontent.com/zaS3shqAQkJGQmpBFFzy3ONM8z4JFkbV_0aZwiIgPqrf03YigClyxzo3qza-IZ8hZqLk8N3_wVPQzbuVU35wXAtm3988QZIRD9v1=w1440"></picture><!----><figcaption _ngcontent-sc46="" class="caption">  </figcaption></figure></dm-image-gallery><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content"><div class="g-sm-col-4 g-lg-col-7 g-lg-push-1">
+<div class="rich-text">
+<p>There are several different ways to play the game, but in esports the most common is a 1v1 tournament played over five games. To start, a player must choose to play one of three different alien “races” - Zerg, Protoss or Terran, all of which have distinctive characteristics and abilities (although professional players tend to specialise in one race). Each player starts with a number of worker units, which gather basic resources to build more units and structures and create new technologies. These in turn allow a player to harvest other resources, build more sophisticated bases and structures, and develop new capabilities that can be used to outwit the opponent. To win, a player must carefully balance big-picture management of their economy - known as macro - along with low-level control of their individual units - known as micro.</p>
+<p>The need to balance short and long-term goals and adapt to unexpected situations, poses a huge challenge for systems that have often tended to be brittle and inflexible. Mastering this problem requires breakthroughs in several AI research challenges including:</p>
+<p></p>
+<ul>
+<li><strong>Game theory:&nbsp;</strong>StarCraft is a game where, just like rock-paper-scissors, there is no single best strategy. As such, an AI training process needs to continually explore and expand the frontiers of strategic knowledge.</li>
+<li><strong>Imperfect information:</strong><strong>&nbsp;</strong>Unlike games like chess or Go where players see everything, crucial information is hidden from a StarCraft player and must be actively discovered by “scouting”.</li>
+<li><strong>Long term planning:</strong>&nbsp;Like many real-world problems cause-and-effect is not instantaneous. Games can also take anywhere up to one hour to complete, meaning actions taken early in the game may not pay off for a long time.</li>
+<li><strong>Real time:&nbsp;</strong>Unlike traditional board games where players alternate turns between subsequent moves, StarCraft players must perform actions continually as the game clock progresses.</li>
+<li><strong>Large action space:</strong>&nbsp;Hundreds of different units and buildings must be controlled at once, in real-time, resulting in a combinatorial space of possibilities. On top of this, actions are hierarchical and can be modified and augmented. Our parameterization of the game has an average of approximately 10 to the 26 legal actions at every time-step.</li>
+</ul>
+<p>Due to these immense challenges, StarCraft has emerged as a “grand challenge” for AI research. Ongoing competitions in both StarCraft and StarCraft II have assessed progress since the launch of the BroodWar API in 2009, including the&nbsp;<a href="http://www.cs.mun.ca/~dchurchill/starcraftaicomp/history.shtml">AIIDE StarCraft AI Competition</a>,&nbsp;CIG StarCraft Competition,&nbsp;<a href="https://sscaitournament.com/">Student StarCraft AI Tournament</a>, and the&nbsp;<a href="https://sc2ai.net/">Starcraft II AI Ladder</a>.&nbsp;To help the community explore these problems further,&nbsp;<a href="../../../../../../../blog/announcements/deepmind-and-blizzard-open-starcraft-ii-ai-research-environment">we worked with Blizzard in 2016 and 2017 to release an open-source set of tools known as PySC2</a>, including the largest set of anonymised game replays ever released. We have now built on this work, combining engineering and algorithmic breakthroughs to produce AlphaStar.</p>
+</div>
+</div></div></dm-body-text><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-image-gallery _nghost-sc46="" id="" class="ng-star-inserted" colour-theme=""><!----><figure _ngcontent-sc46="" class="ng-star-inserted"><!----><picture _ngcontent-sc46="" class="ng-star-inserted"><source _ngcontent-sc46="" type="image/webp" srcset="https://lh3.googleusercontent.com/ckm-3GlBQJ4zbNzfiW97yPqj5PVC0qIbRg42FL35EbDkhWoCNxyNZMMJN-f6VZmLMRbyBk2PArLQ-jDxlHbsE3_YaDUmcxUvMf8M=w1440-rw-v1 1x,https://lh3.googleusercontent.com/ckm-3GlBQJ4zbNzfiW97yPqj5PVC0qIbRg42FL35EbDkhWoCNxyNZMMJN-f6VZmLMRbyBk2PArLQ-jDxlHbsE3_YaDUmcxUvMf8M=w2048-rw-v1 2x"><source _ngcontent-sc46="" type="image/jpg" srcset="https://lh3.googleusercontent.com/ckm-3GlBQJ4zbNzfiW97yPqj5PVC0qIbRg42FL35EbDkhWoCNxyNZMMJN-f6VZmLMRbyBk2PArLQ-jDxlHbsE3_YaDUmcxUvMf8M=w1440 1x,https://lh3.googleusercontent.com/ckm-3GlBQJ4zbNzfiW97yPqj5PVC0qIbRg42FL35EbDkhWoCNxyNZMMJN-f6VZmLMRbyBk2PArLQ-jDxlHbsE3_YaDUmcxUvMf8M=w2048 2x"><img _ngcontent-sc46="" alt="" srcset="https://lh3.googleusercontent.com/ckm-3GlBQJ4zbNzfiW97yPqj5PVC0qIbRg42FL35EbDkhWoCNxyNZMMJN-f6VZmLMRbyBk2PArLQ-jDxlHbsE3_YaDUmcxUvMf8M=w2048 2x" src="https://lh3.googleusercontent.com/ckm-3GlBQJ4zbNzfiW97yPqj5PVC0qIbRg42FL35EbDkhWoCNxyNZMMJN-f6VZmLMRbyBk2PArLQ-jDxlHbsE3_YaDUmcxUvMf8M=w1440"></picture><!----><figcaption _ngcontent-sc46="" class="caption"> A visualisation of the AlphaStar agent during game two of the match against MaNa. This shows the game from the agent’s point of view: the raw observation input to the neural network, the neural network’s internal activations, some of the considered actions the agent can take such as where to click and what to build, and the predicted outcome. MaNa’s view of the game is also shown, although this is not accessible to the agent. </figcaption></figure></dm-image-gallery><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content">
+
+<div class="g-sm-col-4 g-lg-col-7 g-lg-push-1">
+<div class="rich-text"><h4>How AlphaStar is trained</h4><p>AlphaStar’s behaviour is generated by a deep <a href="https://en.wikipedia.org/wiki/Artificial_neural_network">neural network</a> that receives input data from the raw game interface (a list of units and their properties), and outputs a sequence of instructions that constitute an action within the game. More specifically, the neural network architecture applies a <a href="https://papers.nips.cc/paper/7181-attention-is-all-you-need.pdf">transformer</a> torso to the units&nbsp;(similar to&nbsp;<a href="https://openreview.net/forum?id=HkxaFoC9KQ">relational deep reinforcement learning</a>), combined with a <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.676.4320&amp;rep=rep1&amp;type=pdf">deep LSTM core</a>, an <a href="https://arxiv.org/abs/1708.04782">auto-regressive policy head</a> with a <a href="https://papers.nips.cc/paper/5866-pointer-networks.pdf">pointer network</a>, and a <a href="https://www.cs.ox.ac.uk/people/shimon.whiteson/pubs/foersteraaai18.pdf">centralised value baseline</a>. We believe that this advanced model will help with many other challenges in machine learning research that involve long-term sequence modelling and large output spaces such as translation, language modelling and visual representations.</p><p>AlphaStar also uses a novel multi-agent learning algorithm. The neural network was initially trained by supervised learning from anonymised human games <a href="https://github.com/Blizzard/s2client-proto/tree/master/samples/replay-api">released by Blizzard</a>. This allowed AlphaStar to learn, by imitation, the basic micro and macro-strategies used by players on the StarCraft ladder. This initial agent defeated the built-in “Elite” level AI - around gold level for a human player - in 95% of games.</p></div>
+</div>
+
+</div></dm-body-text><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-image-gallery _nghost-sc46="" id="" class="ng-star-inserted" colour-theme=""><!----><figure _ngcontent-sc46="" class="ng-star-inserted"><!----><picture _ngcontent-sc46="" class="ng-star-inserted"><source _ngcontent-sc46="" type="image/webp" srcset="https://lh3.googleusercontent.com/cvT9cUfnLWYGNORn256WsbQglG4E___JKCOppo1CuQmIvt6s1MG_gPkqH1phBTo_COQNDeOs28EwK0W_zKGQZyBqDouAH7IXP0QwYQ=w1440-rw-v1 1x,https://lh3.googleusercontent.com/cvT9cUfnLWYGNORn256WsbQglG4E___JKCOppo1CuQmIvt6s1MG_gPkqH1phBTo_COQNDeOs28EwK0W_zKGQZyBqDouAH7IXP0QwYQ=w2048-rw-v1 2x"><source _ngcontent-sc46="" type="image/jpg" srcset="https://lh3.googleusercontent.com/cvT9cUfnLWYGNORn256WsbQglG4E___JKCOppo1CuQmIvt6s1MG_gPkqH1phBTo_COQNDeOs28EwK0W_zKGQZyBqDouAH7IXP0QwYQ=w1440 1x,https://lh3.googleusercontent.com/cvT9cUfnLWYGNORn256WsbQglG4E___JKCOppo1CuQmIvt6s1MG_gPkqH1phBTo_COQNDeOs28EwK0W_zKGQZyBqDouAH7IXP0QwYQ=w2048 2x"><img _ngcontent-sc46="" alt="" srcset="https://lh3.googleusercontent.com/cvT9cUfnLWYGNORn256WsbQglG4E___JKCOppo1CuQmIvt6s1MG_gPkqH1phBTo_COQNDeOs28EwK0W_zKGQZyBqDouAH7IXP0QwYQ=w2048 2x" src="https://lh3.googleusercontent.com/cvT9cUfnLWYGNORn256WsbQglG4E___JKCOppo1CuQmIvt6s1MG_gPkqH1phBTo_COQNDeOs28EwK0W_zKGQZyBqDouAH7IXP0QwYQ=w1440"></picture><!----><figcaption _ngcontent-sc46="" class="caption"> The AlphaStar league. Agents are initially trained from human game replays, and then trained against other competitors in the league. At each iteration, new competitors are branched, original competitors are frozen, and the matchmaking probabilities and hyperparameters determining the learning objective for each agent may be adapted, increasing the difficulty while preserving diversity. The parameters of the agent are updated by reinforcement learning from the game outcomes against competitors. The final agent is sampled (without replacement) from the Nash distribution of the league. </figcaption></figure></dm-image-gallery><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content"><div class="g-sm-col-4 g-lg-col-7 g-lg-push-1">
+<div class="rich-text">
+<p>These were then used to seed a multi-agent reinforcement learning process. A continuous league was created, with the agents of the league - competitors - playing games against each other, akin to how humans experience the game of StarCraft by playing on the <a href="https://starcraft2.com/en-us/ladder/grandmaster/1">StarCraft ladder</a>. New competitors were dynamically added to the league, by branching from existing competitors; each agent then learns from games against other competitors.&nbsp;This new form of training takes the ideas of <a href="https://deepmind.com/blog/article/capture-the-flag-science">population-based</a> and <a href="https://arxiv.org/pdf/1711.00832.pdf">multi-agent</a> reinforcement learning further, creating a process that continually explores the huge strategic space of StarCraft gameplay, while ensuring that each competitor performs well against the strongest strategies, and does not forget how to defeat earlier ones.</p>
+</div>
+</div></div></dm-body-text><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-image-gallery _nghost-sc46="" id="" class="ng-star-inserted" colour-theme=""><!----><figure _ngcontent-sc46="" class="ng-star-inserted"><!----><picture _ngcontent-sc46="" class="ng-star-inserted"><source _ngcontent-sc46="" type="image/webp" srcset="https://lh3.googleusercontent.com/LEEKJoCvXdQlZhIjUDDaDyLtcBVQPHooKYcQVNZMLz1XGpaP99F6WBXVcQOr2eRXTikUNQiX6z78kHn5zuVVWQHD4C8ce0c1tsDm_o8=w1440-rw-v1 1x,https://lh3.googleusercontent.com/LEEKJoCvXdQlZhIjUDDaDyLtcBVQPHooKYcQVNZMLz1XGpaP99F6WBXVcQOr2eRXTikUNQiX6z78kHn5zuVVWQHD4C8ce0c1tsDm_o8=w2048-rw-v1 2x"><source _ngcontent-sc46="" type="image/jpg" srcset="https://lh3.googleusercontent.com/LEEKJoCvXdQlZhIjUDDaDyLtcBVQPHooKYcQVNZMLz1XGpaP99F6WBXVcQOr2eRXTikUNQiX6z78kHn5zuVVWQHD4C8ce0c1tsDm_o8=w1440 1x,https://lh3.googleusercontent.com/LEEKJoCvXdQlZhIjUDDaDyLtcBVQPHooKYcQVNZMLz1XGpaP99F6WBXVcQOr2eRXTikUNQiX6z78kHn5zuVVWQHD4C8ce0c1tsDm_o8=w2048 2x"><img _ngcontent-sc46="" alt="" srcset="https://lh3.googleusercontent.com/LEEKJoCvXdQlZhIjUDDaDyLtcBVQPHooKYcQVNZMLz1XGpaP99F6WBXVcQOr2eRXTikUNQiX6z78kHn5zuVVWQHD4C8ce0c1tsDm_o8=w2048 2x" src="https://lh3.googleusercontent.com/LEEKJoCvXdQlZhIjUDDaDyLtcBVQPHooKYcQVNZMLz1XGpaP99F6WBXVcQOr2eRXTikUNQiX6z78kHn5zuVVWQHD4C8ce0c1tsDm_o8=w1440"></picture><!----><figcaption _ngcontent-sc46="" class="caption"> Estimate of the Match Making Rating (MMR) - an approximate measure of a player’s skill - for competitors in the AlphaStar league, throughout training, in comparison to Blizzard’s online leagues. </figcaption></figure></dm-image-gallery><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content">
+
+<div class="g-sm-col-4 g-lg-col-7 g-lg-push-1">
+<div class="rich-text"><p>As the league progresses and new competitors are created, new counter-strategies emerge that are able to defeat the earlier strategies. While some new competitors execute a strategy that is merely a refinement of a previous strategy, others discover drastically new strategies consisting of entirely new build orders, unit compositions, and micro-management plans. For example, early on in the AlphaStar league, “cheesy” strategies such as very quick rushes with <a href="https://liquipedia.net/starcraft2/Photon_Cannon_(Legacy_of_the_Void)">Photon Cannons</a> or <a href="https://liquipedia.net/starcraft2/Dark_Templar_(Legacy_of_the_Void)">Dark Templars</a> were favoured. These risky strategies were discarded as training progressed, leading to other strategies: for example, gaining economic strength by over-extending a base with more workers, or sacrificing two <a href="https://liquipedia.net/starcraft2/Oracle_(Legacy_of_the_Void)">Oracles</a> to disrupt an opponent's workers and economy. This process is similar to the way in which players have discovered new strategies, and were able to defeat previously favoured approaches, over the years since StarCraft was released.</p></div>
+</div>
+
+</div></dm-body-text><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-image-gallery _nghost-sc46="" id="" class="ng-star-inserted" colour-theme=""><!----><figure _ngcontent-sc46="" class="ng-star-inserted"><!----><picture _ngcontent-sc46="" class="ng-star-inserted"><source _ngcontent-sc46="" type="image/webp" srcset="https://lh3.googleusercontent.com/O16bCAuHZQkZte_6k7Np0rf4NWKOwZuNFpDjwPWOXeOz5LANINVmya5rp5JIGEZZ1JqvhWrhUxLSWNirpPTPKuR9zw6Ci8yh0PeQBDI=w1440-rw-v1 1x,https://lh3.googleusercontent.com/O16bCAuHZQkZte_6k7Np0rf4NWKOwZuNFpDjwPWOXeOz5LANINVmya5rp5JIGEZZ1JqvhWrhUxLSWNirpPTPKuR9zw6Ci8yh0PeQBDI=w2048-rw-v1 2x"><source _ngcontent-sc46="" type="image/jpg" srcset="https://lh3.googleusercontent.com/O16bCAuHZQkZte_6k7Np0rf4NWKOwZuNFpDjwPWOXeOz5LANINVmya5rp5JIGEZZ1JqvhWrhUxLSWNirpPTPKuR9zw6Ci8yh0PeQBDI=w1440 1x,https://lh3.googleusercontent.com/O16bCAuHZQkZte_6k7Np0rf4NWKOwZuNFpDjwPWOXeOz5LANINVmya5rp5JIGEZZ1JqvhWrhUxLSWNirpPTPKuR9zw6Ci8yh0PeQBDI=w2048 2x"><img _ngcontent-sc46="" alt="" srcset="https://lh3.googleusercontent.com/O16bCAuHZQkZte_6k7Np0rf4NWKOwZuNFpDjwPWOXeOz5LANINVmya5rp5JIGEZZ1JqvhWrhUxLSWNirpPTPKuR9zw6Ci8yh0PeQBDI=w2048 2x" src="https://lh3.googleusercontent.com/O16bCAuHZQkZte_6k7Np0rf4NWKOwZuNFpDjwPWOXeOz5LANINVmya5rp5JIGEZZ1JqvhWrhUxLSWNirpPTPKuR9zw6Ci8yh0PeQBDI=w1440"></picture><!----><figcaption _ngcontent-sc46="" class="caption"> As training progressed, the league creating AlphaStar changed the blend of units that it builds. </figcaption></figure></dm-image-gallery><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content">
+
+<div class="g-sm-col-4 g-lg-col-7 g-lg-push-1">
+<div class="rich-text"><p>To encourage diversity in the league, each agent has its own learning objective: for example, which competitors should this agent aim to beat, and any additional internal motivations that bias how the agent plays. One agent may have an objective to beat one specific competitor, while another agent may have to beat a whole distribution of competitors, but do so by building more of a particular game unit. These learning objectives are adapted during training.</p></div>
+</div>
+
+</div></dm-body-text><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-iframe _nghost-sc39="" id="" colour-theme="" class="ng-star-inserted"><figure _ngcontent-sc39="" style="width:100%;"><div _ngcontent-sc39="" class="iframe-container portrait"><iframe _ngcontent-sc39="" frameborder="no" scrolling="no" width="100%" aria-label="Interactive visualisation which shows the competitors of the AlphaStar league." src="https://deepmind-media.storage.googleapis.com/research/alphastar/index.html"></iframe></div><!----><figcaption _ngcontent-sc39="" class="caption ng-star-inserted"> Interactive visualisation which shows the competitors of the AlphaStar league. The agents that played against TLO and MaNa are specifically labelled. </figcaption></figure></dm-iframe><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content">
+
+<div class="g-sm-col-4 g-lg-col-7 g-lg-push-1">
+<div class="rich-text"><p>The neural network weights of each agent are updated by reinforcement learning from its games against competitors, to optimise its personal learning objective. The weight update rule is an efficient and novel <a href="https://arxiv.org/pdf/1802.01561.pdf">off-policy actor-critic</a> reinforcement learning algorithm with <a href="https://link.springer.com/content/pdf/10.1023%2FA%3A1022628806385.pdf">experience replay</a>, &nbsp;<a href="http://proceedings.mlr.press/v80/oh18b/oh18b.pdf">self-imitation learning</a> and <a href="https://arxiv.org/pdf/1511.06295.pdf">policy distillation</a>.</p></div>
+</div>
+
+</div></dm-body-text><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-image-gallery _nghost-sc46="" id="" class="ng-star-inserted" colour-theme=""><!----><figure _ngcontent-sc46="" class="ng-star-inserted"><!----><picture _ngcontent-sc46="" class="ng-star-inserted"><source _ngcontent-sc46="" type="image/webp" srcset="https://lh3.googleusercontent.com/-VHYTOd6hta4tWLMjIcaC3IzrCbO9XnC1BamV7Vo09dpRdeQgjccRmHAY2FAPJ_kDCSPZGENuB3zHaI61EmuKqR6hej5myAH0KlVmPk=w1440-rw-v1 1x,https://lh3.googleusercontent.com/-VHYTOd6hta4tWLMjIcaC3IzrCbO9XnC1BamV7Vo09dpRdeQgjccRmHAY2FAPJ_kDCSPZGENuB3zHaI61EmuKqR6hej5myAH0KlVmPk=w2048-rw-v1 2x"><source _ngcontent-sc46="" type="image/jpg" srcset="https://lh3.googleusercontent.com/-VHYTOd6hta4tWLMjIcaC3IzrCbO9XnC1BamV7Vo09dpRdeQgjccRmHAY2FAPJ_kDCSPZGENuB3zHaI61EmuKqR6hej5myAH0KlVmPk=w1440 1x,https://lh3.googleusercontent.com/-VHYTOd6hta4tWLMjIcaC3IzrCbO9XnC1BamV7Vo09dpRdeQgjccRmHAY2FAPJ_kDCSPZGENuB3zHaI61EmuKqR6hej5myAH0KlVmPk=w2048 2x"><img _ngcontent-sc46="" alt="" srcset="https://lh3.googleusercontent.com/-VHYTOd6hta4tWLMjIcaC3IzrCbO9XnC1BamV7Vo09dpRdeQgjccRmHAY2FAPJ_kDCSPZGENuB3zHaI61EmuKqR6hej5myAH0KlVmPk=w2048 2x" src="https://lh3.googleusercontent.com/-VHYTOd6hta4tWLMjIcaC3IzrCbO9XnC1BamV7Vo09dpRdeQgjccRmHAY2FAPJ_kDCSPZGENuB3zHaI61EmuKqR6hej5myAH0KlVmPk=w1440"></picture><!----><figcaption _ngcontent-sc46="" class="caption"> The figure shows how one agent (black dot), which was ultimately selected to play against MaNa, evolved its strategy and competitors (coloured dots) during the course of training. Each dot represents a competitor in the AlphaStar league. The position of the dot represents its strategy (inset), and the size of the dot represents how frequently it is selected as an opponent for the MaNa agent during training. </figcaption></figure></dm-image-gallery><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content">
+
+<div class="g-sm-col-4 g-lg-col-7 g-lg-push-1">
+<div class="rich-text"><p>In order to train AlphaStar, we built a highly scalable distributed training setup using <a href="https://cloud.google.com/tpu/">Google's v3 TPUs that</a> supports a population of agents learning from many thousands of parallel instances of StarCraft II. The AlphaStar league was run for 14 days, using 16 TPUs for each agent. During training, each agent experienced up to 200 years of real-time StarCraft play. The final AlphaStar agent consists of the components of the <a href="https://papers.nips.cc/paper/7588-re-evaluating-evaluation.pdf">Nash distribution of the league</a> - in other words, the most effective mixture of strategies that have been discovered - that run on a single desktop GPU.</p><p>A full technical description of this work is being prepared for publication in a peer-reviewed journal.</p></div>
+</div>
+
+</div></dm-body-text><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-image-gallery _nghost-sc46="" id="" class="ng-star-inserted" colour-theme=""><!----><figure _ngcontent-sc46="" class="ng-star-inserted"><!----><picture _ngcontent-sc46="" class="ng-star-inserted"><source _ngcontent-sc46="" type="image/webp" srcset="https://lh3.googleusercontent.com/lEDnu0YXGjOH5d3tB0rgNV6pHJj45psRGe2dK5q2ISvYID2sf-8XVynYOLmPFcf4jOtNuot10OCGqd9dY3V-heIzhKKDIEjSScKm=w1440-rw-v1 1x,https://lh3.googleusercontent.com/lEDnu0YXGjOH5d3tB0rgNV6pHJj45psRGe2dK5q2ISvYID2sf-8XVynYOLmPFcf4jOtNuot10OCGqd9dY3V-heIzhKKDIEjSScKm=w2048-rw-v1 2x"><source _ngcontent-sc46="" type="image/jpg" srcset="https://lh3.googleusercontent.com/lEDnu0YXGjOH5d3tB0rgNV6pHJj45psRGe2dK5q2ISvYID2sf-8XVynYOLmPFcf4jOtNuot10OCGqd9dY3V-heIzhKKDIEjSScKm=w1440 1x,https://lh3.googleusercontent.com/lEDnu0YXGjOH5d3tB0rgNV6pHJj45psRGe2dK5q2ISvYID2sf-8XVynYOLmPFcf4jOtNuot10OCGqd9dY3V-heIzhKKDIEjSScKm=w2048 2x"><img _ngcontent-sc46="" alt="" srcset="https://lh3.googleusercontent.com/lEDnu0YXGjOH5d3tB0rgNV6pHJj45psRGe2dK5q2ISvYID2sf-8XVynYOLmPFcf4jOtNuot10OCGqd9dY3V-heIzhKKDIEjSScKm=w2048 2x" src="https://lh3.googleusercontent.com/lEDnu0YXGjOH5d3tB0rgNV6pHJj45psRGe2dK5q2ISvYID2sf-8XVynYOLmPFcf4jOtNuot10OCGqd9dY3V-heIzhKKDIEjSScKm=w1440"></picture><!----><figcaption _ngcontent-sc46="" class="caption"> The Nash distribution over competitors as the AlphaStar league progressed and new competitors were created.  The Nash distribution, which is the least exploitable set of complementary competitors, weights the newest competitors most highly, demonstrating continual progress against all previous competitors. </figcaption></figure></dm-image-gallery><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content">
+
+<div class="g-sm-col-4 g-lg-col-7 g-lg-push-1">
+<div class="rich-text"><h4>How AlphaStar plays and observes the game</h4><p>Professional StarCraft players such as TLO and MaNa are able to issue hundreds of <a href="https://github.com/Blizzard/s2client-proto/blob/master/docs/protocol.md#apm">actions per minute</a> (APM) on average. This is far fewer than the majority of <a href="http://www.cs.mun.ca/~dchurchill/starcraftaicomp/results.shtml">existing bots</a>, which control each unit independently and consistently maintain thousands or even tens of thousands of APMs.</p><p>In its games against TLO and MaNa, AlphaStar had an average APM of around 280, significantly lower than the professional players, although its actions may be more precise. This lower APM is, in part, because AlphaStar starts its training using replays and thus mimics the way humans play the game. Additionally, AlphaStar reacts with a delay between observation and action of 350ms on average.</p></div>
+</div>
+
+</div></dm-body-text><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-image-gallery _nghost-sc46="" id="" class="ng-star-inserted" colour-theme=""><!----><figure _ngcontent-sc46="" class="ng-star-inserted"><!----><picture _ngcontent-sc46="" class="ng-star-inserted"><source _ngcontent-sc46="" type="image/webp" srcset="https://lh3.googleusercontent.com/HJbuqsbvAYwsUxeQUGsTWV4FIc8W9NpiXwzLWKW9PPR8v7t1c3MWiBaNbhFyeKQmTiXgIh-i0XFjEHMXBS5V8RSDLdkWUPL27GoVRw=w1440-rw-v1 1x,https://lh3.googleusercontent.com/HJbuqsbvAYwsUxeQUGsTWV4FIc8W9NpiXwzLWKW9PPR8v7t1c3MWiBaNbhFyeKQmTiXgIh-i0XFjEHMXBS5V8RSDLdkWUPL27GoVRw=w2048-rw-v1 2x"><source _ngcontent-sc46="" type="image/jpg" srcset="https://lh3.googleusercontent.com/HJbuqsbvAYwsUxeQUGsTWV4FIc8W9NpiXwzLWKW9PPR8v7t1c3MWiBaNbhFyeKQmTiXgIh-i0XFjEHMXBS5V8RSDLdkWUPL27GoVRw=w1440 1x,https://lh3.googleusercontent.com/HJbuqsbvAYwsUxeQUGsTWV4FIc8W9NpiXwzLWKW9PPR8v7t1c3MWiBaNbhFyeKQmTiXgIh-i0XFjEHMXBS5V8RSDLdkWUPL27GoVRw=w2048 2x"><img _ngcontent-sc46="" alt="" srcset="https://lh3.googleusercontent.com/HJbuqsbvAYwsUxeQUGsTWV4FIc8W9NpiXwzLWKW9PPR8v7t1c3MWiBaNbhFyeKQmTiXgIh-i0XFjEHMXBS5V8RSDLdkWUPL27GoVRw=w2048 2x" src="https://lh3.googleusercontent.com/HJbuqsbvAYwsUxeQUGsTWV4FIc8W9NpiXwzLWKW9PPR8v7t1c3MWiBaNbhFyeKQmTiXgIh-i0XFjEHMXBS5V8RSDLdkWUPL27GoVRw=w1440"></picture><!----><figcaption _ngcontent-sc46="" class="caption"> The distribution of AlphaStar’s APMs in its matches against MaNa and TLO and the total delay between observations and actions. CLARIFICATION (29/01/19): TLO’s APM appears higher than both AlphaStar and MaNa because of his use of rapid-fire hot-keys and use of the “remove and add to control group” key bindings. Also note that AlphaStar's effective APM bursts are sometimes higher than both players. </figcaption></figure></dm-image-gallery><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content">
+
+<div class="g-sm-col-4 g-lg-col-7 g-lg-push-1">
+<div class="rich-text"><p>During the matches against TLO and MaNa, AlphaStar interacted with the StarCraft game engine directly via its raw interface, meaning that it could observe the attributes of its own and its opponent’s visible units on the map directly, without having to move the camera - effectively playing with a zoomed out view of the game. In contrast, human players must explicitly manage an "economy of attention" to decide where to focus the camera. However, analysis of AlphaStar’s games suggests that it manages an implicit focus of attention. On average, agents “switched context” about 30 times per minute, similar to MaNa or TLO.</p><p>Additionally, and subsequent to the matches, we developed a second version of AlphaStar. Like human players, this version of AlphaStar chooses when and where to move the camera, its perception is restricted to on-screen information, and action locations are restricted to its viewable region.</p></div>
+</div>
+
+</div></dm-body-text><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-image-gallery _nghost-sc46="" id="" class="ng-star-inserted" colour-theme=""><!----><figure _ngcontent-sc46="" class="ng-star-inserted"><!----><picture _ngcontent-sc46="" class="ng-star-inserted"><source _ngcontent-sc46="" type="image/webp" srcset="https://lh3.googleusercontent.com/4y-HyrR_zERXYTELNYGmoFjtdHDeKOw8_LcRLk1a-sWQLUA3Lk8G278d4er2I19gmw717JbOdKDn_4O_scSXwoeSxs34YUS7J5c8H80=w1440-rw-v1 1x,https://lh3.googleusercontent.com/4y-HyrR_zERXYTELNYGmoFjtdHDeKOw8_LcRLk1a-sWQLUA3Lk8G278d4er2I19gmw717JbOdKDn_4O_scSXwoeSxs34YUS7J5c8H80=w2048-rw-v1 2x"><source _ngcontent-sc46="" type="image/jpg" srcset="https://lh3.googleusercontent.com/4y-HyrR_zERXYTELNYGmoFjtdHDeKOw8_LcRLk1a-sWQLUA3Lk8G278d4er2I19gmw717JbOdKDn_4O_scSXwoeSxs34YUS7J5c8H80=w1440 1x,https://lh3.googleusercontent.com/4y-HyrR_zERXYTELNYGmoFjtdHDeKOw8_LcRLk1a-sWQLUA3Lk8G278d4er2I19gmw717JbOdKDn_4O_scSXwoeSxs34YUS7J5c8H80=w2048 2x"><img _ngcontent-sc46="" alt="" srcset="https://lh3.googleusercontent.com/4y-HyrR_zERXYTELNYGmoFjtdHDeKOw8_LcRLk1a-sWQLUA3Lk8G278d4er2I19gmw717JbOdKDn_4O_scSXwoeSxs34YUS7J5c8H80=w2048 2x" src="https://lh3.googleusercontent.com/4y-HyrR_zERXYTELNYGmoFjtdHDeKOw8_LcRLk1a-sWQLUA3Lk8G278d4er2I19gmw717JbOdKDn_4O_scSXwoeSxs34YUS7J5c8H80=w1440"></picture><!----><figcaption _ngcontent-sc46="" class="caption"> Performance of AlphaStar using the raw interface and the camera interface, showing the newly trained camera agent rapidly catching up with and almost equalling the performance of the agent using the raw interface. </figcaption></figure></dm-image-gallery><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content">
+
+<div class="g-sm-col-4 g-lg-col-7 g-lg-push-1">
+<div class="rich-text"><p>We trained two new agents, one using the raw interface and one that must learn to control the camera, against the AlphaStar league. Each agent was initially trained by supervised learning from human data followed by the reinforcement learning procedure outlined above. The version of AlphaStar using the camera interface was almost as strong as the raw interface, exceeding 7000 MMR on our internal leaderboard.&nbsp;In an exhibition match, MaNa defeated a prototype version of AlphaStar using the camera interface, that was trained for just 7 days. We hope to evaluate a fully trained instance of the camera interface in the near future.&nbsp;</p><p>These results suggest that AlphaStar’s success against MaNa and TLO was in fact due to superior macro and micro-strategic decision-making, rather than superior click-rate, faster reaction times, or the raw&nbsp;interface.</p></div>
+</div>
+
+</div></dm-body-text><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content">
+
+<div class="g-sm-col-4 g-lg-col-7 g-lg-push-1">
+<div class="rich-text"><h4>Evaluating AlphaStar against professional players</h4><p>The game of StarCraft allows players to select one of three alien races: Terran, Zerg or Protoss. We elected for AlphaStar to specialise in playing a single race for now - Protoss - to reduce training time and variance when reporting results from our internal league. Note that the same training pipeline could be applied to any race. Our agents were trained to play StarCraft II (v4.6.2) in Protoss v Protoss games, on the CatalystLE ladder map. To evaluate AlphaStar’s performance, we initially tested our agents against&nbsp;<a href="https://liquipedia.net/starcraft2/TLO">TLO</a>: a&nbsp;<a href="https://liquipedia.net/starcraft2/2018_StarCraft_II_World_Championship_Series_Circuit/Standings">top professional Zerg player</a>&nbsp;and a GrandMaster level Protoss player. AlphaStar won the match 5-0, using a wide variety of units and build orders. “I was surprised by how strong the agent was,” he said. “AlphaStar takes well-known strategies and turns them on their head. The agent demonstrated strategies I hadn’t thought of before, which means there may still be new ways of playing the game that we haven’t fully explored yet.”</p></div>
+</div>
+
+</div></dm-body-text><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-hero-video _nghost-sc41="" class="ng-tns-c41-2 ng-trigger ng-trigger-animateIn ng-star-inserted" id="" colour-theme="ink_dark" style="transform:translateX(0px);opacity:0;"><div _ngcontent-sc41="" class="video-wrapper"><div _ngcontent-sc41="" class="video-container"><div _ngcontent-sc41="" class="play"><button _ngcontent-sc41="" class="dm-cta icon icon-play" aria-label="Play video" role="button"><svg _ngcontent-sc41="" class="ng-tns-c41-2" role="img"><use _ngcontent-sc41="" class="ng-tns-c41-2" xlink:href="#play"></use></svg></button></div><dm-media _ngcontent-sc41="" class="h-position-default v-position-default" _nghost-sc9=""><!----><div _ngcontent-sc9="" class="image ng-star-inserted" style="background-image: url('https://lh3.googleusercontent.com/re5rtK0N0WXVY8bsNbAv_s2l59nvO2K7UswyCMia16nwhtcV7aD6uQHWrpU2DyXgBAEF3KEQDY7YomClyw6HJ75a03f-Pvz7_rKW=w2048');"><!----><!----><!----></div><!----><!----><div _ngcontent-sc9="" class="video ng-star-inserted" style=""><!----></div><!----><!----></dm-media></div><div _ngcontent-sc41="" class="video-copy"><h3 _ngcontent-sc41="" class="dm-h3"> DeepMind Scholars: Shaquille's story </h3><!----><div _ngcontent-sc41="" class="read-time ng-tns-c41-2 ng-star-inserted" style=""><svg _ngcontent-sc41="" class="clock" role="img"><use _ngcontent-sc41="" class="ng-tns-c41-2" xlink:href="#clock"></use></svg><!----><p _ngcontent-sc41="" class="caption ng-tns-c41-2 ng-star-inserted"> 3 mins </p></div></div></div></dm-hero-video><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content">
+
+<div class="g-sm-col-4 g-lg-col-7 g-lg-push-1">
+<div class="rich-text"><p>After training our agents for an additional week, we played against MaNa, <a href="https://liquipedia.net/starcraft2/2018_StarCraft_II_World_Championship_Series_Circuit/Standings">one of the world’s strongest StarCraft II players</a>, and among the 10 strongest Protoss players. AlphaStar again won by 5 games to 0, demonstrating strong micro and macro-strategic skills. “I was impressed to see AlphaStar pull off advanced moves and different strategies across almost every game, using a very human style of gameplay I wouldn’t have expected,” he said. “I’ve realised how much my gameplay relies on forcing mistakes and being able to exploit human reactions, so this has put the game in a whole new light for me. We’re all excited to see what comes next.”</p></div>
+</div>
+
+</div></dm-body-text><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content"><div class="g-sm-col-4 g-lg-col-7 g-lg-push-1">
+<div class="rich-text">
+<h4>AlphaStar and other complex problems</h4>
+<p>While StarCraft is just a game, albeit a complex one, we think that the techniques behind AlphaStar could be useful in solving other problems. For example, its neural network architecture is capable of modelling very long sequences of likely actions - with games often lasting up to an hour with tens of thousands of moves - based on imperfect information. Each frame of StarCraft is used as one step of input, with the neural network predicting the expected sequence of actions for the rest of the game after every frame. The fundamental problem of making complex predictions over very long sequences of data appears in many real world challenges, such as weather prediction, climate modelling, language understanding and more. We’re very excited about the potential to make significant advances in these domains using learnings and developments from the AlphaStar project.</p>
+<p>We also think some of our training methods may prove useful in the study of safe and robust AI. One of the great challenges in AI is the number of ways in which systems could go wrong, and StarCraft pros have previously found it easy to beat AI systems by finding inventive ways to provoke these mistakes. AlphaStar’s innovative league-based training process finds the approaches that are most reliable and least likely to go wrong. We’re excited by the potential for this kind of approach to help improve the safety and robustness of AI systems in general, particularly in safety-critical domains like energy, where it’s essential to address complex edge cases.</p>
+<p>Achieving the highest levels of StarCraft play represents a major breakthrough in one of the most complex video games ever created. We believe that these advances, alongside other recent progress in projects such as <a href="../../../../../../../blog/article/alphazero-shedding-new-light-grand-games-chess-shogi-and-go">AlphaZero</a> and <a href="../../../../../../../blog/article/alphafold">AlphaFold</a>, represent a step forward in our mission to create intelligent systems that will one day help us unlock novel solutions to some of the world’s most important and fundamental scientific problems.</p>
+<p><em><strong>We are thankful for the support and immense skill of Team Liquid’s TLO and MaNa. We are also grateful for the continued support of Blizzard and the StarCraft community for making this work possible.</strong></em></p>
+<p><strong>AlphaStar Team:</strong></p>
+<p><em>Oriol Vinyals, Igor Babuschkin, Junyoung Chung, Michael Mathieu, Max Jaderberg, Wojtek Czarnecki, Andrew Dudzik, Aja Huang, Petko Georgiev, Richard Powell, Timo Ewalds, Dan Horgan, Manuel Kroiss, Ivo Danihelka, John Agapiou, Junhyuk Oh, Valentin Dalibard, David Choi, Laurent Sifre, Yury Sulsky, Sasha Vezhnevets, James Molloy, Trevor Cai, David Budden, Tom Paine, Caglar Gulcehre, Ziyu Wang, Tobias Pfaff, Toby Pohlen,&nbsp;</em><em>Yuhuai Wu,</em><em>&nbsp;Dani Yogatama, Julia Cohen, Katrina McKinney, Oliver Smith, Tom Schaul, Timothy Lillicrap, Chris Apps, Koray Kavukcuoglu, Demis Hassabis, David Silver</em></p>
+<p><strong>With thanks to: </strong></p>
+<p><em>Ali Razavi, Daniel Toyama, David Balduzzi, Doug Fritz, Eser Aygün, Florian Strub, Guillaume Alain, Haoran Tang,&nbsp;Jaume Sanchez,&nbsp;Jonathan Fildes, Julian Schrittwieser, Justin Novosad, Karen Simonyan, Karol Kurach, Philippe Hamel,&nbsp;Remi Leblond,&nbsp;Ricardo Barreira, Scott Reed, Sergey Bartunov, Shibl Mourad, Steve Gaffney, Thomas Hubert, the <a href="../../../../../../../blog/announcements/deepmind-and-blizzard-open-starcraft-ii-ai-research-environment">team that created PySC2</a>&nbsp;and the whole DeepMind Team, with special thanks to the research platform team, comms and events teams.</em></p>
+</div>
+</div></div></dm-body-text><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-links _nghost-sc51="" id="" class="ng-star-inserted"><div _ngcontent-sc51="" class="text-block dm-section"><!----><div _ngcontent-sc51="" class="body"><!----><!----><!----><dm-link _ngcontent-sc51="" classlist="dm-cta link caption" _nghost-sc8="" class="ng-star-inserted"><!----><!----><a _ngcontent-sc8="" aria-label="Read more on DeepMind" class="dm-cta link caption ng-star-inserted" href="/research/open-source/alphastar-resources"><!----><!----><div _ngcontent-sc8="" class="icon ng-star-inserted"><svg _ngcontent-sc8="" role="img"><use _ngcontent-sc8="" xlink:href="#read-more"></use></svg></div><!----><span _ngcontent-sc8="" class="ng-star-inserted">Download all 11 replays of the games against TLO and MaNA</span><!----><!----><!----></a><!----><!----></dm-link><!----><!----><!----><dm-link _ngcontent-sc51="" classlist="dm-cta link caption" _nghost-sc8="" class="ng-star-inserted"><!----><!----><a _ngcontent-sc8="" aria-label="Read more on an external page" class="external dm-cta link caption ng-star-inserted" rel="noopener" target="_blank" href="https://www.youtube.com/watch?v=cUTMhmVh1qs"><!----><!----><div _ngcontent-sc8="" class="icon ng-star-inserted"><svg _ngcontent-sc8="" role="img"><use _ngcontent-sc8="" xlink:href="#external"></use></svg></div><!----><span _ngcontent-sc8="" class="ng-star-inserted">Watch the exhibition game against MaNa</span><!----><!----><!----></a><!----><!----><!----></dm-link><!----><!----><!----><dm-link _ngcontent-sc51="" classlist="dm-cta link caption" _nghost-sc8="" class="ng-star-inserted"><!----><!----><a _ngcontent-sc8="" aria-label="Read more on an external page" class="external dm-cta link caption ng-star-inserted" rel="noopener" target="_blank" href="https://www.youtube.com/watch?v=HcZ48JDamyk"><!----><!----><div _ngcontent-sc8="" class="icon ng-star-inserted"><svg _ngcontent-sc8="" role="img"><use _ngcontent-sc8="" xlink:href="#external"></use></svg></div><!----><span _ngcontent-sc8="" class="ng-star-inserted">Watch a visualisation of AlphaStar’s entire second game against MaNa</span><!----><!----><!----></a><!----><!----><!----></dm-link><!----><!----><!----><dm-link _ngcontent-sc51="" classlist="dm-cta link caption" _nghost-sc8="" class="ng-star-inserted"><!----><!----><a _ngcontent-sc8="" aria-label="Read more on an external page" class="external dm-cta link caption ng-star-inserted" rel="noopener" target="_blank" href="https://youtu.be/6EQAsrfUIyo"><!----><!----><div _ngcontent-sc8="" class="icon ng-star-inserted"><svg _ngcontent-sc8="" role="img"><use _ngcontent-sc8="" xlink:href="#external"></use></svg></div><!----><span _ngcontent-sc8="" class="ng-star-inserted">Watch game highlights of AlphaStar versus TLO and MaNa</span><!----><!----><!----></a><!----><!----><!----></dm-link><!----><!----><!----><dm-link _ngcontent-sc51="" classlist="dm-cta link caption" _nghost-sc8="" class="ng-star-inserted"><!----><!----><a _ngcontent-sc8="" aria-label="Read more on an external page" class="external dm-cta link caption ng-star-inserted" rel="noopener" target="_blank" href="https://deepmind.com/documents/292/alphastar_reference_bibtex.txt"><!----><!----><div _ngcontent-sc8="" class="icon ng-star-inserted"><svg _ngcontent-sc8="" role="img"><use _ngcontent-sc8="" xlink:href="#external"></use></svg></div><!----><span _ngcontent-sc8="" class="ng-star-inserted">Watch game highlights of AlphaStar versus TLO and MaNa</span><!----><!----><!----></a><!----><!----><!----></dm-link><!----><!----><!----><dm-link _ngcontent-sc51="" classlist="dm-cta link caption" _nghost-sc8="" class="ng-star-inserted"><!----><!----><a _ngcontent-sc8="" aria-label="Read more on an external page" class="external dm-cta link caption ng-star-inserted" rel="noopener" target="_blank" href="https://storage.googleapis.com/deepmind-media/papers/alphastar_reference_bibtex.txt"><!----><!----><div _ngcontent-sc8="" class="icon ng-star-inserted"><svg _ngcontent-sc8="" role="img"><use _ngcontent-sc8="" xlink:href="#external"></use></svg></div><!----><span _ngcontent-sc8="" class="ng-star-inserted">To cite this blog please use this BibTeX</span><!----><!----><!----></a><!----><!----><!----></dm-link><!----></div></div></dm-links><!----></dm-component-factory></div></div></div><!----><!----><!----></dm-blog-article-page><!----></dm-component-factory></dm-page-loader><div _ngcontent-sc0="" class="svg-elements"></div><dm-footer _ngcontent-sc0="" _nghost-sc3=""><!----><!----><footer _ngcontent-sc3="" colour-theme="ink_dark" class="ng-star-inserted"><div _ngcontent-sc3="" class="body-wrapper dm-section"><div _ngcontent-sc3="" class="logo"><a _ngcontent-sc3="" aria-label="Home page" class="dm-cta" routerlink="/" href="/"><svg _ngcontent-sc3="" role="img"><use _ngcontent-sc3="" xlink:href="#deepmind-logo-text"></use></svg></a></div><div _ngcontent-sc3="" class="body"><!----><div _ngcontent-sc3="" class="categories ng-star-inserted"><!----><div _ngcontent-sc3="" class="column ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/about"> About </a><ul _ngcontent-sc3=""><!----><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/about#our_story"> Our story </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/about#recent_progress"> Recent progress </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/about#our_global_community"> Our global community </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/about#leadership"> Leadership </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/about#teams"> Teams </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/about#access_to_science"> Access to science </a></li><!----></ul></div><div _ngcontent-sc3="" class="column ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/research"> Research </a><ul _ngcontent-sc3=""><!----><!----><li _ngcontent-sc3="" class="ng-star-inserted"><dm-link _ngcontent-sc3="" classlist="nav-cta" _nghost-sc8=""><!----><!----><a _ngcontent-sc8="" aria-label="Read more on DeepMind" class="nav-cta ng-star-inserted" href="/research?filters=%7B%22category%22:%5B%22Research%22%5D%7D"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">Blog</span><!----><!----><!----></a><!----><!----></dm-link></li><li _ngcontent-sc3="" class="ng-star-inserted"><dm-link _ngcontent-sc3="" classlist="nav-cta" _nghost-sc8=""><!----><!----><a _ngcontent-sc8="" aria-label="Read more on DeepMind" class="nav-cta ng-star-inserted" href="/research?filters=%7B%22collection%22:%5B%22OpenSource%22%5D%7D"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">Open source</span><!----><!----><!----></a><!----><!----></dm-link></li><li _ngcontent-sc3="" class="ng-star-inserted"><dm-link _ngcontent-sc3="" classlist="nav-cta" _nghost-sc8=""><!----><!----><a _ngcontent-sc8="" aria-label="Read more on DeepMind" class="nav-cta ng-star-inserted" href="/research?filters=%7B%22collection%22:%5B%22Publications%22%5D%7D"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">Publications</span><!----><!----><!----></a><!----><!----></dm-link></li></ul></div><div _ngcontent-sc3="" class="column ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/impact"> Impact </a><ul _ngcontent-sc3=""><!----><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/impact#real_world_impact"> Real-world impact </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/impact#significant_breakthroughs"> Significant breakthroughs </a></li><!----></ul></div><div _ngcontent-sc3="" class="column ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/blog"> Blog </a><ul _ngcontent-sc3=""><!----><!----><li _ngcontent-sc3="" class="ng-star-inserted"><dm-link _ngcontent-sc3="" classlist="nav-cta" _nghost-sc8=""><!----><!----><a _ngcontent-sc8="" aria-label="Read more on DeepMind" class="nav-cta ng-star-inserted" href="/blog?filters=%7B%22category%22:%5B%22Research%22%5D%7D"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">Research</span><!----><!----><!----></a><!----><!----></dm-link></li><li _ngcontent-sc3="" class="ng-star-inserted"><dm-link _ngcontent-sc3="" classlist="nav-cta" _nghost-sc8=""><!----><!----><a _ngcontent-sc8="" aria-label="Read more on DeepMind" class="nav-cta ng-star-inserted" href="/blog?filters=%7B%22collection%22:%5B%22Announcements%22%5D%7D"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">News</span><!----><!----><!----></a><!----><!----></dm-link></li></ul></div><div _ngcontent-sc3="" class="column ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/safety-and-ethics"> Safety &amp; Ethics </a><ul _ngcontent-sc3=""><!----><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/safety-and-ethics#overview"> Overview </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/safety-and-ethics#technical_safety"> Technical safety </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/safety-and-ethics#ethics_society"> Ethics &amp; Society </a></li><!----></ul></div><div _ngcontent-sc3="" class="column ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/careers"> Careers </a><ul _ngcontent-sc3=""><!----><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/careers#a_unique_mission"> A unique mission </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/careers#teams"> Teams </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/careers#diversity_matters"> Diversity matters </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/careers#locations"> Locations </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/careers#internships"> Internships </a></li><!----></ul></div></div><!----><div _ngcontent-sc3="" class="back-to-top"><svg _ngcontent-sc3="" role="img"><use _ngcontent-sc3="" xlink:href="#arrow"></use></svg></div><div _ngcontent-sc3="" class="information"><div _ngcontent-sc3="" class="legal"><!----><dm-link _ngcontent-sc3="" classlist="dm-cta caption" _nghost-sc8="" class="ng-star-inserted"><!----><!----><a _ngcontent-sc8="" aria-label="Read more on an external page" class="external dm-cta caption ng-star-inserted" rel="noopener" target="_blank" href="mailto:press@deepmind.com"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">Press</span><!----><!----><!----></a><!----><!----><!----></dm-link><dm-link _ngcontent-sc3="" classlist="dm-cta caption" _nghost-sc8="" class="ng-star-inserted"><!----><!----><a _ngcontent-sc8="" aria-label="Read more on DeepMind" class="dm-cta caption ng-star-inserted" href="/terms-and-conditions"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">Terms &amp; Conditions</span><!----><!----><!----></a><!----><!----></dm-link><dm-link _ngcontent-sc3="" classlist="dm-cta caption" _nghost-sc8="" class="ng-star-inserted"><!----><!----><a _ngcontent-sc8="" aria-label="Read more on DeepMind" class="dm-cta caption ng-star-inserted" href="/privacy-policy"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">Privacy Policy</span><!----><!----><!----></a><!----><!----></dm-link><dm-link _ngcontent-sc3="" classlist="dm-cta caption" _nghost-sc8="" class="ng-star-inserted"><!----><!----><a _ngcontent-sc8="" aria-label="Read more on an external page" class="external dm-cta caption ng-star-inserted" rel="noopener" target="_blank" href="https://storage.googleapis.com/deepmind-media/modern_slavery/FINAL_201_Google_Modern_Slavery_Statement.pdf"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">Modern Slavery Statement</span><!----><!----><!----></a><!----><!----><!----></dm-link><dm-link _ngcontent-sc3="" classlist="dm-cta caption" _nghost-sc8="" class="ng-star-inserted"><!----><!----><a _ngcontent-sc8="" aria-label="Read more on an external page" class="external dm-cta caption ng-star-inserted" rel="noopener" target="_blank" href="https://abc.xyz/"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">Alphabet Inc</span><!----><!----><!----></a><!----><!----><!----></dm-link></div><ul _ngcontent-sc3="" class="social"><!----><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta icon" rel="noopener" target="_blank" aria-label="Follow us on Twitter!" href="https://twitter.com/DeepMindAI"><svg _ngcontent-sc3="" role="img"><use _ngcontent-sc3="" xlink:href="#twitter"></use></svg></a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta icon" rel="noopener" target="_blank" aria-label="Follow us on Youtube!" href="https://www.youtube.com/deepmind"><svg _ngcontent-sc3="" role="img"><use _ngcontent-sc3="" xlink:href="#youtube"></use></svg></a></li></ul></div></div><div _ngcontent-sc3="" class="shape"><svg _ngcontent-sc3="" role="img"><use _ngcontent-sc3="" xlink:href="#shape-octa3"></use></svg></div></div></footer></dm-footer></div></dm-app-root>
+<script src="runtime-es2015.858f8dd898b75fe86926.js" type="module" crossorigin="use-credentials"></script><script src="polyfills-es2015.0b2e40f2b7e045bb6031.js" type="module" crossorigin="use-credentials"></script><script src="runtime-es5.741402d1d47331ce975c.js" nomodule=""></script><script src="polyfills-es5.343790ebaac41845eaa3.js" nomodule=""></script><script src="main-es2015.b86475430f0c2e1f65c0.js" type="module" crossorigin="use-credentials"></script><script src="main-es5.90f722d029495b63e37f.js" nomodule=""></script>
+
+</body></html>

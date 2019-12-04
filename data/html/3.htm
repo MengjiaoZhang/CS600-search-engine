@@ -1,0 +1,1848 @@
+<!DOCTYPE html><html class="loading" dir="ltr" lang="ALL"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+  <base href="/">
+
+  <!-- Facebook base meta tags. -->
+  <meta property="og:image:width" content="600">
+  <meta property="og:image:height" content="600">
+  <meta property="og:site_name" content="Deepmind">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter base meta tags. -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@DeepMindAI">
+
+  <!-- Set in Angular. -->
+  <title>Capture the Flag: the emergence of complex cooperative agents | DeepMind</title>
+  <meta name="description" content="
+
+Mastering the strategy, tactical understanding, and team play involved in multiplayer video games represents a critical challenge for AI research. Now, through new developments in reinforcement learning, our agents have achieved human-level performance in Quake III Arena Capture the Flag, a complex multi-agent environment and one of the canonical 3D first-person multiplayer games. These agents demonstrate the ability to team up with both artificial agents and human players.
+
+">
+
+  <link rel="preconnect" href="https://lh3.googleusercontent.com">
+  <link href="assets/favicon.ico" rel="icon">
+<link rel="stylesheet" href="styles.c25992414036055c2434.css"><style ng-transition="deepmind-website">[_nghost-sc0] {
+  display: flex;
+  flex-direction: column;
+}
+@media (min-width: 1024px) {
+  [_nghost-sc0] {
+    flex-direction: row;
+  }
+}
+[_nghost-sc0]   .dm-body[_ngcontent-sc0] {
+  background-color: #f0f5f5;
+  height: 100%;
+  width: 100%;
+}
+@media (min-width: 1024px) {
+  [_nghost-sc0]   .dm-body[_ngcontent-sc0] {
+    width: calc(100% - 100px);
+  }
+}
+[_nghost-sc0]   .svg-elements[_ngcontent-sc0] {
+  height: 0;
+  position: absolute;
+  visibility: hidden;
+  width: 0;
+}</style><style ng-transition="deepmind-website">[_nghost-sc2] {
+  display: block;
+  position: relative;
+}
+header[_ngcontent-sc2] {
+  background-color: #0053d6;
+  height: 60px;
+  width: 100%;
+}
+@media (min-width: 768px) {
+  header[_ngcontent-sc2] {
+    height: 70px;
+  }
+}
+@media (min-width: 1024px) {
+  header[_ngcontent-sc2] {
+    height: 100%;
+    width: 100px;
+  }
+}
+header[_ngcontent-sc2]::after {
+  background-color: #0053d6;
+  content: "";
+  height: 100%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: right 0.3s ease, width 0.3s ease;
+  width: 0;
+  z-index: 34;
+}
+header.is-peaking[_ngcontent-sc2]::after {
+  right: -10px;
+  width: 10px;
+}
+.header-container[_ngcontent-sc2] {
+  background-color: #0053d6;
+  display: flex;
+  flex-direction: column;
+  height: inherit;
+  justify-content: space-between;
+  left: 0;
+  padding: 0 20px;
+  position: fixed;
+  top: 0;
+  width: inherit;
+  z-index: 35;
+}
+@media (min-width: 1024px) {
+  .header-container[_ngcontent-sc2] {
+    height: 100%;
+    padding: 30px 20px;
+  }
+}
+header.is-menu-open[_ngcontent-sc2]   .header-container[_ngcontent-sc2] {
+  width: 100%;
+}
+@media (min-width: 1024px) {
+  header.is-menu-open[_ngcontent-sc2]   .header-container[_ngcontent-sc2] {
+    width: 100px;
+  }
+}
+.header-container[_ngcontent-sc2]   ul[_ngcontent-sc2] {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.menu-wrapper[_ngcontent-sc2] {
+  display: flex;
+  height: 100%;
+}
+@media (min-width: 1024px) {
+  .menu-wrapper[_ngcontent-sc2] {
+    flex-direction: column;
+    height: auto;
+  }
+}
+.menu-header[_ngcontent-sc2] {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+@media (min-width: 1024px) {
+  .menu-header[_ngcontent-sc2] {
+    display: block;
+  }
+}
+.menu-header[_ngcontent-sc2]   .logo[_ngcontent-sc2] {
+  display: block;
+  margin: 0 0 0 -12px;
+}
+@media (min-width: 768px) {
+  .menu-header[_ngcontent-sc2]   .logo[_ngcontent-sc2] {
+    margin: 0;
+  }
+}
+@media (min-width: 1024px) {
+  .menu-header[_ngcontent-sc2]   .logo[_ngcontent-sc2] {
+    margin: 0 0 30px 0;
+  }
+}
+.menu-header[_ngcontent-sc2]   .logo[_ngcontent-sc2]   svg[_ngcontent-sc2] {
+  display: block;
+  height: 40px;
+  width: 184px;
+}
+@media (min-width: 1024px) {
+  .menu-header[_ngcontent-sc2]   .logo[_ngcontent-sc2]   svg[_ngcontent-sc2] {
+    width: 40px;
+  }
+}
+.menu-header[_ngcontent-sc2]   .logo[_ngcontent-sc2]   svg.full-logo[_ngcontent-sc2] {
+  width: 184px;
+}
+.menu-header[_ngcontent-sc2]   .menu-controls[_ngcontent-sc2] {
+  align-items: center;
+  display: flex;
+  flex-direction: row-reverse;
+}
+@media (min-width: 1024px) {
+  .menu-header[_ngcontent-sc2]   .menu-controls[_ngcontent-sc2] {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+    width: 38px;
+  }
+}
+.menu-header[_ngcontent-sc2]   .menu-controls[_ngcontent-sc2]   button[_ngcontent-sc2]    + button[_ngcontent-sc2] {
+  display: block;
+  margin: 0 20px 0 0;
+}
+@media (min-width: 1024px) {
+  .menu-header[_ngcontent-sc2]   .menu-controls[_ngcontent-sc2]   button[_ngcontent-sc2]    + button[_ngcontent-sc2] {
+    margin: 30px 0 0;
+  }
+}
+nav[_ngcontent-sc2] {
+  display: none;
+}
+@media (min-width: 1024px) {
+  nav[_ngcontent-sc2] {
+    display: flex;
+  }
+}
+@media (min-width: 1024px) {
+  header.is-menu-open[_ngcontent-sc2]   nav[_ngcontent-sc2] {
+    align-items: center;
+    height: 100%;
+    justify-content: center;
+  }
+}
+.pages[_ngcontent-sc2] {
+  display: block;
+  width: 100%;
+}
+header.is-menu-open[_ngcontent-sc2]   .pages[_ngcontent-sc2] {
+  width: auto;
+}
+@media (min-width: 1024px) {
+  header.is-menu-open[_ngcontent-sc2]   .pages[_ngcontent-sc2] {
+    display: flex;
+    flex-direction: row-reverse;
+    -webkit-transform: rotateZ(-90deg);
+            transform: rotateZ(-90deg);
+  }
+}
+.pages[_ngcontent-sc2]   li[_ngcontent-sc2]   a[_ngcontent-sc2] {
+  cursor: pointer;
+  position: relative;
+}
+.pages[_ngcontent-sc2]   li[_ngcontent-sc2]   a[_ngcontent-sc2]::before {
+  border-left: 6px solid transparent;
+  content: "";
+  display: block;
+  height: 100%;
+  left: -20px;
+  position: absolute;
+  top: 0;
+}
+.pages[_ngcontent-sc2]   li[_ngcontent-sc2]   a[_ngcontent-sc2]:focus::before, .pages[_ngcontent-sc2]   li[_ngcontent-sc2]   a[_ngcontent-sc2]:hover::before {
+  border-color: #fff;
+}
+.pages[_ngcontent-sc2]   li.is-active[_ngcontent-sc2]   a[_ngcontent-sc2]::before {
+  border-color: #fff;
+}
+.page-link[_ngcontent-sc2] {
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  display: block;
+  padding: 10px 0;
+}
+.page-link.nav-cta[_ngcontent-sc2]:focus, .page-link.nav-cta[_ngcontent-sc2]:hover {
+  color: #fff;
+}
+.social-media-wrapper[_ngcontent-sc2] {
+  display: none;
+}
+@media (min-width: 1024px) {
+  .social-media-wrapper[_ngcontent-sc2] {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    width: 38px;
+  }
+}
+.social-media-wrapper[_ngcontent-sc2]   li[_ngcontent-sc2]    + li[_ngcontent-sc2] {
+  margin-top: 10px;
+}
+.social-media-wrapper[_ngcontent-sc2]   svg[_ngcontent-sc2] {
+  height: 20px;
+  width: 20px;
+}
+.hamburger-menu[_ngcontent-sc2] {
+  cursor: pointer;
+  display: block;
+  height: 18px;
+  position: relative;
+  width: 22px;
+}
+@media (min-width: 1024px) {
+  .hamburger-menu[_ngcontent-sc2] {
+    width: 30px;
+  }
+}
+@media (hover: hover) {
+  .hamburger-menu[_ngcontent-sc2]:focus   span[_ngcontent-sc2]:nth-child(2), .hamburger-menu[_ngcontent-sc2]:hover   span[_ngcontent-sc2]:nth-child(2) {
+    -webkit-transform: scaleX(0.5);
+            transform: scaleX(0.5);
+  }
+}
+.hamburger-menu[_ngcontent-sc2]   span[_ngcontent-sc2] {
+  background-color: #fff;
+  display: block;
+  height: 2px;
+  margin: 0;
+  position: absolute;
+  -webkit-transform-origin: center;
+          transform-origin: center;
+  transition: width 0.2s ease, -webkit-transform 0.3s ease;
+  transition: transform 0.3s ease, width 0.2s ease;
+  transition: transform 0.3s ease, width 0.2s ease, -webkit-transform 0.3s ease;
+  width: 100%;
+}
+.hamburger-menu[_ngcontent-sc2]   span[_ngcontent-sc2]:first-child {
+  top: 0;
+}
+.hamburger-menu[_ngcontent-sc2]   span[_ngcontent-sc2]:nth-child(2) {
+  top: 8px;
+}
+.hamburger-menu[_ngcontent-sc2]   span[_ngcontent-sc2]:last-child {
+  bottom: 0;
+}
+.hamburger-menu.is-active[_ngcontent-sc2]   span[_ngcontent-sc2]:first-child {
+  -webkit-transform: translateY(8px) rotate(45deg);
+          transform: translateY(8px) rotate(45deg);
+  width: 23px;
+}
+@media (min-width: 1024px) {
+  .hamburger-menu.is-active[_ngcontent-sc2]   span[_ngcontent-sc2]:first-child {
+    width: 29px;
+  }
+}
+.hamburger-menu.is-active[_ngcontent-sc2]   span[_ngcontent-sc2]:nth-child(2) {
+  width: 0;
+}
+.hamburger-menu.is-active[_ngcontent-sc2]   span[_ngcontent-sc2]:last-child {
+  -webkit-transform: translateY(-8px) rotate(-45deg);
+          transform: translateY(-8px) rotate(-45deg);
+  width: 23px;
+}
+@media (min-width: 1024px) {
+  .hamburger-menu.is-active[_ngcontent-sc2]   span[_ngcontent-sc2]:last-child {
+    width: 29px;
+  }
+}
+.search[_ngcontent-sc2] {
+  text-align: center;
+}
+.search.no-focus[_ngcontent-sc2]:focus   g[_ngcontent-sc2] {
+  -webkit-transform: none;
+          transform: none;
+}
+.search[_ngcontent-sc2]:focus   g[_ngcontent-sc2], .search[_ngcontent-sc2]:hover   g[_ngcontent-sc2] {
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
+}
+@media (hover: none) {
+  .search.no-focus[_ngcontent-sc2]:focus   g[_ngcontent-sc2] {
+    -webkit-transform: none;
+            transform: none;
+  }
+  .search.no-focus[_ngcontent-sc2]:hover   g[_ngcontent-sc2] {
+    -webkit-transform: none;
+            transform: none;
+  }
+  .search[_ngcontent-sc2]:focus   g[_ngcontent-sc2], .search[_ngcontent-sc2]:hover   g[_ngcontent-sc2] {
+    -webkit-transform: none;
+            transform: none;
+  }
+}
+.search[_ngcontent-sc2]   svg[_ngcontent-sc2] {
+  height: 22px;
+  vertical-align: middle;
+  width: 22px;
+}
+@media (min-width: 1024px) {
+  .search[_ngcontent-sc2]   svg[_ngcontent-sc2] {
+    height: 28px;
+    width: 30px;
+  }
+}
+.search[_ngcontent-sc2]   svg[_ngcontent-sc2]   g[_ngcontent-sc2] {
+  transition: -webkit-transform 0.3s ease;
+  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, -webkit-transform 0.3s ease;
+}
+.search[_ngcontent-sc2]   svg[_ngcontent-sc2]   g[_ngcontent-sc2]   [_ngcontent-sc2]:first-child {
+  fill: #0053d6;
+}</style><style ng-transition="deepmind-website">[_nghost-sc3] {
+  display: block;
+}
+footer[_ngcontent-sc3] {
+  background-color: #14234b;
+  overflow: hidden;
+  padding: 50px 0 40px;
+  position: relative;
+}
+@media (min-width: 768px) {
+  footer[_ngcontent-sc3] {
+    padding: 60px 0 50px;
+  }
+}
+@media (min-width: 1440px) {
+  footer[_ngcontent-sc3] {
+    padding: 90px 0 100px;
+  }
+}
+.logo[_ngcontent-sc3] {
+  display: none;
+}
+@media (min-width: 1024px) {
+  .logo[_ngcontent-sc3] {
+    display: block;
+    margin: 0 0 45px;
+  }
+}
+.logo[_ngcontent-sc3]   svg[_ngcontent-sc3] {
+  fill: #fff;
+  height: 28px;
+  width: 130px;
+}
+.body[_ngcontent-sc3] {
+  flex: 1 1 0%;
+  position: relative;
+}
+.categories[_ngcontent-sc3] {
+  display: flex;
+  flex-flow: row wrap;
+}
+@media (min-width: 1440px) {
+  .categories[_ngcontent-sc3] {
+    flex-flow: row nowrap;
+  }
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3] {
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .categories[_ngcontent-sc3]   .column[_ngcontent-sc3] {
+    margin: 0 0 30px;
+    max-width: 33.3333333333%;
+  }
+}
+@media (min-width: 1440px) {
+  .categories[_ngcontent-sc3]   .column[_ngcontent-sc3] {
+    max-width: none;
+  }
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3]:last-child {
+  flex-grow: 0;
+}
+@media (min-width: 768px) {
+  .categories[_ngcontent-sc3]   .column[_ngcontent-sc3]:last-child {
+    flex-grow: 1;
+  }
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3]    > .nav-cta[_ngcontent-sc3] {
+  font-size: 16px;
+  font-weight: 700;
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   [dmAccordionTitle][_ngcontent-sc3] {
+  flex-grow: 1;
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   [dmAccordionTitle][_ngcontent-sc3]:focus, .categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   [dmAccordionTitle][_ngcontent-sc3]:hover {
+  border: 0;
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   ul[_ngcontent-sc3] {
+  list-style-type: none;
+  padding: 0 0 20px;
+}
+@media (min-width: 768px) {
+  .categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   ul[_ngcontent-sc3] {
+    border-left: 1px solid #0053d6;
+    margin: 15px 0 0;
+    padding: 0 0 0 8px;
+  }
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   ul[_ngcontent-sc3]   li[_ngcontent-sc3]    + li[_ngcontent-sc3] {
+  margin: 10px 0 0;
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   ul[_ngcontent-sc3]   li[_ngcontent-sc3]   a[_ngcontent-sc3] {
+  display: inherit;
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   ul[_ngcontent-sc3]   li[_ngcontent-sc3]   a[_ngcontent-sc3]:focus, .categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   ul[_ngcontent-sc3]   li[_ngcontent-sc3]   a[_ngcontent-sc3]:hover {
+  border: 0;
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   ul[_ngcontent-sc3]   li[_ngcontent-sc3]   dm-link[_ngcontent-sc3] {
+  line-height: 1;
+}
+.information[_ngcontent-sc3] {
+  display: flex;
+}
+@media (min-width: 768px) {
+  .information[_ngcontent-sc3] {
+    border-top: 1px solid #5c657f;
+    padding: 25px 0;
+  }
+}
+@media (min-width: 1440px) {
+  .information[_ngcontent-sc3] {
+    padding: 35px 0;
+  }
+}
+.information[_ngcontent-sc3]   .legal[_ngcontent-sc3] {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+@media (min-width: 768px) {
+  .information[_ngcontent-sc3]   .legal[_ngcontent-sc3] {
+    align-items: center;
+    flex-direction: row;
+    margin: 0;
+  }
+}
+.information[_ngcontent-sc3]   .legal[_ngcontent-sc3]   dm-link[_ngcontent-sc3] {
+  margin: 0 0 15px;
+}
+@media (min-width: 768px) {
+  .information[_ngcontent-sc3]   .legal[_ngcontent-sc3]   dm-link[_ngcontent-sc3] {
+    margin: 0 45px 0 0;
+  }
+}
+.information[_ngcontent-sc3]   .social[_ngcontent-sc3] {
+  align-items: flex-end;
+  display: flex;
+  justify-content: flex-end;
+  list-style: none;
+}
+@media (min-width: 768px) {
+  .information[_ngcontent-sc3]   .social[_ngcontent-sc3] {
+    align-items: center;
+  }
+}
+.information[_ngcontent-sc3]   .social[_ngcontent-sc3]   li[_ngcontent-sc3] {
+  display: flex;
+}
+.information[_ngcontent-sc3]   .social[_ngcontent-sc3]   a[_ngcontent-sc3] {
+  margin: 0 0 15px;
+  padding: 0 0 0 32px;
+}
+@media (min-width: 768px) {
+  .information[_ngcontent-sc3]   .social[_ngcontent-sc3]   a[_ngcontent-sc3] {
+    margin: 0 0 0 15px;
+    padding: 0;
+  }
+}
+.information[_ngcontent-sc3]   .social[_ngcontent-sc3]   a[_ngcontent-sc3]   svg[_ngcontent-sc3] {
+  height: 20px;
+  vertical-align: middle;
+  width: 20px;
+}
+.shape[_ngcontent-sc3] {
+  height: 100%;
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+@media (min-width: 1440px) {
+  .shape[_ngcontent-sc3] {
+    display: inline;
+  }
+}
+.shape[_ngcontent-sc3]   svg[_ngcontent-sc3] {
+  bottom: -100px;
+  fill: #0053d6;
+  height: 400px;
+  position: absolute;
+  right: -100px;
+  width: 400px;
+}
+@media (min-width: 768px) {
+  .shape[_ngcontent-sc3]   svg[_ngcontent-sc3] {
+    right: -100px;
+    top: 10%;
+  }
+}
+@media (min-width: 1440px) {
+  .shape[_ngcontent-sc3]   svg[_ngcontent-sc3] {
+    bottom: -200px;
+    left: 60%;
+    top: auto;
+  }
+}
+.back-to-top[_ngcontent-sc3] {
+  margin: 30px 0;
+  position: relative;
+  text-align: right;
+}
+@media (min-width: 768px) {
+  .back-to-top[_ngcontent-sc3] {
+    margin: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+}
+@media (min-width: 1024px) {
+  .back-to-top[_ngcontent-sc3] {
+    display: none;
+  }
+}
+.back-to-top[_ngcontent-sc3]   svg[_ngcontent-sc3] {
+  fill: #fff;
+  height: 16px;
+  margin: 0 0 0 auto;
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+  transition: -webkit-transform 0.2s ease;
+  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, -webkit-transform 0.2s ease;
+  width: 25px;
+}
+@media (min-width: 768px) {
+  .back-to-top[_ngcontent-sc3]   svg[_ngcontent-sc3] {
+    margin: auto;
+  }
+}</style><style ng-transition="deepmind-website">[_nghost-sc8] {
+  display: block;
+}
+.media[_ngcontent-sc8] {
+  display: block;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+.link[_ngcontent-sc8]   .icon[_ngcontent-sc8] {
+  height: 30px;
+  min-width: 30px;
+  position: relative;
+  width: 30px;
+}
+.link.external[_ngcontent-sc8]:focus   .icon[_ngcontent-sc8]::before, .link.external[_ngcontent-sc8]:hover   .icon[_ngcontent-sc8]::before {
+  background-color: #0053d6;
+}
+.link.external[_ngcontent-sc8]   .icon[_ngcontent-sc8]::before {
+  background-color: #ffdb13;
+  border-radius: 50%;
+  content: "";
+  display: block;
+  height: 30px;
+  position: absolute;
+  right: 0;
+  width: 30px;
+}
+.link.external[_ngcontent-sc8]   svg[_ngcontent-sc8] {
+  background-color: transparent;
+  border-radius: 0;
+  padding: 8px;
+  position: relative;
+}
+.link.transparent[_ngcontent-sc8]   .icon[_ngcontent-sc8] {
+  line-height: 0;
+}
+.hero-link[_ngcontent-sc8] {
+  align-items: flex-start;
+  font: 500 14px/30px "Deepmind Sans", Helvetica, Arial, sans-serif;
+  letter-spacing: 0;
+}
+@media (min-width: 1024px) {
+  .hero-link[_ngcontent-sc8] {
+    font-size: 18px;
+    line-height: 30px;
+  }
+}
+.cta-text[_ngcontent-sc8] {
+  margin-right: 10px;
+  text-transform: uppercase;
+}</style><style ng-transition="deepmind-website">[_nghost-sc10] {
+  display: block;
+  position: relative;
+  width: 100%;
+}</style><meta property="og:title" content="Capture the Flag: the emergence of complex cooperative agents"><meta property="og:description" content="
+
+Mastering the strategy, tactical understanding, and team play involved in multiplayer video games represents a critical challenge for AI research. Now, through new developments in reinforcement learning, our agents have achieved human-level performance in Quake III Arena Capture the Flag, a complex multi-agent environment and one of the canonical 3D first-person multiplayer games. These agents demonstrate the ability to team up with both artificial agents and human players.
+
+"><meta property="og:image" content="https://lh3.googleusercontent.com/jVZ3VN7wwx2dSowqLmhqm0qAzAmcb-1t7ks3HiNnoHknihF5sl9VDEwuCNTSxfx8jFIi7mBQkvHUdnSKXSPgYLNpvCuE4YajJeMnrYA"><meta property="og:url" content="/blog/article/capture-the-flag-science"><meta name="twitter:title" content="Capture the Flag: the emergence of complex cooperative agents"><meta name="twitter:description" content="
+
+Mastering the strategy, tactical understanding, and team play involved in multiplayer video games represents a critical challenge for AI research. Now, through new developments in reinforcement learning, our agents have achieved human-level performance in Quake III Arena Capture the Flag, a complex multi-agent environment and one of the canonical 3D first-person multiplayer games. These agents demonstrate the ability to team up with both artificial agents and human players.
+
+"><meta name="twitter:image:src" content="https://lh3.googleusercontent.com/jVZ3VN7wwx2dSowqLmhqm0qAzAmcb-1t7ks3HiNnoHknihF5sl9VDEwuCNTSxfx8jFIi7mBQkvHUdnSKXSPgYLNpvCuE4YajJeMnrYA"><meta name="twitter:site" content="/blog/article/capture-the-flag-science"><style ng-transition="deepmind-website">[_nghost-sc49] {
+  display: block;
+  margin-top: 70px;
+}
+@media (min-width: 1024px) {
+  [_nghost-sc49] {
+    margin-top: 100px;
+  }
+}
+dm-breadcrumb[_ngcontent-sc49] {
+  left: 20px;
+  position: absolute;
+  top: -45px;
+}
+@media (min-width: 768px) {
+  dm-breadcrumb[_ngcontent-sc49] {
+    left: 30px;
+  }
+}
+@media (min-width: 1024px) {
+  dm-breadcrumb[_ngcontent-sc49] {
+    left: 60px;
+    margin: 40px 0 25px;
+    top: -100px;
+  }
+}
+@media (min-width: 1440px) {
+  dm-breadcrumb[_ngcontent-sc49] {
+    left: 90px;
+  }
+}
+.blog-article-bg[_ngcontent-sc49] {
+  background: linear-gradient(to right, #fff 50%, #ffe6f0 50%);
+}
+@media (min-width: 1024px) {
+  .blog-article-bg[_ngcontent-sc49] {
+    background: linear-gradient(to right, #ffe6f0 50%, #fff 50%);
+  }
+}
+.page-content-container[_ngcontent-sc49] {
+  display: flex;
+  flex-direction: column-reverse;
+}
+@media (max-width: 1023px) {
+  .page-content-container[_ngcontent-sc49] {
+    padding: 0;
+  }
+}
+@media (min-width: 1024px) {
+  .page-content-container[_ngcontent-sc49] {
+    flex-direction: row;
+  }
+}
+aside[_ngcontent-sc49] {
+  background-color: #ffe6f0;
+  display: flex;
+  flex-direction: column;
+  padding: 50px 0 50px 30px;
+  width: 100%;
+}
+@media (min-width: 768px) {
+  aside[_ngcontent-sc49] {
+    -webkit-column-gap: 0;
+       -moz-column-gap: 0;
+            column-gap: 0;
+    -webkit-columns: 2;
+       -moz-columns: 2;
+            columns: 2;
+    display: inline;
+  }
+}
+@media (min-width: 1024px) {
+  aside[_ngcontent-sc49] {
+    display: flex;
+    max-width: 260px;
+    padding: 0 40px 50px 0;
+  }
+}
+@media (min-width: 1440px) {
+  aside[_ngcontent-sc49] {
+    max-width: 300px;
+  }
+}
+.page-content[_ngcontent-sc49] {
+  background-color: #fff;
+  padding: 20px 20px 0;
+  width: calc(100% - 20px);
+}
+@media (min-width: 768px) {
+  .page-content[_ngcontent-sc49] {
+    padding: 20px 30px 0;
+    width: calc(100% - 125px);
+  }
+}
+@media (min-width: 1024px) {
+  .page-content[_ngcontent-sc49] {
+    padding: 55px 0 55px 30px;
+    width: 100%;
+  }
+}
+@media (min-width: 1440px) {
+  .page-content[_ngcontent-sc49] {
+    padding: 70px 0 70px 100px;
+  }
+}
+dm-social-share[_ngcontent-sc49], dm-authors-list[_ngcontent-sc49], dm-tag-list[_ngcontent-sc49] {
+  margin-bottom: 30px;
+}
+@media (min-width: 768px) {
+  dm-social-share[_ngcontent-sc49], dm-authors-list[_ngcontent-sc49], dm-tag-list[_ngcontent-sc49] {
+    margin: 0 20px 30px 0;
+  }
+}
+@media (min-width: 1024px) {
+  dm-social-share[_ngcontent-sc49], dm-authors-list[_ngcontent-sc49], dm-tag-list[_ngcontent-sc49] {
+    margin: 0 0 30px;
+  }
+}
+dm-authors-list[_ngcontent-sc49] {
+  margin-bottom: 30px;
+}
+@media (min-width: 768px) {
+  dm-authors-list[_ngcontent-sc49] {
+    -webkit-column-break-before: always;
+       -moz-column-break-before: always;
+            break-before: always;
+    margin: 0;
+  }
+}
+@media (min-width: 1024px) {
+  dm-authors-list[_ngcontent-sc49] {
+    -webkit-column-break-before: auto;
+       -moz-column-break-before: auto;
+            break-before: auto;
+    margin-bottom: 30px;
+  }
+}
+dm-tag-list[_ngcontent-sc49] {
+  order: 3;
+}</style><style ng-transition="deepmind-website">[_nghost-sc13] {
+  display: block;
+}
+.theme-dark[_nghost-sc13]   li[_ngcontent-sc13]   a[_ngcontent-sc13] {
+  color: #0053d6;
+}
+.theme-dark[_nghost-sc13]   .logo[_ngcontent-sc13]   svg[_ngcontent-sc13], .theme-dark[_nghost-sc13]   .arrow[_ngcontent-sc13] {
+  fill: #0053d6;
+}
+ul[_ngcontent-sc13] {
+  align-items: center;
+  display: flex;
+  list-style: none;
+}
+ul[_ngcontent-sc13]   li[_ngcontent-sc13] {
+  align-items: center;
+  display: flex;
+}
+ul[_ngcontent-sc13]   li[_ngcontent-sc13]:not(:nth-child(2)) {
+  display: none;
+}
+@media (min-width: 1024px) {
+  ul[_ngcontent-sc13]   li[_ngcontent-sc13]:not(:nth-child(2)) {
+    display: flex;
+  }
+}
+ul[_ngcontent-sc13]   li[_ngcontent-sc13]:last-child   a[_ngcontent-sc13] {
+  font-weight: bold;
+}
+ul[_ngcontent-sc13]   li[_ngcontent-sc13]   .nav-cta[_ngcontent-sc13]:focus, ul[_ngcontent-sc13]   li[_ngcontent-sc13]   .nav-cta[_ngcontent-sc13]:hover {
+  border: 0;
+}
+ul[_ngcontent-sc13]   li[_ngcontent-sc13]   .disabled[_ngcontent-sc13] {
+  cursor: default;
+  pointer-events: none;
+}
+ul[_ngcontent-sc13]   li[_ngcontent-sc13]   .disabled[_ngcontent-sc13]:focus, ul[_ngcontent-sc13]   li[_ngcontent-sc13]   .disabled[_ngcontent-sc13]:hover {
+  color: #fff;
+}
+ul[_ngcontent-sc13]   .logo[_ngcontent-sc13]   svg[_ngcontent-sc13] {
+  display: none;
+  fill: #fff;
+  height: 25px;
+  width: 110px;
+}
+@media (min-width: 1024px) {
+  ul[_ngcontent-sc13]   .logo[_ngcontent-sc13]   svg[_ngcontent-sc13] {
+    display: block;
+    height: 28px;
+    width: 130px;
+  }
+}
+ul[_ngcontent-sc13]   .arrow[_ngcontent-sc13] {
+  fill: #fff;
+  height: 9px;
+  margin: 0 25px 0 0;
+  -webkit-transform: scaleX(-1);
+          transform: scaleX(-1);
+  width: 5px;
+}
+@media (min-width: 1024px) {
+  ul[_ngcontent-sc13]   .arrow[_ngcontent-sc13] {
+    margin: 0 25px;
+    -webkit-transform: scaleX(1);
+            transform: scaleX(1);
+  }
+}
+ul[_ngcontent-sc13]   .arrow.is-last[_ngcontent-sc13] {
+  display: none;
+}
+@media (min-width: 1024px) {
+  ul[_ngcontent-sc13]   .arrow.is-last[_ngcontent-sc13] {
+    display: inline;
+  }
+}</style><style ng-transition="deepmind-website">[_nghost-sc50] {
+  display: block;
+}
+header[_ngcontent-sc50] {
+  position: relative;
+}
+header[_ngcontent-sc50]   .article-image[_ngcontent-sc50] {
+  background: linear-gradient(transparent 60%, #ffe6f0 60%);
+}
+@media (min-width: 768px) {
+  header[_ngcontent-sc50]   .article-image[_ngcontent-sc50] {
+    background: linear-gradient(transparent 30%, #ffe6f0 30%);
+  }
+}
+@media (min-width: 1024px) {
+  header[_ngcontent-sc50]   .article-image[_ngcontent-sc50] {
+    background: transparent;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    z-index: 0;
+  }
+}
+@media (min-width: 2048px) {
+  header[_ngcontent-sc50]   .article-image[_ngcontent-sc50] {
+    max-height: 820px;
+  }
+}
+@media (min-width: 1024px) {
+  header[_ngcontent-sc50]   .article-image[_ngcontent-sc50]   picture[_ngcontent-sc50] {
+    height: auto;
+    position: relative;
+    display: block;
+    margin-left: auto;
+    width: 75%;
+  }
+  header[_ngcontent-sc50]   .article-image[_ngcontent-sc50]   picture[_ngcontent-sc50]::before {
+    content: "";
+    display: block;
+    padding-top: 56.25%;
+    width: 100%;
+  }
+  header[_ngcontent-sc50]   .article-image[_ngcontent-sc50]   picture[_ngcontent-sc50]    > img[_ngcontent-sc50], header[_ngcontent-sc50]   .article-image[_ngcontent-sc50]   picture[_ngcontent-sc50]    > svg[_ngcontent-sc50], header[_ngcontent-sc50]   .article-image[_ngcontent-sc50]   picture[_ngcontent-sc50]    > path[_ngcontent-sc50] {
+    display: block;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+}
+@media (min-width: 2048px) {
+  header[_ngcontent-sc50]   .article-image[_ngcontent-sc50]   picture[_ngcontent-sc50] {
+    width: calc( 1440px - 330px + (100vw - 1440px - 100px) / 2);
+  }
+}
+header[_ngcontent-sc50]   .article-image[_ngcontent-sc50]   picture[_ngcontent-sc50]   img[_ngcontent-sc50] {
+  height: 100%;
+  max-width: none;
+  width: calc(100% - 20px);
+}
+@media (min-width: 768px) {
+  header[_ngcontent-sc50]   .article-image[_ngcontent-sc50]   picture[_ngcontent-sc50]   img[_ngcontent-sc50] {
+    width: calc(100% - 30px);
+  }
+}
+@media (min-width: 1024px) {
+  header[_ngcontent-sc50]   .article-image[_ngcontent-sc50]   picture[_ngcontent-sc50]   img[_ngcontent-sc50] {
+    width: auto;
+  }
+}
+.article-content-container[_ngcontent-sc50] {
+  align-items: flex-start;
+  background-color: #ffe6f0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+@media (min-width: 1024px) {
+  .article-content-container[_ngcontent-sc50] {
+    align-items: flex-end;
+    bottom: 0;
+    margin: 0 auto;
+    position: absolute;
+    z-index: 1;
+  }
+}
+@media (min-width: 1440px) {
+  .article-content-container[_ngcontent-sc50] {
+    padding-left: calc((100% - 1440px) / 2);
+  }
+}
+@media (min-width: 2048px) {
+  .article-content-container[_ngcontent-sc50] {
+    min-width: 745px;
+    width: calc(100% - calc( 1440px - 330px + (100vw - 1440px - 100px) / 2) + 350px);
+  }
+}
+.article-content[_ngcontent-sc50] {
+  padding: 30px 20px 25px;
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .article-content[_ngcontent-sc50] {
+    padding: 25px 125px 25px 30px;
+  }
+}
+@media (min-width: 1024px) {
+  .article-content[_ngcontent-sc50] {
+    margin: 0;
+    max-width: 485px;
+    padding: 50px 50px 30px 60px;
+  }
+}
+@media (min-width: 1440px) {
+  .article-content[_ngcontent-sc50] {
+    max-width: 745px;
+    padding: 50px 50px 30px 90px;
+  }
+}
+.article-meta-container[_ngcontent-sc50] {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.article-meta-container[_ngcontent-sc50]   svg[_ngcontent-sc50] {
+  background-color: #e1144b;
+  border-radius: 50%;
+  fill: #fff;
+  height: 40px;
+  margin: 0 9px 0 0;
+  width: 40px;
+}
+.article-meta-container[_ngcontent-sc50]   .article-category-container[_ngcontent-sc50] {
+  align-items: center;
+  display: flex;
+}
+.dm-h2[_ngcontent-sc50] {
+  margin: 30px 0;
+}
+
+@media (min-width: 1024px) {
+  .article-description[_ngcontent-sc50] {
+    font-size: 36px;
+    line-height: 48px;
+  }
+}
+@media (min-width: 1440px) {
+  .article-description[_ngcontent-sc50] {
+    font-size: 55px;
+    line-height: 65px;
+  }
+}</style><style ng-transition="deepmind-website">[_nghost-sc19] {
+  display: block;
+}
+
+.social-share[_ngcontent-sc19] {
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  padding-top: 15px;
+  text-align: left;
+}
+
+.social-share[_ngcontent-sc19]   p[_ngcontent-sc19] {
+  margin-bottom: 15px;
+}
+
+.social-media[_ngcontent-sc19] {
+  display: flex;
+  list-style: none;
+  padding: 0;
+}
+
+.social-media[_ngcontent-sc19]   li[_ngcontent-sc19] {
+  margin-right: 10px;
+}
+
+.social-media[_ngcontent-sc19]   li[_ngcontent-sc19]:last-child {
+  margin: 0;
+}
+
+.social-media[_ngcontent-sc19]   svg[_ngcontent-sc19] {
+  height: 30px;
+  width: 30px;
+}</style><style ng-transition="deepmind-website">[_nghost-sc44] {
+  display: block;
+}
+
+.related-topics[_ngcontent-sc44] {
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  padding-top: 15px;
+  text-align: left;
+}
+
+.related-topics[_ngcontent-sc44]   p[_ngcontent-sc44] {
+  margin-bottom: 15px;
+}
+
+.tags[_ngcontent-sc44] {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+}
+
+.tags[_ngcontent-sc44]   li[_ngcontent-sc44] {
+  margin: 0 5px 5px 0;
+  text-transform: capitalize;
+  width: 100%;
+}
+
+.tags[_ngcontent-sc44]   li[_ngcontent-sc44]:last-child {
+  margin: 0;
+}
+
+.tags[_ngcontent-sc44]   li[_ngcontent-sc44]    > .tag[_ngcontent-sc44] {
+  padding: 6px 10px;
+}</style><style ng-transition="deepmind-website">[_nghost-sc45] {
+  display: block;
+}
+.authors-container[_ngcontent-sc45] {
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  padding-top: 15px;
+  text-align: left;
+}
+.authors-container[_ngcontent-sc45]   .title[_ngcontent-sc45] {
+  margin-bottom: 15px;
+}
+.authors-list[_ngcontent-sc45] {
+  display: flex;
+  flex-flow: row wrap;
+  list-style: none;
+  padding: 0;
+}
+@media (min-width: 768px) {
+  .authors-list[_ngcontent-sc45] {
+    display: block;
+  }
+}
+.authors-list[_ngcontent-sc45]   li[_ngcontent-sc45] {
+  align-items: center;
+  display: flex;
+  flex-basis: 50%;
+  margin-bottom: 5px;
+}
+.authors-list[_ngcontent-sc45]   li[_ngcontent-sc45]   .image[_ngcontent-sc45] {
+  align-items: center;
+  background-color: #0053d6;
+  border-radius: 50%;
+  display: flex;
+  height: 50px;
+  justify-content: center;
+  margin-right: 10px;
+  min-width: 50px;
+  overflow: hidden;
+  position: relative;
+  width: 50px;
+  z-index: 0;
+}
+.authors-list[_ngcontent-sc45]   li[_ngcontent-sc45]   .image[_ngcontent-sc45]   p[_ngcontent-sc45] {
+  color: #fff;
+  margin: 0;
+}
+li[_ngcontent-sc45]:not(.external)   .author-name[_ngcontent-sc45] {
+  border: 0;
+  position: relative;
+}
+li[_ngcontent-sc45]:not(.external)   .author-name[_ngcontent-sc45]::before {
+  background-color: #0053d6;
+  bottom: 0;
+  content: "";
+  height: 1px;
+  left: 0;
+  position: absolute;
+  right: 0;
+  -webkit-transform: scaleX(0);
+          transform: scaleX(0);
+  -webkit-transform-origin: bottom right;
+          transform-origin: bottom right;
+  transition: -webkit-transform 0.5s ease;
+  transition: transform 0.5s ease;
+  transition: transform 0.5s ease, -webkit-transform 0.5s ease;
+}
+li[_ngcontent-sc45]:not(.external)   .author-name[_ngcontent-sc45]:hover {
+  color: #0053d6;
+}
+li[_ngcontent-sc45]:not(.external)   .author-name[_ngcontent-sc45]:hover::before {
+  -webkit-transform: scaleX(1);
+          transform: scaleX(1);
+  -webkit-transform-origin: bottom left;
+          transform-origin: bottom left;
+}
+.authors-list[_ngcontent-sc45]   li.external[_ngcontent-sc45]   .image[_ngcontent-sc45] {
+  background-color: #fff;
+}
+.authors-list[_ngcontent-sc45]   li.external[_ngcontent-sc45]   .image[_ngcontent-sc45]   p[_ngcontent-sc45] {
+  color: #123693;
+  font-weight: 700;
+}
+.authors-list[_ngcontent-sc45]   li.external[_ngcontent-sc45]   .author-name[_ngcontent-sc45] {
+  color: #123693;
+}
+.authors-list[_ngcontent-sc45]   li.external[_ngcontent-sc45]   .author-name[_ngcontent-sc45]:hover {
+  color: #123693;
+}
+.footnote[_ngcontent-sc45] {
+  margin: 15px 0 0;
+}
+.footnote[_ngcontent-sc45]   small[_ngcontent-sc45]   sup[_ngcontent-sc45] {
+  top: -1px;
+}</style><style ng-transition="deepmind-website">[_nghost-sc18] {
+  background-color: #f0f5f5;
+  display: block;
+  padding: 60px 0;
+}
+@media (min-width: 768px) {
+  [_nghost-sc18] {
+    padding: 70px 0;
+  }
+}
+@media (min-width: 1024px) {
+  [_nghost-sc18] {
+    padding: 80px 0;
+  }
+}
+@media (min-width: 1440px) {
+  [_nghost-sc18] {
+    padding: 100px 0;
+  }
+}
+.footer-promos[_ngcontent-sc18] {
+  display: flex;
+  flex-direction: column;
+}
+@media (min-width: 1440px) {
+  .footer-promos.is-case-study[_ngcontent-sc18] {
+    flex-direction: row;
+  }
+}
+@media (min-width: 1440px) {
+  .footer-promos.is-case-study[_ngcontent-sc18]   .dm-h5[_ngcontent-sc18] {
+    margin: 0 100px 0 0;
+    min-width: 325px;
+  }
+}
+@media (min-width: 2048px) {
+  .footer-promos.is-case-study[_ngcontent-sc18]   .dm-h5[_ngcontent-sc18] {
+    min-width: 375px;
+  }
+}
+.footer-promos[_ngcontent-sc18]   .dm-h5[_ngcontent-sc18] {
+  margin: 0 0 30px;
+  min-width: 100%;
+}
+.promo-wrapper[_ngcontent-sc18] {
+  display: flex;
+  flex-flow: row wrap;
+  width: 100%;
+}
+.promo-wrapper[_ngcontent-sc18]   .footer-promo[_ngcontent-sc18] {
+  flex-grow: 1;
+  margin: 0 0 30px;
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .promo-wrapper[_ngcontent-sc18]   .footer-promo[_ngcontent-sc18] {
+    max-width: calc(50% - 15px);
+    width: calc(50% - 15px);
+  }
+}
+@media (min-width: 768px) {
+  .promo-wrapper[_ngcontent-sc18]   .footer-promo[_ngcontent-sc18]:nth-child(2n) {
+    margin: 0 0 30px 30px;
+  }
+}
+.promo-wrapper[_ngcontent-sc18]   dm-component-factory[_ngcontent-sc18] {
+  height: 100%;
+}</style><style ng-transition="deepmind-website">[_nghost-sc42] {
+  display: block;
+  position: relative;
+}
+.user-content.is-homepage-intro[_ngcontent-sc42] {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  left: 0;
+  margin: 40px auto;
+  max-width: 835px;
+  right: 0;
+  text-align: center;
+}</style><style ng-transition="deepmind-website">[_nghost-sc46] {
+  display: block;
+  margin: 30px 0;
+  position: relative;
+  width: 100%;
+}
+.full-width[_nghost-sc46] {
+  margin: 30px 0 30px -30px;
+  width: calc(100% + 80px);
+}
+@media (min-width: 768px) {
+  .full-width[_nghost-sc46] {
+    width: calc(100% + 215px);
+  }
+}
+@media (min-width: 1024px) {
+  .full-width[_nghost-sc46] {
+    margin: 30px 0 30px calc((312px + 100px) * -1);
+    width: calc(100% + 312px + 100px);
+  }
+}
+@media (min-width: 2048px) {
+  .full-width[_nghost-sc46] {
+    margin: 30px 0 30px calc((100vw - 775px) / -2);
+    width: calc(1440px + ((100vw - 1440px) / 2));
+  }
+}
+img[_ngcontent-sc46] {
+  left: 0;
+  position: relative;
+  width: 100%;
+}
+figcaption[_ngcontent-sc46] {
+  margin: 17px 0 0;
+}</style><style ng-transition="deepmind-website">[_nghost-sc41] {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+  z-index: 0;
+}
+@media (min-width: 768px) {
+  [_nghost-sc41] {
+    flex-direction: row;
+  }
+}
+@media (min-width: 1440px) {
+  [_nghost-sc41] {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+.is-homepage[_nghost-sc41] {
+  margin: 0 0 40px;
+}
+.video-player-active[_nghost-sc41] {
+  z-index: 40;
+}
+[_nghost-sc41]   .dm-h3[_ngcontent-sc41], [_nghost-sc41]   span[_ngcontent-sc41] {
+  text-align: center;
+}
+.video-wrapper[_ngcontent-sc41] {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.video-container[_ngcontent-sc41] {
+  height: auto;
+  position: relative;
+  display: flex;
+  width: 100%;
+}
+.video-container[_ngcontent-sc41]::before {
+  content: "";
+  display: block;
+  padding-top: 56.25%;
+  width: 100%;
+}
+.video-container[_ngcontent-sc41]    > img[_ngcontent-sc41], .video-container[_ngcontent-sc41]    > svg[_ngcontent-sc41], .video-container[_ngcontent-sc41]    > path[_ngcontent-sc41] {
+  display: block;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+.play[_ngcontent-sc41] {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+button.icon-play[_ngcontent-sc41] {
+  background-color: #ffdb13;
+  border: 0;
+  position: absolute;
+  z-index: 1;
+}
+button.icon-play[_ngcontent-sc41]   svg[_ngcontent-sc41] {
+  fill: #0053d6;
+  height: 50px;
+  padding: 15px 13px 15px 19px;
+  width: 50px;
+}
+@media (min-width: 1440px) {
+  button.icon-play[_ngcontent-sc41]   svg[_ngcontent-sc41] {
+    height: 75px;
+    padding: 25px 23px 25px 29px;
+    width: 75px;
+  }
+}
+button.icon-play[_ngcontent-sc41]:focus, button.icon-play[_ngcontent-sc41]:hover {
+  background-color: #0053d6;
+}
+button.icon-play[_ngcontent-sc41]:focus   svg[_ngcontent-sc41], button.icon-play[_ngcontent-sc41]:hover   svg[_ngcontent-sc41] {
+  fill: #fff;
+}
+.video-copy[_ngcontent-sc41] {
+  padding: 30px 50px;
+  width: 100%;
+}
+@media (min-width: 1024px) {
+  .video-copy[_ngcontent-sc41] {
+    bottom: 0;
+    left: 0;
+    pointer-events: none;
+    position: absolute;
+  }
+}
+.read-time[_ngcontent-sc41] {
+  display: flex;
+  justify-content: center;
+}
+.read-time[_ngcontent-sc41]   svg.clock[_ngcontent-sc41] {
+  height: 17px;
+  margin-right: 8px;
+  width: 17px;
+}</style><style ng-transition="deepmind-website">[_nghost-sc9] {
+  display: block;
+  height: 100%;
+  left: 0;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+.image[_ngcontent-sc9], .video[_ngcontent-sc9] {
+  background: center/cover no-repeat;
+  display: block;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: -1;
+}
+.image[_ngcontent-sc9]   img[_ngcontent-sc9], .video[_ngcontent-sc9]   video[_ngcontent-sc9] {
+  max-width: none;
+  min-height: 100%;
+  min-width: 103%;
+  position: absolute;
+  width: 100%;
+}
+@supports ((-o-object-fit: cover) or (object-fit: cover)) {
+  .image[_ngcontent-sc9]   img[_ngcontent-sc9], .video[_ngcontent-sc9]   video[_ngcontent-sc9] {
+    -o-object-fit: cover;
+       object-fit: cover;
+  }
+}
+.v-position-default[_nghost-sc9]   .image[_ngcontent-sc9]   img[_ngcontent-sc9], .v-position-top[_nghost-sc9]   .image[_ngcontent-sc9]   img[_ngcontent-sc9], .v-position-default[_nghost-sc9]   .video[_ngcontent-sc9]   video[_ngcontent-sc9], .v-position-top[_nghost-sc9]   .video[_ngcontent-sc9]   video[_ngcontent-sc9] {
+  top: 0;
+}
+.v-position-bottom[_nghost-sc9]   .image[_ngcontent-sc9]   img[_ngcontent-sc9], .v-position-bottom[_nghost-sc9]   .video[_ngcontent-sc9]   video[_ngcontent-sc9] {
+  bottom: 0;
+}
+.v-position-center[_nghost-sc9]   .image[_ngcontent-sc9]   img[_ngcontent-sc9], .v-position-center[_nghost-sc9]   .video[_ngcontent-sc9]   video[_ngcontent-sc9] {
+  top: 50%;
+  -webkit-transform: translate(0, -50%);
+          transform: translate(0, -50%);
+}
+.h-position-default[_nghost-sc9]   .image[_ngcontent-sc9]   img[_ngcontent-sc9], .h-position-left[_nghost-sc9]   .image[_ngcontent-sc9]   img[_ngcontent-sc9], .h-position-default[_nghost-sc9]   .video[_ngcontent-sc9]   video[_ngcontent-sc9], .h-position-left[_nghost-sc9]   .video[_ngcontent-sc9]   video[_ngcontent-sc9] {
+  left: 0;
+}
+.h-position-right[_nghost-sc9]   .image[_ngcontent-sc9]   img[_ngcontent-sc9], .h-position-right[_nghost-sc9]   .video[_ngcontent-sc9]   video[_ngcontent-sc9] {
+  right: 0;
+}
+.h-position-center[_nghost-sc9]   .image[_ngcontent-sc9]   img[_ngcontent-sc9], .h-position-center[_nghost-sc9]   .video[_ngcontent-sc9]   video[_ngcontent-sc9] {
+  left: 50%;
+  -webkit-transform: translate(-50%, 0);
+          transform: translate(-50%, 0);
+}
+.h-position-center.v-position-center[_nghost-sc9]   .image[_ngcontent-sc9]   img[_ngcontent-sc9], .h-position-center.v-position-center[_nghost-sc9]   .video[_ngcontent-sc9]   video[_ngcontent-sc9] {
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+dm-modal[_ngcontent-sc9] {
+  pointer-events: auto;
+}</style><style ng-transition="deepmind-website">[_nghost-sc39] {
+  display: block;
+  position: relative;
+}
+[_nghost-sc39]   figure[_ngcontent-sc39] {
+  margin: auto;
+}
+[_nghost-sc39]   .iframe-container[_ngcontent-sc39] {
+  height: auto;
+  position: relative;
+  overflow: hidden;
+}
+[_nghost-sc39]   .iframe-container[_ngcontent-sc39]::before {
+  content: "";
+  display: block;
+  padding-top: 56.25%;
+  width: 100%;
+}
+[_nghost-sc39]   .iframe-container[_ngcontent-sc39]    > img[_ngcontent-sc39], [_nghost-sc39]   .iframe-container[_ngcontent-sc39]    > svg[_ngcontent-sc39], [_nghost-sc39]   .iframe-container[_ngcontent-sc39]    > path[_ngcontent-sc39] {
+  display: block;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+[_nghost-sc39]   .iframe-container.portrait[_ngcontent-sc39] {
+  height: auto;
+  position: relative;
+}
+[_nghost-sc39]   .iframe-container.portrait[_ngcontent-sc39]::before {
+  content: "";
+  display: block;
+  padding-top: 177.7777777778%;
+  width: 100%;
+}
+[_nghost-sc39]   .iframe-container.portrait[_ngcontent-sc39]    > img[_ngcontent-sc39], [_nghost-sc39]   .iframe-container.portrait[_ngcontent-sc39]    > svg[_ngcontent-sc39], [_nghost-sc39]   .iframe-container.portrait[_ngcontent-sc39]    > path[_ngcontent-sc39] {
+  display: block;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+[_nghost-sc39]   .iframe-container.square[_ngcontent-sc39] {
+  height: auto;
+  position: relative;
+}
+[_nghost-sc39]   .iframe-container.square[_ngcontent-sc39]::before {
+  content: "";
+  display: block;
+  padding-top: 100%;
+  width: 100%;
+}
+[_nghost-sc39]   .iframe-container.square[_ngcontent-sc39]    > img[_ngcontent-sc39], [_nghost-sc39]   .iframe-container.square[_ngcontent-sc39]    > svg[_ngcontent-sc39], [_nghost-sc39]   .iframe-container.square[_ngcontent-sc39]    > path[_ngcontent-sc39] {
+  display: block;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+[_nghost-sc39]   iframe[_ngcontent-sc39] {
+  display: block;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}</style><style ng-transition="deepmind-website">[_nghost-sc47] {
+  display: flex;
+  position: relative;
+}
+.promo-wrapper   [_nghost-sc47] {
+  background-color: #fff;
+  margin: 0;
+  padding: 0;
+}
+.promo-wrapper   [_nghost-sc47]   dm-content-card[_ngcontent-sc47] {
+  height: 100%;
+  max-width: none;
+}
+dm-site-page   [_nghost-sc47] {
+  align-items: center;
+  background-color: #d4ffed;
+  height: 100%;
+  justify-content: center;
+  margin: 0 -20px;
+  padding: 20px;
+}
+dm-site-page   [_nghost-sc47]   dm-content-card[_ngcontent-sc47], dm-site-page   .featured[_nghost-sc47]   dm-content-card[_ngcontent-sc47] {
+  background-color: #fff;
+  min-height: 355px;
+}
+dm-site-page   [_nghost-sc47]   dm-content-card[_ngcontent-sc47]   .header[_ngcontent-sc47]   svg[_ngcontent-sc47], dm-site-page   .featured[_nghost-sc47]   dm-content-card[_ngcontent-sc47]   .header[_ngcontent-sc47]   svg[_ngcontent-sc47] {
+  background-color: #d4ffed;
+}
+@media (min-width: 768px) {
+  dm-site-page   [_nghost-sc47] {
+    margin: 0;
+    padding: 30px;
+  }
+  dm-site-page   [_nghost-sc47]   dm-content-card[_ngcontent-sc47] {
+    max-width: 320px;
+  }
+}
+@media (min-width: 1440px) {
+  dm-site-page   [_nghost-sc47] {
+    padding: 40px;
+  }
+}
+.featured[_nghost-sc47]   dm-content-card[_ngcontent-sc47] {
+  background-color: #d4ffed;
+}
+.featured[_nghost-sc47]   dm-content-card[_ngcontent-sc47]   .header[_ngcontent-sc47]   svg[_ngcontent-sc47] {
+  background-color: #fff;
+}
+[_nghost-sc47]   dm-content-card[_ngcontent-sc47] {
+  background-color: #fff;
+  min-height: 350px;
+}
+.caption[_ngcontent-sc47] {
+  margin: 0;
+}
+.header[_ngcontent-sc47] {
+  display: flex;
+  margin-bottom: 22px;
+}
+.header[_ngcontent-sc47]   svg[_ngcontent-sc47] {
+  background-color: #d4ffed;
+  border-radius: 50%;
+  fill: #0053d6;
+  height: 40px;
+  margin: 0 9px 0 0;
+  min-width: 40px;
+  width: 40px;
+}
+.header[_ngcontent-sc47]   .category[_ngcontent-sc47] {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+.body[_ngcontent-sc47]   h4[_ngcontent-sc47] {
+  margin: 0 0 10px;
+}
+.footer[_ngcontent-sc47] {
+  display: flex;
+  margin: auto 0 0;
+  padding: 25px 0 0;
+}
+.footer[_ngcontent-sc47]   .info[_ngcontent-sc47]   svg[_ngcontent-sc47], .footer[_ngcontent-sc47]   .read-more[_ngcontent-sc47]   svg[_ngcontent-sc47] {
+  height: 30px;
+  width: 30px;
+}
+.footer[_ngcontent-sc47]   .icon-open-source[_ngcontent-sc47] {
+  padding: 0;
+}
+.footer[_ngcontent-sc47]   .dm-cta[_ngcontent-sc47] {
+  margin: 0 10px 0 0;
+}
+.footer[_ngcontent-sc47]   .dm-cta.icon[_ngcontent-sc47]    > svg[_ngcontent-sc47] {
+  height: 28px;
+  width: 28px;
+}
+.footer[_ngcontent-sc47]   .dm-cta[_ngcontent-sc47]:last-child {
+  left: 0;
+  margin: 0 0 0 auto;
+}</style><style ng-transition="deepmind-website">[_nghost-sc37] {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+  z-index: 0;
+}
+.image-left[_nghost-sc37]   .content-card-body[_ngcontent-sc37], .image-right[_nghost-sc37]   .content-card-body[_ngcontent-sc37] {
+  width: 100%;
+}
+@media (min-width: 1440px) {
+  .image-left[_nghost-sc37]   .content-card-body[_ngcontent-sc37], .image-right[_nghost-sc37]   .content-card-body[_ngcontent-sc37] {
+    width: 50%;
+  }
+}
+@media (min-width: 1440px) {
+  .image-left[_nghost-sc37]   .image[_ngcontent-sc37], .image-right[_nghost-sc37]   .image[_ngcontent-sc37] {
+    height: auto;
+    max-height: none;
+    min-height: auto;
+    width: 50%;
+  }
+}
+@media (min-width: 1440px) {
+  .image-left[_nghost-sc37]   .content-card-body[_ngcontent-sc37], .image-right[_nghost-sc37]   .content-card-body[_ngcontent-sc37] {
+    width: 50%;
+  }
+}
+@media (min-width: 1440px) {
+  .image-left[_nghost-sc37] {
+    flex-direction: row;
+  }
+}
+@media (min-width: 1440px) {
+  .image-right[_nghost-sc37] {
+    flex-direction: row-reverse;
+  }
+}
+.content-card-body[_ngcontent-sc37] {
+  align-items: inherit;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: inherit;
+  padding: 20px;
+}
+@media (min-width: 1024px) {
+  .content-card-body[_ngcontent-sc37] {
+    padding: 25px;
+  }
+}
+.content-card-body.has-border[_ngcontent-sc37] {
+  position: relative;
+}
+.content-card-body.has-border[_ngcontent-sc37]:before {
+  background-color: #d8d8d8;
+  bottom: 0;
+  content: "";
+  height: 1px;
+  left: 20px;
+  position: absolute;
+  width: calc(100% - 40px);
+}
+@media (min-width: 1024px) {
+  .content-card-body.has-border[_ngcontent-sc37]:before {
+    left: 25px;
+    width: calc(100% - 50px);
+  }
+}
+.image[_ngcontent-sc37] {
+  height: auto;
+  position: relative;
+  display: block;
+  min-height: 200px;
+  position: relative;
+  width: 100%;
+}
+.image[_ngcontent-sc37]::before {
+  content: "";
+  display: block;
+  padding-top: 56.25%;
+  width: 100%;
+}
+.image[_ngcontent-sc37]    > img[_ngcontent-sc37], .image[_ngcontent-sc37]    > svg[_ngcontent-sc37], .image[_ngcontent-sc37]    > path[_ngcontent-sc37] {
+  display: block;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}</style></head>
+<body>
+  <script data-gtm-id="GTM-MWTBMKX" src="https://www.gstatic.com/brandstudio/kato/google_tag_manager_component/google_tag_manager_component.js">
+  </script>
+  <noscript>
+    <iframe class="gtm-iframe"
+            height="0"
+            src="https://www.googletagmanager.com/ns.html?id=GTM-MWTBMKX"
+            width="0">
+    </iframe>
+  </noscript>
+
+  <script src="https://www.gstatic.com/brandstudio/kato/cookie_choice_component/cookie_consent_bar.v2.js">
+  </script>
+
+  <dm-app-root _nghost-sc0="" ng-version="8.0.0"><!----><dm-header _ngcontent-sc0="" _nghost-sc2="" class="ng-tns-c2-0"><!----><!----><header _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted"><div _ngcontent-sc2="" class="header-container"><div _ngcontent-sc2="" class="menu-wrapper"><div _ngcontent-sc2="" class="menu-header"><a _ngcontent-sc2="" class="nav-cta logo" aria-label="Home page" routerlink="/" href="/"><!----><svg _ngcontent-sc2="" class="full-logo ng-tns-c2-0 ng-star-inserted" role="img"><use _ngcontent-sc2="" class="ng-tns-c2-0" xlink:href="#deepmind-logo"></use></svg><!----></a><div _ngcontent-sc2="" class="menu-controls"><button _ngcontent-sc2="" class="nav-cta hamburger-menu" aria-label="Toggle menu" aria-pressed="true" role="button"><span _ngcontent-sc2="" class="ng-tns-c2-0"></span><span _ngcontent-sc2="" class="ng-tns-c2-0"></span><span _ngcontent-sc2="" class="ng-tns-c2-0"></span></button><button _ngcontent-sc2="" class="nav-cta search" aria-label="Search publications" aria-pressed="true" role="button"><svg _ngcontent-sc2="" class="ng-tns-c2-0" role="img" viewBox="0 0 27 28"><path _ngcontent-sc2="" class="ng-tns-c2-0" d="M17.537 20.034l1.414-1.414 7.854 7.854-1.414 1.415z"></path><g _ngcontent-sc2="" class="ng-tns-c2-0"><path _ngcontent-sc2="" class="ng-tns-c2-0" d="M11.292 20.583a9.292 9.292 0 1 0 0-18.583 9.292 9.292 0 0 0 0 18.583z"></path><path _ngcontent-sc2="" class="ng-tns-c2-0" d="M11.292 22.583C5.055 22.583 0 17.528 0 11.292 0 5.055 5.055 0 11.292 0c6.236 0 11.291 5.055 11.291 11.292 0 6.236-5.055 11.291-11.291 11.291zm0-2a9.292 9.292 0 1 0 0-18.583 9.292 9.292 0 0 0 0 18.583z"></path></g></svg></button></div></div><!----><nav _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted"><ul _ngcontent-sc2="" class="pages"><!----><li _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted"><a _ngcontent-sc2="" class="nav-cta page-link" href="/about"> About </a></li><li _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted"><a _ngcontent-sc2="" class="nav-cta page-link" href="/research"> Research </a></li><li _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted"><a _ngcontent-sc2="" class="nav-cta page-link" href="/impact"> Impact </a></li><li _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted is-active"><a _ngcontent-sc2="" class="nav-cta page-link" href="/blog"> Blog </a></li><li _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted"><a _ngcontent-sc2="" class="nav-cta page-link" href="/safety-and-ethics"> Safety &amp; Ethics </a></li><li _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted"><a _ngcontent-sc2="" class="nav-cta page-link" href="/careers"> Careers </a></li></ul></nav></div><div _ngcontent-sc2="" class="social-media-wrapper"><ul _ngcontent-sc2="" class="ng-tns-c2-0"><!----><li _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted"><a _ngcontent-sc2="" class="nav-cta icon" rel="noopener" target="_blank" aria-label="Follow us on Twitter!" href="https://twitter.com/DeepMindAI"><svg _ngcontent-sc2="" class="ng-tns-c2-0" role="img"><use _ngcontent-sc2="" class="ng-tns-c2-0" xlink:href="#twitter"></use></svg></a></li><li _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted"><a _ngcontent-sc2="" class="nav-cta icon" rel="noopener" target="_blank" aria-label="Follow us on Youtube!" href="https://www.youtube.com/deepmind"><svg _ngcontent-sc2="" class="ng-tns-c2-0" role="img"><use _ngcontent-sc2="" class="ng-tns-c2-0" xlink:href="#youtube"></use></svg></a></li></ul></div></div></header><!----><!----><!----></dm-header><div _ngcontent-sc0="" class="dm-body"><router-outlet _ngcontent-sc0=""></router-outlet><dm-page-loader class="ng-star-inserted"><dm-component-factory _nghost-sc10=""><!----><dm-blog-article-page _nghost-sc49="" id="" class="ng-star-inserted"><!----><!----><div _ngcontent-sc49="" class="dm-section ng-star-inserted"><dm-breadcrumb _ngcontent-sc49="" _nghost-sc13="" class="theme-dark"><!----><ul _ngcontent-sc13="" class="ng-star-inserted"><!----><li _ngcontent-sc13="" class="ng-star-inserted"><!----><a _ngcontent-sc13="" class="nav-cta logo ng-star-inserted" href="/"><svg _ngcontent-sc13="" role="img"><use _ngcontent-sc13="" xlink:href="#deepmind-logo-text"></use></svg></a><!----></li><li _ngcontent-sc13="" class="ng-star-inserted"><!----><a _ngcontent-sc13="" class="nav-cta ng-star-inserted" tab-index="0" href="/blog"><svg _ngcontent-sc13="" class="arrow" role="img"><use _ngcontent-sc13="" xlink:href="#breadcrumb-arrow"></use></svg> Blog </a><!----></li><li _ngcontent-sc13="" class="ng-star-inserted"><!----><a _ngcontent-sc13="" class="nav-cta disabled ng-star-inserted" tab-index="-1" href="/blog/article/capture-the-flag-science"><svg _ngcontent-sc13="" class="arrow is-last" role="img"><use _ngcontent-sc13="" xlink:href="#breadcrumb-arrow"></use></svg> Capture the Flag: the emergence of complex cooperative agents </a><!----></li></ul></dm-breadcrumb></div><dm-blog-article-hero _ngcontent-sc49="" _nghost-sc50="" class="ng-star-inserted"><header _ngcontent-sc50=""><!----><div _ngcontent-sc50="" class="article-image ng-star-inserted"><picture _ngcontent-sc50=""><source _ngcontent-sc50="" type="image/webp" srcset="https://lh3.googleusercontent.com/EoYGm1kHugDA0pNcftPcdzIvnVn-TzHIQ9tyAKkAaYMn4D8xLbZGIYcTmkbcqA__CQro5CD_NBBCNoc4H0pMnZw2kSncpAmmxkQDYA=w1440-rw-v1 1x,https://lh3.googleusercontent.com/EoYGm1kHugDA0pNcftPcdzIvnVn-TzHIQ9tyAKkAaYMn4D8xLbZGIYcTmkbcqA__CQro5CD_NBBCNoc4H0pMnZw2kSncpAmmxkQDYA=w2048-rw-v1 2x"><source _ngcontent-sc50="" type="image/jpg" srcset="https://lh3.googleusercontent.com/EoYGm1kHugDA0pNcftPcdzIvnVn-TzHIQ9tyAKkAaYMn4D8xLbZGIYcTmkbcqA__CQro5CD_NBBCNoc4H0pMnZw2kSncpAmmxkQDYA=w1440 1x,https://lh3.googleusercontent.com/EoYGm1kHugDA0pNcftPcdzIvnVn-TzHIQ9tyAKkAaYMn4D8xLbZGIYcTmkbcqA__CQro5CD_NBBCNoc4H0pMnZw2kSncpAmmxkQDYA=w2048 2x"><img _ngcontent-sc50="" alt="" srcset="https://lh3.googleusercontent.com/EoYGm1kHugDA0pNcftPcdzIvnVn-TzHIQ9tyAKkAaYMn4D8xLbZGIYcTmkbcqA__CQro5CD_NBBCNoc4H0pMnZw2kSncpAmmxkQDYA=w2048 2x" src="https://lh3.googleusercontent.com/EoYGm1kHugDA0pNcftPcdzIvnVn-TzHIQ9tyAKkAaYMn4D8xLbZGIYcTmkbcqA__CQro5CD_NBBCNoc4H0pMnZw2kSncpAmmxkQDYA=w1440"></picture></div><div _ngcontent-sc50="" class="article-content-container"><div _ngcontent-sc50="" class="article-content"><div _ngcontent-sc50="" class="article-meta-container"><div _ngcontent-sc50="" class="article-category-container"><svg _ngcontent-sc50="" role="img"><use _ngcontent-sc50="" xlink:href="#article"></use></svg><div _ngcontent-sc50="" class="category"><p _ngcontent-sc50="" class="caption title">Blog post</p><!----><p _ngcontent-sc50="" class="caption ng-star-inserted"> Research </p></div></div><p _ngcontent-sc50="" class="caption date">30 May 2019</p></div><h2 _ngcontent-sc50="" class="dm-h2 article-description"> Capture the Flag: the emergence of complex cooperative agents </h2></div></div></header></dm-blog-article-hero><div _ngcontent-sc49="" class="blog-article-bg ng-star-inserted"><div _ngcontent-sc49="" class="page-content-container dm-section"><aside _ngcontent-sc49=""><dm-social-share _ngcontent-sc49="" _nghost-sc19=""><!----><!----><div _ngcontent-sc19="" class="social-share ng-star-inserted"><p _ngcontent-sc19="" class="caption title">Share</p><ul _ngcontent-sc19="" class="social-media"><!----><li _ngcontent-sc19="" class="ng-star-inserted"><a _ngcontent-sc19="" class="dm-cta icon" aria-label="Share to Twitter!"><svg _ngcontent-sc19="" role="img"><use _ngcontent-sc19="" xlink:href="#twitter"></use></svg></a></li><li _ngcontent-sc19="" class="ng-star-inserted"><a _ngcontent-sc19="" class="dm-cta icon" aria-label="Share to Facebook!"><svg _ngcontent-sc19="" role="img"><use _ngcontent-sc19="" xlink:href="#facebook"></use></svg></a></li><li _ngcontent-sc19="" class="ng-star-inserted"><a _ngcontent-sc19="" class="dm-cta icon" aria-label="Share to LinkedIn!"><svg _ngcontent-sc19="" role="img"><use _ngcontent-sc19="" xlink:href="#linkedin"></use></svg></a></li></ul></div></dm-social-share><!----><dm-tag-list _ngcontent-sc49="" _nghost-sc44="" class="ng-star-inserted"><div _ngcontent-sc44="" class="related-topics"><p _ngcontent-sc44="" class="caption title">Further reading</p><ul _ngcontent-sc44="" class="tags"><!----><li _ngcontent-sc44="" class="ng-star-inserted"><a _ngcontent-sc44="" class="dm-cta pill tag flat" routerlink="/research" href="/research?filters=%7B%22tags%22:%5B%22Deep%20learning%22%5D%7D"> Deep learning </a></li><li _ngcontent-sc44="" class="ng-star-inserted"><a _ngcontent-sc44="" class="dm-cta pill tag flat" routerlink="/research" href="/research?filters=%7B%22tags%22:%5B%22Deep%20reinforcement%20learning%22%5D%7D"> Deep reinforcement learning </a></li><li _ngcontent-sc44="" class="ng-star-inserted"><a _ngcontent-sc44="" class="dm-cta pill tag flat" routerlink="/research" href="/research?filters=%7B%22tags%22:%5B%22Environments%22%5D%7D"> Environments </a></li><li _ngcontent-sc44="" class="ng-star-inserted"><a _ngcontent-sc44="" class="dm-cta pill tag flat" routerlink="/research" href="/research?filters=%7B%22tags%22:%5B%22Games%22%5D%7D"> Games </a></li><li _ngcontent-sc44="" class="ng-star-inserted"><a _ngcontent-sc44="" class="dm-cta pill tag flat" routerlink="/research" href="/research?filters=%7B%22tags%22:%5B%22Multi-agent%20learning%22%5D%7D"> Multi-agent learning </a></li><li _ngcontent-sc44="" class="ng-star-inserted"><a _ngcontent-sc44="" class="dm-cta pill tag flat" routerlink="/research" href="/research?filters=%7B%22tags%22:%5B%22Navigation%22%5D%7D"> Navigation </a></li><li _ngcontent-sc44="" class="ng-star-inserted"><a _ngcontent-sc44="" class="dm-cta pill tag flat" routerlink="/research" href="/research?filters=%7B%22tags%22:%5B%22Reinforcement%20learning%22%5D%7D"> Reinforcement learning </a></li><li _ngcontent-sc44="" class="ng-star-inserted"><a _ngcontent-sc44="" class="dm-cta pill tag flat" routerlink="/research" href="/research?filters=%7B%22tags%22:%5B%22Visualization%22%5D%7D"> Visualization </a></li></ul></div></dm-tag-list><!----><dm-authors-list _ngcontent-sc49="" _nghost-sc45="" class="ng-star-inserted"><address _ngcontent-sc45="" class="authors-container"><p _ngcontent-sc45="" class="caption title">Authors</p><ul _ngcontent-sc45="" class="authors-list"><!----><li _ngcontent-sc45="" class="ng-star-inserted"><div _ngcontent-sc45="" class="image"><!----><p _ngcontent-sc45="" class="ng-star-inserted"><small _ngcontent-sc45="">MJ</small></p><!----></div><!----><a _ngcontent-sc45="" alt="More articles" class="author-name small ng-star-inserted" routerlink="/research" href="/research?filters=%7B%22authors%22:%5B%226581825211727872%22%5D%7D"> Max Jaderberg<!----></a><!----></li><li _ngcontent-sc45="" class="ng-star-inserted"><div _ngcontent-sc45="" class="image"><!----><p _ngcontent-sc45="" class="ng-star-inserted"><small _ngcontent-sc45="">WMC</small></p><!----></div><!----><a _ngcontent-sc45="" alt="More articles" class="author-name small ng-star-inserted" routerlink="/research" href="/research?filters=%7B%22authors%22:%5B%224955336665989120%22%5D%7D"> Wojciech Marian Czarnecki<!----></a><!----></li><li _ngcontent-sc45="" class="ng-star-inserted"><div _ngcontent-sc45="" class="image"><!----><p _ngcontent-sc45="" class="ng-star-inserted"><small _ngcontent-sc45="">ID</small></p><!----></div><!----><a _ngcontent-sc45="" alt="More articles" class="author-name small ng-star-inserted" routerlink="/research" href="/research?filters=%7B%22authors%22:%5B%226166745965920256%22%5D%7D"> Iain Dunning<!----></a><!----></li><li _ngcontent-sc45="" class="ng-star-inserted"><div _ngcontent-sc45="" class="image"><!----><p _ngcontent-sc45="" class="ng-star-inserted"><small _ngcontent-sc45="">TG</small></p><!----></div><!----><a _ngcontent-sc45="" alt="More articles" class="author-name small ng-star-inserted" routerlink="/research" href="/research?filters=%7B%22authors%22:%5B%226281023284838400%22%5D%7D"> Thore Graepel<!----></a><!----></li><li _ngcontent-sc45="" class="ng-star-inserted"><div _ngcontent-sc45="" class="image"><!----><p _ngcontent-sc45="" class="ng-star-inserted"><small _ngcontent-sc45="">LM</small></p><!----></div><!----><a _ngcontent-sc45="" alt="More articles" class="author-name small ng-star-inserted" routerlink="/research" href="/research?filters=%7B%22authors%22:%5B%224856566779478016%22%5D%7D"> Luke Marris<!----></a><!----></li></ul><!----></address></dm-authors-list></aside><div _ngcontent-sc49="" class="page-content"><!----><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content"><p><em>Updated 30/5/19. Read about our new work below, in “Human Comparable Agents” and “Going Further”.</em></p>
+<p><strong>Mastering the strategy, tactical understanding, and team play involved in multiplayer video games represents a critical challenge for AI research. In our latest paper, <a href="https://science.sciencemag.org/content/364/6443/859" rel="noopener" target="_blank">now published in the journal Science</a>, we present new developments in reinforcement learning, resulting in human-level performance in Quake III Arena Capture the Flag. This is a complex, multi-agent environment and one of the canonical 3D first-person multiplayer games. The agents successfully cooperate with both artificial and human teammates, and demonstrate high performance even when trained with reaction times comparable to human players. Furthermore, we show how these methods have managed to scale beyond research Capture the Flag environments to the full game of Quake III Arena.</strong></p></div></dm-body-text><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-image-gallery _nghost-sc46="" id="" class="ng-star-inserted" colour-theme=""><!----><figure _ngcontent-sc46="" class="ng-star-inserted"><!----><picture _ngcontent-sc46="" class="ng-star-inserted"><source _ngcontent-sc46="" type="image/webp" srcset="https://lh3.googleusercontent.com/CFlAYmP49qitU-SOP_PaKtV1kOrlpNnvo4oEDFhyxelrVwKyAbkdXwUuDFRTmiRSQle4955mmOAB4jrrIrWzIXDt8hOajZGtJzNaDRw=w1440-rw-v1 1x,https://lh3.googleusercontent.com/CFlAYmP49qitU-SOP_PaKtV1kOrlpNnvo4oEDFhyxelrVwKyAbkdXwUuDFRTmiRSQle4955mmOAB4jrrIrWzIXDt8hOajZGtJzNaDRw=w2048-rw-v1 2x"><source _ngcontent-sc46="" type="image/jpg" srcset="https://lh3.googleusercontent.com/CFlAYmP49qitU-SOP_PaKtV1kOrlpNnvo4oEDFhyxelrVwKyAbkdXwUuDFRTmiRSQle4955mmOAB4jrrIrWzIXDt8hOajZGtJzNaDRw=w1440 1x,https://lh3.googleusercontent.com/CFlAYmP49qitU-SOP_PaKtV1kOrlpNnvo4oEDFhyxelrVwKyAbkdXwUuDFRTmiRSQle4955mmOAB4jrrIrWzIXDt8hOajZGtJzNaDRw=w2048 2x"><img _ngcontent-sc46="" alt="" srcset="https://lh3.googleusercontent.com/CFlAYmP49qitU-SOP_PaKtV1kOrlpNnvo4oEDFhyxelrVwKyAbkdXwUuDFRTmiRSQle4955mmOAB4jrrIrWzIXDt8hOajZGtJzNaDRw=w2048 2x" src="https://lh3.googleusercontent.com/CFlAYmP49qitU-SOP_PaKtV1kOrlpNnvo4oEDFhyxelrVwKyAbkdXwUuDFRTmiRSQle4955mmOAB4jrrIrWzIXDt8hOajZGtJzNaDRw=w1440"></picture><!----><figcaption _ngcontent-sc46="" class="caption"> Agents playing Capture the Flag, presented from the first-person perspective of one of the red players in an indoor environment (left) and outdoor environment (right). </figcaption></figure></dm-image-gallery><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-image-gallery _nghost-sc46="" id="" class="ng-star-inserted" colour-theme=""><!----><figure _ngcontent-sc46="" class="ng-star-inserted"><!----><picture _ngcontent-sc46="" class="ng-star-inserted"><source _ngcontent-sc46="" type="image/webp" srcset="https://lh3.googleusercontent.com/RterJzRGidwT9R_Dqeu5LY5MZPjjYRc-MQdQyca7gACnA7w0bjCu_hIcoXLC4xV5zebvdZnN7ocZkemGnF4K7_p5SMZCLRWbNq1IDQ=w1440-rw-v1 1x,https://lh3.googleusercontent.com/RterJzRGidwT9R_Dqeu5LY5MZPjjYRc-MQdQyca7gACnA7w0bjCu_hIcoXLC4xV5zebvdZnN7ocZkemGnF4K7_p5SMZCLRWbNq1IDQ=w2048-rw-v1 2x"><source _ngcontent-sc46="" type="image/jpg" srcset="https://lh3.googleusercontent.com/RterJzRGidwT9R_Dqeu5LY5MZPjjYRc-MQdQyca7gACnA7w0bjCu_hIcoXLC4xV5zebvdZnN7ocZkemGnF4K7_p5SMZCLRWbNq1IDQ=w1440 1x,https://lh3.googleusercontent.com/RterJzRGidwT9R_Dqeu5LY5MZPjjYRc-MQdQyca7gACnA7w0bjCu_hIcoXLC4xV5zebvdZnN7ocZkemGnF4K7_p5SMZCLRWbNq1IDQ=w2048 2x"><img _ngcontent-sc46="" alt="" srcset="https://lh3.googleusercontent.com/RterJzRGidwT9R_Dqeu5LY5MZPjjYRc-MQdQyca7gACnA7w0bjCu_hIcoXLC4xV5zebvdZnN7ocZkemGnF4K7_p5SMZCLRWbNq1IDQ=w2048 2x" src="https://lh3.googleusercontent.com/RterJzRGidwT9R_Dqeu5LY5MZPjjYRc-MQdQyca7gACnA7w0bjCu_hIcoXLC4xV5zebvdZnN7ocZkemGnF4K7_p5SMZCLRWbNq1IDQ=w1440"></picture><!----><figcaption _ngcontent-sc46="" class="caption"> Agents playing two other Quake III Arena multiplayer game modes on full-scale tournament maps: Harvester on the Future Crossings map (left) and One Flag Capture the Flag on the Ironwood map (right), with all the pickups and gadgets of the full game. </figcaption></figure></dm-image-gallery><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content"><div class="g-sm-col-4 g-lg-col-7 g-lg-push-1">
+<div class="rich-text">
+<p>Billions of people inhabit the planet, each with their own individual goals and actions, but still capable of coming together through teams, organisations and societies in impressive displays of collective intelligence. This is a setting we call multi-agent learning: many individual agents must act independently, yet learn to interact and cooperate with other agents. This is an immensely difficult problem - because with co-adapting agents the world is constantly changing.</p>
+<p>To investigate this problem, we look at 3D first-person multiplayer video games. These games represent the most popular genre of video game, and have captured the imagination of millions of gamers because of their immersive game play, as well as the challenges they pose in terms of strategy, tactics, hand-eye coordination, and team play. The challenge for our agents is to learn directly from raw pixels to produce actions. This complexity makes first-person multiplayer games a fruitful and active area of research within the AI community.</p>
+</div>
+</div></div></dm-body-text><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-hero-video _nghost-sc41="" class="ng-tns-c41-1 ng-trigger ng-trigger-animateIn ng-star-inserted" id="" colour-theme="blue_dark" style="transform:translateX(0px);opacity:0;"><div _ngcontent-sc41="" class="video-wrapper"><div _ngcontent-sc41="" class="video-container"><div _ngcontent-sc41="" class="play"><button _ngcontent-sc41="" class="dm-cta icon icon-play" aria-label="Play video" role="button"><svg _ngcontent-sc41="" class="ng-tns-c41-1" role="img"><use _ngcontent-sc41="" class="ng-tns-c41-1" xlink:href="#play"></use></svg></button></div><dm-media _ngcontent-sc41="" class="h-position-default v-position-default" _nghost-sc9=""><!----><div _ngcontent-sc9="" class="image ng-star-inserted" style="background-image: url('https://lh3.googleusercontent.com/dPOuXhxU53wZUo_AwQyLzF1ouXZc-8r936LLGYYFsvtAEXxHjrKmAPDA_2vsDm_ON3kH4AdgQOtfC4gT2HvC8ox69zN99h7G9Urtpw=w2048');"><!----><!----><!----></div><!----><!----><div _ngcontent-sc9="" class="video ng-star-inserted" style=""><!----></div><!----><!----></dm-media></div><div _ngcontent-sc41="" class="video-copy"><h3 _ngcontent-sc41="" class="dm-h3"> Capture the Flag: from pixels to actions </h3><!----><div _ngcontent-sc41="" class="read-time ng-tns-c41-1 ng-star-inserted" style=""><svg _ngcontent-sc41="" class="clock" role="img"><use _ngcontent-sc41="" class="ng-tns-c41-1" xlink:href="#clock"></use></svg><!----><p _ngcontent-sc41="" class="caption ng-tns-c41-1 ng-star-inserted"> 1 mins </p></div></div></div></dm-hero-video><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content"><div class="g-sm-col-4 g-lg-col-7 g-lg-push-1">
+<div class="rich-text">
+<p>The game we focused on in this work is Quake III Arena (which we aesthetically modified, though all game mechanics remain the same). Quake III Arena has laid the foundations for many modern first-person video games, and has attracted a long-standing competitive e-sports scene. We train agents that learn and act as individuals, but which must be able to play on teams with and against any other agents, artificial or human.</p>
+<p>The rules of CTF are simple, but the dynamics are complex. Two teams of individual players compete on a given map with the goal of capturing the opponent team’s flag while protecting their own. To gain tactical advantage they can tag the opponent team members to send them back to their spawn points. The team with the most flag captures after five minutes wins.</p>
+<p></p>
+</div>
+</div></div></dm-body-text><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-hero-video _nghost-sc41="" class="ng-tns-c41-2 ng-trigger ng-trigger-animateIn ng-star-inserted" id="" colour-theme="ink_dark" style="transform:translateX(0px);opacity:0;"><div _ngcontent-sc41="" class="video-wrapper"><div _ngcontent-sc41="" class="video-container"><div _ngcontent-sc41="" class="play"><button _ngcontent-sc41="" class="dm-cta icon icon-play" aria-label="Play video" role="button"><svg _ngcontent-sc41="" class="ng-tns-c41-2" role="img"><use _ngcontent-sc41="" class="ng-tns-c41-2" xlink:href="#play"></use></svg></button></div><dm-media _ngcontent-sc41="" class="h-position-default v-position-default" _nghost-sc9=""><!----><div _ngcontent-sc9="" class="image ng-star-inserted" style="background-image: url('https://lh3.googleusercontent.com/ZgiVOfqMTcBG_BHy1qYHmG7SjJ25M_AOXC0wdGuM9vUDnDoozvg-tnJPrQYYt25gBqYJS-IXTXJUpTXSC5_p3jEWaBvI5M3p0RFt=w2048');"><!----><!----><!----></div><!----><!----><div _ngcontent-sc9="" class="video ng-star-inserted" style=""><!----></div><!----><!----></dm-media></div><div _ngcontent-sc41="" class="video-copy"><h3 _ngcontent-sc41="" class="dm-h3"> Capture the Flag: tutorial </h3><!----></div></div></dm-hero-video><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content"><p>From a multi-agent perspective, CTF requires players to both successfully cooperate with their teammates as well as compete with the opposing team, while remaining robust to any playing style they might encounter.</p>
+<p>To make things even more interesting, we consider a variant of CTF in which the map layout changes from match to match. As a consequence, our agents are forced to acquire general strategies rather than memorising the map layout. Additionally, to level the playing field, our learning agents experience the world of CTF in a similar way to humans: they observe a stream of pixel images and issue actions through an emulated game controller.</p></div></dm-body-text><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content"><div class="g-sm-col-4 g-lg-col-7 g-lg-push-1">
+<div class="rich-text">
+<p>Our agents must learn from scratch how to see, act, cooperate, and compete in unseen environments, all from a single reinforcement signal per match: whether their team won or not. This is a challenging learning problem, and its solution is based on three general ideas for reinforcement learning:</p>
+<ul>
+<li>Rather than training a single agent, we&nbsp;<strong>train a population of agents</strong>, which learn by playing with each other, providing a diversity of teammates and opponents.</li>
+<li>Each agent in the population<strong>&nbsp;learns its own internal reward signal</strong>, which allows agents to generate their own internal goals, such as capturing a flag. A&nbsp;<strong>two-tier optimisation process</strong>&nbsp;optimises agents’ internal rewards directly for winning, and uses reinforcement learning on the internal rewards to learn the agents’ policies.</li>
+<li>Agents&nbsp;<strong>operate at two timescales</strong>, fast and slow, which improves their ability to use memory and generate consistent action sequences.</li>
+</ul>
+<p></p>
+</div>
+</div></div></dm-body-text><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-image-gallery _nghost-sc46="" id="" class="ng-star-inserted" colour-theme=""><!----><figure _ngcontent-sc46="" class="ng-star-inserted"><!----><picture _ngcontent-sc46="" class="ng-star-inserted"><source _ngcontent-sc46="" type="image/webp" srcset="https://lh3.googleusercontent.com/lxvZW4tdNAmYZ8ku873U4XYa-SljFgh8EPHG9-HbkqdjTBjEyktRSBTQGML6oBcjkYIJqnoXAnp50Z8t876WaucgotFlcTgfN8urJg=w1440-rw-v1 1x,https://lh3.googleusercontent.com/lxvZW4tdNAmYZ8ku873U4XYa-SljFgh8EPHG9-HbkqdjTBjEyktRSBTQGML6oBcjkYIJqnoXAnp50Z8t876WaucgotFlcTgfN8urJg=w2048-rw-v1 2x"><source _ngcontent-sc46="" type="image/jpg" srcset="https://lh3.googleusercontent.com/lxvZW4tdNAmYZ8ku873U4XYa-SljFgh8EPHG9-HbkqdjTBjEyktRSBTQGML6oBcjkYIJqnoXAnp50Z8t876WaucgotFlcTgfN8urJg=w1440 1x,https://lh3.googleusercontent.com/lxvZW4tdNAmYZ8ku873U4XYa-SljFgh8EPHG9-HbkqdjTBjEyktRSBTQGML6oBcjkYIJqnoXAnp50Z8t876WaucgotFlcTgfN8urJg=w2048 2x"><img _ngcontent-sc46="" alt="" srcset="https://lh3.googleusercontent.com/lxvZW4tdNAmYZ8ku873U4XYa-SljFgh8EPHG9-HbkqdjTBjEyktRSBTQGML6oBcjkYIJqnoXAnp50Z8t876WaucgotFlcTgfN8urJg=w2048 2x" src="https://lh3.googleusercontent.com/lxvZW4tdNAmYZ8ku873U4XYa-SljFgh8EPHG9-HbkqdjTBjEyktRSBTQGML6oBcjkYIJqnoXAnp50Z8t876WaucgotFlcTgfN8urJg=w1440"></picture><!----><figcaption _ngcontent-sc46="" class="caption"> A schematic of the For The Win (FTW) agent architecture. The agent combines recurrent neural networks (RNNs) on fast and slow timescales, includes a shared memory module, and learns a conversion from game points to internal reward. </figcaption></figure></dm-image-gallery><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content">
+
+<div class="g-sm-col-4 g-lg-col-7 g-lg-push-1">
+<div class="rich-text"><p>The resulting agent, dubbed the For The Win (FTW) agent, learns to play CTF to a very high standard. Crucially, the learned agent policies are robust to the size of the maps, the number of teammates, and the other players on their team. Below, you can explore some games on both the outdoor procedural environments, where FTW agents play against each other, as well as games in which humans and agents play together on indoor procedural environments.</p></div>
+</div>
+
+</div></dm-body-text><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-iframe _nghost-sc39="" id="" colour-theme="" class="ng-star-inserted"><figure _ngcontent-sc39="" style="width:140%;"><div _ngcontent-sc39="" class="iframe-container landscape"><iframe _ngcontent-sc39="" frameborder="no" scrolling="no" width="100%" aria-label="" src="https://storage.googleapis.com/deepmind-media/research/ctf/index.html"></iframe></div><!----><figcaption _ngcontent-sc39="" class="caption ng-star-inserted"> Interactive CTF game explorer, with games on indoor and outdoor procedurally generated environments. Games on outdoor maps are between FTW agents, while those on indoor maps are mixed human and FTW agent games (see icons). </figcaption></figure></dm-iframe><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content">
+
+<div class="g-sm-col-4 g-lg-col-7 g-lg-push-1">
+<div class="rich-text"><p>We ran a tournament including 40 human players, in which humans and agents are randomly matched up in games - both as opponents and as teammates.</p></div>
+</div>
+
+</div></dm-body-text><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-image-gallery _nghost-sc46="" id="" class="ng-star-inserted" colour-theme=""><!----><figure _ngcontent-sc46="" class="ng-star-inserted"><!----><picture _ngcontent-sc46="" class="ng-star-inserted"><source _ngcontent-sc46="" type="image/webp" srcset="https://lh3.googleusercontent.com/ZghLIu0NyAg5FMYhDEtDfHc5d6aG3Fp9Hq3BviWvsGIaTNOfEsHttntE4_WbHF3ou5B-cpSqYrZ52IcBSIGi_PqPsdt-ZwkJWBcd7tU=w1440-rw-v1 1x,https://lh3.googleusercontent.com/ZghLIu0NyAg5FMYhDEtDfHc5d6aG3Fp9Hq3BviWvsGIaTNOfEsHttntE4_WbHF3ou5B-cpSqYrZ52IcBSIGi_PqPsdt-ZwkJWBcd7tU=w2048-rw-v1 2x"><source _ngcontent-sc46="" type="image/jpg" srcset="https://lh3.googleusercontent.com/ZghLIu0NyAg5FMYhDEtDfHc5d6aG3Fp9Hq3BviWvsGIaTNOfEsHttntE4_WbHF3ou5B-cpSqYrZ52IcBSIGi_PqPsdt-ZwkJWBcd7tU=w1440 1x,https://lh3.googleusercontent.com/ZghLIu0NyAg5FMYhDEtDfHc5d6aG3Fp9Hq3BviWvsGIaTNOfEsHttntE4_WbHF3ou5B-cpSqYrZ52IcBSIGi_PqPsdt-ZwkJWBcd7tU=w2048 2x"><img _ngcontent-sc46="" alt="" srcset="https://lh3.googleusercontent.com/ZghLIu0NyAg5FMYhDEtDfHc5d6aG3Fp9Hq3BviWvsGIaTNOfEsHttntE4_WbHF3ou5B-cpSqYrZ52IcBSIGi_PqPsdt-ZwkJWBcd7tU=w2048 2x" src="https://lh3.googleusercontent.com/ZghLIu0NyAg5FMYhDEtDfHc5d6aG3Fp9Hq3BviWvsGIaTNOfEsHttntE4_WbHF3ou5B-cpSqYrZ52IcBSIGi_PqPsdt-ZwkJWBcd7tU=w1440"></picture><!----><figcaption _ngcontent-sc46="" class="caption"> An early test tournament with humans playing CTF with and against trained agents and other humans. </figcaption></figure></dm-image-gallery><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content">
+
+<div class="g-sm-col-4 g-lg-col-7 g-lg-push-1">
+<div class="rich-text"><p>The FTW agents learn to become much stronger than the strong baseline methods, and exceed the win-rate of the human players. In fact, in a survey among participants they were rated more collaborative than human participants.</p></div>
+</div>
+
+</div></dm-body-text><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-image-gallery _nghost-sc46="" id="" class="ng-star-inserted" colour-theme=""><!----><figure _ngcontent-sc46="" class="ng-star-inserted"><!----><picture _ngcontent-sc46="" class="ng-star-inserted"><source _ngcontent-sc46="" type="image/webp" srcset="https://lh3.googleusercontent.com/xHH_mdttgmVgXy_mnosGM6P8pMIbGQOLmRniz9QzPLEfoDolgcM7CVihH_EY76mjmJv5iOjF-K0op4ZcnBUBPpUxSqdu1wkWmtpJ=w1440-rw-v1 1x,https://lh3.googleusercontent.com/xHH_mdttgmVgXy_mnosGM6P8pMIbGQOLmRniz9QzPLEfoDolgcM7CVihH_EY76mjmJv5iOjF-K0op4ZcnBUBPpUxSqdu1wkWmtpJ=w2048-rw-v1 2x"><source _ngcontent-sc46="" type="image/jpg" srcset="https://lh3.googleusercontent.com/xHH_mdttgmVgXy_mnosGM6P8pMIbGQOLmRniz9QzPLEfoDolgcM7CVihH_EY76mjmJv5iOjF-K0op4ZcnBUBPpUxSqdu1wkWmtpJ=w1440 1x,https://lh3.googleusercontent.com/xHH_mdttgmVgXy_mnosGM6P8pMIbGQOLmRniz9QzPLEfoDolgcM7CVihH_EY76mjmJv5iOjF-K0op4ZcnBUBPpUxSqdu1wkWmtpJ=w2048 2x"><img _ngcontent-sc46="" alt="" srcset="https://lh3.googleusercontent.com/xHH_mdttgmVgXy_mnosGM6P8pMIbGQOLmRniz9QzPLEfoDolgcM7CVihH_EY76mjmJv5iOjF-K0op4ZcnBUBPpUxSqdu1wkWmtpJ=w2048 2x" src="https://lh3.googleusercontent.com/xHH_mdttgmVgXy_mnosGM6P8pMIbGQOLmRniz9QzPLEfoDolgcM7CVihH_EY76mjmJv5iOjF-K0op4ZcnBUBPpUxSqdu1wkWmtpJ=w1440"></picture><!----><figcaption _ngcontent-sc46="" class="caption"> The performance of our agents during training. Our new agent, the FTW agent, obtains a much higher Elo rating - which corresponds to the probability of winning - than the human players and baseline methods of Self-play + RS and Self-play. </figcaption></figure></dm-image-gallery><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content">
+
+<div class="g-sm-col-4 g-lg-col-7 g-lg-push-1">
+<div class="rich-text"><p>Going beyond mere performance evaluation, it is important to understand the emergent complexity in the behaviours and internal representations of these agents.</p><p>To understand how agents represent game state, we look at activation patterns of the agents’ neural networks plotted on a plane. Dots in the figure below represent situations during play with close by dots representing similar activation patterns. These dots are coloured according to the high-level CTF game state in which the agent finds itself: In which room is the agent? What is the status of the flags? What teammates and opponents can be seen? We observe clusters of the same colour, indicating that the agent represents similar high-level game states in a similar manner.</p></div>
+</div>
+
+</div></dm-body-text><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-image-gallery _nghost-sc46="" id="" class="ng-star-inserted" colour-theme=""><!----><figure _ngcontent-sc46="" class="ng-star-inserted"><!----><picture _ngcontent-sc46="" class="ng-star-inserted"><source _ngcontent-sc46="" type="image/webp" srcset="https://lh3.googleusercontent.com/ObeXhZ9cWIcq5g_-cTpcGpXcDNYQ5b4z6o2X__agIqD_CR_dNNA_9vAEUAb2N6dcCPJ4HGjCw_K4zYsuZ4IJyBirdmOMbuxle-1z0w=w1440-rw-v1 1x,https://lh3.googleusercontent.com/ObeXhZ9cWIcq5g_-cTpcGpXcDNYQ5b4z6o2X__agIqD_CR_dNNA_9vAEUAb2N6dcCPJ4HGjCw_K4zYsuZ4IJyBirdmOMbuxle-1z0w=w2048-rw-v1 2x"><source _ngcontent-sc46="" type="image/jpg" srcset="https://lh3.googleusercontent.com/ObeXhZ9cWIcq5g_-cTpcGpXcDNYQ5b4z6o2X__agIqD_CR_dNNA_9vAEUAb2N6dcCPJ4HGjCw_K4zYsuZ4IJyBirdmOMbuxle-1z0w=w1440 1x,https://lh3.googleusercontent.com/ObeXhZ9cWIcq5g_-cTpcGpXcDNYQ5b4z6o2X__agIqD_CR_dNNA_9vAEUAb2N6dcCPJ4HGjCw_K4zYsuZ4IJyBirdmOMbuxle-1z0w=w2048 2x"><img _ngcontent-sc46="" alt="" srcset="https://lh3.googleusercontent.com/ObeXhZ9cWIcq5g_-cTpcGpXcDNYQ5b4z6o2X__agIqD_CR_dNNA_9vAEUAb2N6dcCPJ4HGjCw_K4zYsuZ4IJyBirdmOMbuxle-1z0w=w2048 2x" src="https://lh3.googleusercontent.com/ObeXhZ9cWIcq5g_-cTpcGpXcDNYQ5b4z6o2X__agIqD_CR_dNNA_9vAEUAb2N6dcCPJ4HGjCw_K4zYsuZ4IJyBirdmOMbuxle-1z0w=w1440"></picture><!----><figcaption _ngcontent-sc46="" class="caption"> A look into how our agents represent the game world. In the plot above, neural activation patterns at a given time are plotted according to how similar they are to one another: the closer two points are in space, the more similar their activation patterns. They’re then coloured according to the game situation at that time - same colour, same situation. We see that these neural activation patterns are organised, and form clusters of colour, indicating that agents are representing meaningful aspects of gameplay in a stereotyped, organised fashion. The trained agents even exhibit some artificial neurons which code directly for particular situations. </figcaption></figure></dm-image-gallery><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content"><div class="g-sm-col-4 g-lg-col-7 g-lg-push-1">
+<div class="rich-text">
+<div class="cf container rich-text--research show" id="block-19">
+<div class="g-sm-col-4 g-lg-col-7 g-lg-push-1">
+<div class="rich-text">
+<p>The agents are never told anything about the rules of the game, yet learn about fundamental game concepts and effectively develop an intuition for CTF. In fact, we can find particular neurons that code directly for some of the most important game states, such as a neuron that activates when the agent’s flag is taken, or a neuron that activates when an agent’s teammate is holding a flag. The paper provides further analysis covering the agents’ use of memory and visual attention.</p>
+</div>
+</div>
+</div>
+<div class="cf container rich-text--research show" id="block-20">
+<div class="g-sm-col-4 g-lg-col-7 g-lg-push-1">
+<div class="rich-text">
+<h2>Human Comparable Agents</h2>
+<p>How did our agents perform as well as they did? First, we noticed that the agents had very fast reaction times and were very accurate taggers, which might explain their performance (tagging is a tactical action that sends opponents back to their starting point). Humans are comparatively slow to process and act on sensory input, due to our slower biological signalling.&nbsp;&nbsp;<a href="https://faculty.washington.edu/chudler/java/redgreen.html">Here’s an example of a reaction time test you can try yourself</a>. Thus, our agents’ superior performance might be a result of their faster visual processing and motor control. However, by artificially reducing this accuracy and reaction time, we saw that this was only one factor in their success. In a further study, we trained agents which have an inbuilt delay of a quarter of a second (267 ms) – that is, agents have a 267ms lag before observing the world – comparable with reported reaction times of human video game players. These response-delayed agents still outperformed human participants, with strong humans only winning 21% of the time.</p>
+</div>
+</div>
+</div>
+<p></p>
+</div>
+</div></div></dm-body-text><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-image-gallery _nghost-sc46="" id="" class="ng-star-inserted" colour-theme=""><!----><figure _ngcontent-sc46="" class="ng-star-inserted"><!----><picture _ngcontent-sc46="" class="ng-star-inserted"><source _ngcontent-sc46="" type="image/webp" srcset="https://lh3.googleusercontent.com/tAHWkL1ZYKIaqjgBvplF68ScvzvOdCBwhdzb-lT6h3gQDPXLkv7m7O5qfyFCEFCfv9DiKIeg67ItKgolSjMTJzEYPlcq-vrANvMr5VI=w1440-rw-v1 1x,https://lh3.googleusercontent.com/tAHWkL1ZYKIaqjgBvplF68ScvzvOdCBwhdzb-lT6h3gQDPXLkv7m7O5qfyFCEFCfv9DiKIeg67ItKgolSjMTJzEYPlcq-vrANvMr5VI=w2048-rw-v1 2x"><source _ngcontent-sc46="" type="image/jpg" srcset="https://lh3.googleusercontent.com/tAHWkL1ZYKIaqjgBvplF68ScvzvOdCBwhdzb-lT6h3gQDPXLkv7m7O5qfyFCEFCfv9DiKIeg67ItKgolSjMTJzEYPlcq-vrANvMr5VI=w1440 1x,https://lh3.googleusercontent.com/tAHWkL1ZYKIaqjgBvplF68ScvzvOdCBwhdzb-lT6h3gQDPXLkv7m7O5qfyFCEFCfv9DiKIeg67ItKgolSjMTJzEYPlcq-vrANvMr5VI=w2048 2x"><img _ngcontent-sc46="" alt="" srcset="https://lh3.googleusercontent.com/tAHWkL1ZYKIaqjgBvplF68ScvzvOdCBwhdzb-lT6h3gQDPXLkv7m7O5qfyFCEFCfv9DiKIeg67ItKgolSjMTJzEYPlcq-vrANvMr5VI=w2048 2x" src="https://lh3.googleusercontent.com/tAHWkL1ZYKIaqjgBvplF68ScvzvOdCBwhdzb-lT6h3gQDPXLkv7m7O5qfyFCEFCfv9DiKIeg67ItKgolSjMTJzEYPlcq-vrANvMr5VI=w1440"></picture><!----><figcaption _ngcontent-sc46="" class="caption"> The win rates of human players against response-delayed agents are low, indicating that even with human-comparable reaction delays, agents outperform human players. In addition, looking at the average number of game events by humans and response-delayed agents, we see comparable numbers of tagging events, showing that these agents do not have an advantage over humans in this respect. </figcaption></figure></dm-image-gallery><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content">
+
+<div class="g-sm-col-4 g-lg-col-7 g-lg-push-1">
+<div class="rich-text"><p>Through unsupervised learning we established the prototypical behaviours of agents and humans to discover that agents in fact learn human-like behaviours, such as following teammates and camping in the opponent’s base.</p></div>
+</div>
+
+</div></dm-body-text><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-image-gallery _nghost-sc46="" id="" class="ng-star-inserted" colour-theme=""><!----><figure _ngcontent-sc46="" class="ng-star-inserted"><!----><picture _ngcontent-sc46="" class="ng-star-inserted"><source _ngcontent-sc46="" type="image/webp" srcset="https://lh3.googleusercontent.com/gL0WgVP2AG45fFhyVf-e3Dba6BWs3hyLqdXaT6PHpBuddljb14ZXWSpB0Z1TcvS0N7arUZmT_zSGUZmAygR8T94Qtzu00uXr4HCmqQ4=w1440-rw-v1 1x,https://lh3.googleusercontent.com/gL0WgVP2AG45fFhyVf-e3Dba6BWs3hyLqdXaT6PHpBuddljb14ZXWSpB0Z1TcvS0N7arUZmT_zSGUZmAygR8T94Qtzu00uXr4HCmqQ4=w2048-rw-v1 2x"><source _ngcontent-sc46="" type="image/jpg" srcset="https://lh3.googleusercontent.com/gL0WgVP2AG45fFhyVf-e3Dba6BWs3hyLqdXaT6PHpBuddljb14ZXWSpB0Z1TcvS0N7arUZmT_zSGUZmAygR8T94Qtzu00uXr4HCmqQ4=w1440 1x,https://lh3.googleusercontent.com/gL0WgVP2AG45fFhyVf-e3Dba6BWs3hyLqdXaT6PHpBuddljb14ZXWSpB0Z1TcvS0N7arUZmT_zSGUZmAygR8T94Qtzu00uXr4HCmqQ4=w2048 2x"><img _ngcontent-sc46="" alt="" srcset="https://lh3.googleusercontent.com/gL0WgVP2AG45fFhyVf-e3Dba6BWs3hyLqdXaT6PHpBuddljb14ZXWSpB0Z1TcvS0N7arUZmT_zSGUZmAygR8T94Qtzu00uXr4HCmqQ4=w2048 2x" src="https://lh3.googleusercontent.com/gL0WgVP2AG45fFhyVf-e3Dba6BWs3hyLqdXaT6PHpBuddljb14ZXWSpB0Z1TcvS0N7arUZmT_zSGUZmAygR8T94Qtzu00uXr4HCmqQ4=w1440"></picture><!----><figcaption _ngcontent-sc46="" class="caption"> Three examples of the automatically discovered behaviours that the trained agents exhibit. </figcaption></figure></dm-image-gallery><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content"><div class="g-sm-col-4 g-lg-col-7 g-lg-push-1">
+<div class="rich-text">
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p>These behaviours emerge in the course of training, through reinforcement learning and population-level evolution, with behaviours - such as teammate following - falling out of favour as agents learn to cooperate in a more complementary manner.</p>
+</div>
+</div></div></dm-body-text><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-hero-video _nghost-sc41="" class="ng-tns-c41-3 ng-trigger ng-trigger-animateIn ng-star-inserted" id="" colour-theme="ink_dark" style="transform:translateX(0px);opacity:0;"><div _ngcontent-sc41="" class="video-wrapper"><div _ngcontent-sc41="" class="video-container"><div _ngcontent-sc41="" class="play"><button _ngcontent-sc41="" class="dm-cta icon icon-play" aria-label="Play video" role="button"><svg _ngcontent-sc41="" class="ng-tns-c41-3" role="img"><use _ngcontent-sc41="" class="ng-tns-c41-3" xlink:href="#play"></use></svg></button></div><dm-media _ngcontent-sc41="" class="h-position-default v-position-default" _nghost-sc9=""><!----><div _ngcontent-sc9="" class="image ng-star-inserted" style="background-image: url('https://lh3.googleusercontent.com/qgtkIH1DvtOkd9qxEJAP4wwshRYeJs8E1hxXmcdFmgkPBqT_zwf1KXISSg6tvsEnIP7zFe3_A1rPRCvuAIk26ogR_BnJ40oKW1fV=w2048');"><!----><!----><!----></div><!----><!----><div _ngcontent-sc9="" class="video ng-star-inserted" style=""><!----></div><!----><!----></dm-media></div><div _ngcontent-sc41="" class="video-copy"><h3 _ngcontent-sc41="" class="dm-h3"> FTW agents: training progression </h3><!----></div></div></dm-hero-video><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content"><p><em>The training progression of a population of FTW agents. Top left: the 30 agents’ Elo ratings as they train and evolve from each other. Top right: the genetic tree of these evolution events. The lower graph shows the progression of knowledge, some of the internal rewards, and behaviour probability throughout the training of the agents.</em></p>
+<p></p></div></dm-body-text><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content"><h2>Going Further</h2>
+<p>While this paper focuses on Capture the Flag, the research contributions are general and we are excited to see how others build upon our techniques in different complex environments. Since initially publishing these results, we have found success in extending these methods to the full game of Quake III Arena, which includes professionally played maps, more multiplayer game modes in addition to Capture the Flag, and more gadgets and pickups. Initial results indicate that agents can play multiple game modes and multiple maps competitively, and are starting to challenge the skills of our human researchers in test matches. Indeed, ideas introduced in this work, such as population based multi-agent RL, form a foundation of the&nbsp;<a href="https://deepmind.com/blog/alphastar-mastering-real-time-strategy-game-starcraft-ii/">AlphaStar agent in our work on StarCraft II</a>.</p></div></dm-body-text><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-hero-video _nghost-sc41="" class="ng-tns-c41-4 ng-trigger ng-trigger-animateIn ng-star-inserted" id="" colour-theme="ink_dark" style="transform:translateX(0px);opacity:0;"><div _ngcontent-sc41="" class="video-wrapper"><div _ngcontent-sc41="" class="video-container"><div _ngcontent-sc41="" class="play"><button _ngcontent-sc41="" class="dm-cta icon icon-play" aria-label="Play video" role="button"><svg _ngcontent-sc41="" class="ng-tns-c41-4" role="img"><use _ngcontent-sc41="" class="ng-tns-c41-4" xlink:href="#play"></use></svg></button></div><dm-media _ngcontent-sc41="" class="h-position-default v-position-default" _nghost-sc9=""><!----><div _ngcontent-sc9="" class="image ng-star-inserted" style="background-image: url('https://lh3.googleusercontent.com/JzONuhqO4tw2NS_axRevUgRkWCa86doaxiMKy5_0uIOWsrbb4QtwYdM7hd8Qm4pftFEpp1wES5d8DsTVKbYH8jlJEF3l0ct7g9TOrQ=w2048');"><!----><!----><!----></div><!----><!----><div _ngcontent-sc9="" class="video ng-star-inserted" style=""><!----></div><!----><!----></dm-media></div><div _ngcontent-sc41="" class="video-copy"><h3 _ngcontent-sc41="" class="dm-h3"> Capture the Flag: Quake III Arena </h3><!----></div></div></dm-hero-video><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content"><div class="cf container rich-text--research show" id="block-28">
+<div class="g-sm-col-4 g-lg-col-7 g-lg-push-1">
+<div class="rich-text">
+<p>In general, this work highlights the potential of multi-agent training to advance the development of artificial intelligence: exploiting the natural curriculum provided by multi-agent training, and forcing the development of robust agents that can even team up with humans.</p>
+<hr>
+<p>For more details, please see the <a href="https://science.sciencemag.org/cgi/doi/10.1126/science.aau6249">paper</a>&nbsp;and the&nbsp;<a href="https://youtu.be/dltN4MxV1RI">full supplementary video</a>. Download an Open Access version of the paper&nbsp;<a href="https://arxiv.org/abs/1807.01281">here</a>.</p>
+</div>
+</div>
+</div>
+<div class="cf container rich-text--research show" id="block-29">
+<div class="g-sm-col-4 g-lg-col-7 g-lg-push-1">
+<div class="rich-text">
+<p><em>This work was done by Max Jaderberg, Wojciech M. Czarnecki, Iain Dunning, Luke Marris, Brendan Tracey, Guy Lever, Antonio Garcia Castaneda, Charles Beattie, Neil Rabinowitz, Ari Morcos, Avraham Ruderman, Nicolas Sonnerat, Tim Green, Louise Deason, Joel Z. Leibo, David Silver, Demis Hassabis, Koray Kavukcuoglu, and Thore Graepel.</em></p>
+<p><em>Visualisations were created by Adam Cain, Damien Boudot, Doug Fritz, Jaume Sanchez Elias, Paul Lewis, Max Jaderberg, Wojciech M. Czarnecki, and Luke Marris.</em></p>
+<p><em>We would like to thank Patrick Howard and Dan “Scancode” Gold for allowing us to use the Quake III Arena maps they designed.</em></p>
+</div>
+</div>
+</div></div></dm-body-text><!----></dm-component-factory></div></div></div><!----><dm-footer-promos _ngcontent-sc49="" _nghost-sc18="" class="ng-star-inserted"><div _ngcontent-sc18="" class="dm-section footer-promos"><!----><h5 _ngcontent-sc18="" class="dm-h5 ng-star-inserted">Further reading</h5><div _ngcontent-sc18="" class="promo-wrapper"><!----><div _ngcontent-sc18="" class="footer-promo ng-star-inserted"><dm-component-factory _ngcontent-sc18="" _nghost-sc10=""><!----><dm-publication-card _nghost-sc47="" class="ng-tns-c47-5 ng-trigger ng-trigger-animateIn ng-star-inserted" id="" style="transform:translateX(0px);opacity:0;"><!----><dm-content-card _ngcontent-sc47="" _nghost-sc37="" class="ng-star-inserted" style=""><!----><!----><!----><!----><div _ngcontent-sc37="" class="content-card-body"><div _ngcontent-sc47="" class="header ng-tns-c47-5"><svg _ngcontent-sc47="" class="ng-tns-c47-5" role="img"><use _ngcontent-sc47="" class="ng-tns-c47-5" xlink:href="#publication"></use></svg><div _ngcontent-sc47="" class="category"><!----><p _ngcontent-sc47="" class="caption title ng-tns-c47-5 ng-star-inserted"> Publications </p><!----><!----><p _ngcontent-sc47="" class="caption ng-tns-c47-5 ng-star-inserted"> Reinforcement learning </p></div></div><div _ngcontent-sc47="" class="body ng-tns-c47-5"><h4 _ngcontent-sc47="" class="dm-h4"><a _ngcontent-sc47="" class="ng-tns-c47-5" href="/research/publications/hanabi-challenge-new-frontier-ai-research"> The Hanabi Challenge: A New Frontier for AI Research </a></h4><address _ngcontent-sc47="" class="ng-tns-c47-5"><!----><p _ngcontent-sc47="" class="small ng-tns-c47-5 ng-star-inserted"> Nolan Bard, Jakob Foerster, <!----><span _ngcontent-sc47="" class="ng-tns-c47-5 ng-star-inserted"> et al. </span> arXiv <time _ngcontent-sc47="" class="ng-tns-c47-5" datetime="February 1, 2019"> 2019 </time></p></address></div><div _ngcontent-sc47="" class="footer ng-tns-c47-5"><!----><button _ngcontent-sc47="" class="dm-cta icon flat info ng-tns-c47-5 ng-star-inserted" role="button" aria-label="From the early days of computing, games have been important testbeds for studying how well machines..."><svg _ngcontent-sc47="" class="ng-tns-c47-5" role="img"><use _ngcontent-sc47="" class="ng-tns-c47-5" xlink:href="#info"></use></svg></button><!----><a _ngcontent-sc47="" class="dm-cta icon flat info ng-tns-c47-5 ng-star-inserted" aria-label="Open Source Available" href="/research/open-source/hanabi-learning-environment"><svg _ngcontent-sc47="" class="icon-open-source" role="img"><use _ngcontent-sc47="" class="ng-tns-c47-5" xlink:href="#open-source"></use></svg></a><!----><a _ngcontent-sc47="" class="dm-cta pill flat caption thin ng-tns-c47-5 ng-star-inserted" rel="noopener" target="_blank" href="https://arxiv.org/pdf/1902.00506v1.pdf"><svg _ngcontent-sc47="" class="ng-tns-c47-5" role="img"><use _ngcontent-sc47="" class="ng-tns-c47-5" xlink:href="#download"></use></svg> Download </a><a _ngcontent-sc47="" class="dm-cta link" aria-label="The Hanabi Challenge: A New Frontier for AI Research" href="/research/publications/hanabi-challenge-new-frontier-ai-research"><svg _ngcontent-sc47="" class="ng-tns-c47-5" role="img"><use _ngcontent-sc47="" class="ng-tns-c47-5" xlink:href="#read-more"></use></svg></a></div></div></dm-content-card></dm-publication-card><!----></dm-component-factory></div><div _ngcontent-sc18="" class="footer-promo ng-star-inserted"><dm-component-factory _ngcontent-sc18="" _nghost-sc10=""><!----><dm-publication-card _nghost-sc47="" class="ng-tns-c47-6 ng-trigger ng-trigger-animateIn ng-star-inserted" id="" style="transform:translateX(0px);opacity:0;"><!----><dm-content-card _ngcontent-sc47="" _nghost-sc37="" class="ng-star-inserted" style=""><!----><!----><!----><!----><div _ngcontent-sc37="" class="content-card-body"><div _ngcontent-sc47="" class="header ng-tns-c47-6"><svg _ngcontent-sc47="" class="ng-tns-c47-6" role="img"><use _ngcontent-sc47="" class="ng-tns-c47-6" xlink:href="#publication"></use></svg><div _ngcontent-sc47="" class="category"><!----><p _ngcontent-sc47="" class="caption title ng-tns-c47-6 ng-star-inserted"> Publications </p><!----><!----><p _ngcontent-sc47="" class="caption ng-tns-c47-6 ng-star-inserted"> Deep learning </p><p _ngcontent-sc47="" class="caption ng-tns-c47-6 ng-star-inserted"> Reinforcement learning </p></div></div><div _ngcontent-sc47="" class="body ng-tns-c47-6"><h4 _ngcontent-sc47="" class="dm-h4"><a _ngcontent-sc47="" class="ng-tns-c47-6" href="/research/publications/learning-navigate-cities-without-map"> Learning to Navigate in Cities Without a Map </a></h4><address _ngcontent-sc47="" class="ng-tns-c47-6"><!----><p _ngcontent-sc47="" class="small ng-tns-c47-6 ng-star-inserted"> Piotr Mirowski, Matthew Grimes, <!----><span _ngcontent-sc47="" class="ng-tns-c47-6 ng-star-inserted"> et al. </span> NeurIPS <time _ngcontent-sc47="" class="ng-tns-c47-6" datetime="December 21, 2018"> 2018 </time></p></address></div><div _ngcontent-sc47="" class="footer ng-tns-c47-6"><!----><button _ngcontent-sc47="" class="dm-cta icon flat info ng-tns-c47-6 ng-star-inserted" role="button" aria-label="Navigating through unstructured environments is
+a basic capability of intelligent creatures, and..."><svg _ngcontent-sc47="" class="ng-tns-c47-6" role="img"><use _ngcontent-sc47="" class="ng-tns-c47-6" xlink:href="#info"></use></svg></button><!----><a _ngcontent-sc47="" class="dm-cta icon flat info ng-tns-c47-6 ng-star-inserted" aria-label="Open Source Available" href="/research/open-source/streetlearn"><svg _ngcontent-sc47="" class="icon-open-source" role="img"><use _ngcontent-sc47="" class="ng-tns-c47-6" xlink:href="#open-source"></use></svg></a><!----><a _ngcontent-sc47="" class="dm-cta pill flat caption thin ng-tns-c47-6 ng-star-inserted" rel="noopener" target="_blank" href="https://arxiv.org/pdf/1804.00168.pdf"><svg _ngcontent-sc47="" class="ng-tns-c47-6" role="img"><use _ngcontent-sc47="" class="ng-tns-c47-6" xlink:href="#download"></use></svg> Download </a><a _ngcontent-sc47="" class="dm-cta link" aria-label="Learning to Navigate in Cities Without a Map" href="/research/publications/learning-navigate-cities-without-map"><svg _ngcontent-sc47="" class="ng-tns-c47-6" role="img"><use _ngcontent-sc47="" class="ng-tns-c47-6" xlink:href="#read-more"></use></svg></a></div></div></dm-content-card></dm-publication-card><!----></dm-component-factory></div><div _ngcontent-sc18="" class="footer-promo ng-star-inserted"><dm-component-factory _ngcontent-sc18="" _nghost-sc10=""><!----><dm-publication-card _nghost-sc47="" class="ng-tns-c47-7 ng-trigger ng-trigger-animateIn ng-star-inserted" id="" style="transform:translateX(0px);opacity:0;"><!----><dm-content-card _ngcontent-sc47="" _nghost-sc37="" class="ng-star-inserted" style=""><!----><!----><!----><!----><div _ngcontent-sc37="" class="content-card-body"><div _ngcontent-sc47="" class="header ng-tns-c47-7"><svg _ngcontent-sc47="" class="ng-tns-c47-7" role="img"><use _ngcontent-sc47="" class="ng-tns-c47-7" xlink:href="#publication"></use></svg><div _ngcontent-sc47="" class="category"><!----><p _ngcontent-sc47="" class="caption title ng-tns-c47-7 ng-star-inserted"> Publications </p><!----><!----><p _ngcontent-sc47="" class="caption ng-tns-c47-7 ng-star-inserted"> Deep learning </p><p _ngcontent-sc47="" class="caption ng-tns-c47-7 ng-star-inserted"> Reinforcement learning </p></div></div><div _ngcontent-sc47="" class="body ng-tns-c47-7"><h4 _ngcontent-sc47="" class="dm-h4"><a _ngcontent-sc47="" class="ng-tns-c47-7" href="/research/publications/reinforcement-learning-unsupervised-auxiliary-tasks"> Reinforcement Learning with Unsupervised Auxiliary Tasks </a></h4><address _ngcontent-sc47="" class="ng-tns-c47-7"><!----><p _ngcontent-sc47="" class="small ng-tns-c47-7 ng-star-inserted"> Max Jaderberg, Vlad Mnih, <!----><span _ngcontent-sc47="" class="ng-tns-c47-7 ng-star-inserted"> et al. </span> ICLR <time _ngcontent-sc47="" class="ng-tns-c47-7" datetime="November 16, 2016"> 2016 </time></p></address></div><div _ngcontent-sc47="" class="footer ng-tns-c47-7"><!----><button _ngcontent-sc47="" class="dm-cta icon flat info ng-tns-c47-7 ng-star-inserted" role="button" aria-label="Deep reinforcement learning agents have achieved state-of-the-art results by directly&nbsp;maximising..."><svg _ngcontent-sc47="" class="ng-tns-c47-7" role="img"><use _ngcontent-sc47="" class="ng-tns-c47-7" xlink:href="#info"></use></svg></button><!----><!----><a _ngcontent-sc47="" class="dm-cta pill flat caption thin ng-tns-c47-7 ng-star-inserted" rel="noopener" target="_blank" href="https://arxiv.org/pdf/1611.05397.pdf"><svg _ngcontent-sc47="" class="ng-tns-c47-7" role="img"><use _ngcontent-sc47="" class="ng-tns-c47-7" xlink:href="#download"></use></svg> Download </a><a _ngcontent-sc47="" class="dm-cta link" aria-label="Reinforcement Learning with Unsupervised Auxiliary Tasks" href="/research/publications/reinforcement-learning-unsupervised-auxiliary-tasks"><svg _ngcontent-sc47="" class="ng-tns-c47-7" role="img"><use _ngcontent-sc47="" class="ng-tns-c47-7" xlink:href="#read-more"></use></svg></a></div></div></dm-content-card></dm-publication-card><!----></dm-component-factory></div></div></div></dm-footer-promos><!----><!----></dm-blog-article-page><!----></dm-component-factory></dm-page-loader><div _ngcontent-sc0="" class="svg-elements"></div><dm-footer _ngcontent-sc0="" _nghost-sc3=""><!----><!----><footer _ngcontent-sc3="" colour-theme="ink_dark" class="ng-star-inserted"><div _ngcontent-sc3="" class="body-wrapper dm-section"><div _ngcontent-sc3="" class="logo"><a _ngcontent-sc3="" aria-label="Home page" class="dm-cta" routerlink="/" href="/"><svg _ngcontent-sc3="" role="img"><use _ngcontent-sc3="" xlink:href="#deepmind-logo-text"></use></svg></a></div><div _ngcontent-sc3="" class="body"><!----><div _ngcontent-sc3="" class="categories ng-star-inserted"><!----><div _ngcontent-sc3="" class="column ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/about"> About </a><ul _ngcontent-sc3=""><!----><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/about#our_story"> Our story </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/about#recent_progress"> Recent progress </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/about#our_global_community"> Our global community </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/about#leadership"> Leadership </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/about#teams"> Teams </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/about#access_to_science"> Access to science </a></li><!----></ul></div><div _ngcontent-sc3="" class="column ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/research"> Research </a><ul _ngcontent-sc3=""><!----><!----><li _ngcontent-sc3="" class="ng-star-inserted"><dm-link _ngcontent-sc3="" classlist="nav-cta" _nghost-sc8=""><!----><!----><a _ngcontent-sc8="" aria-label="Read more on DeepMind" class="nav-cta ng-star-inserted" href="/research?filters=%7B%22category%22:%5B%22Research%22%5D%7D"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">Blog</span><!----><!----><!----></a><!----><!----></dm-link></li><li _ngcontent-sc3="" class="ng-star-inserted"><dm-link _ngcontent-sc3="" classlist="nav-cta" _nghost-sc8=""><!----><!----><a _ngcontent-sc8="" aria-label="Read more on DeepMind" class="nav-cta ng-star-inserted" href="/research?filters=%7B%22collection%22:%5B%22OpenSource%22%5D%7D"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">Open source</span><!----><!----><!----></a><!----><!----></dm-link></li><li _ngcontent-sc3="" class="ng-star-inserted"><dm-link _ngcontent-sc3="" classlist="nav-cta" _nghost-sc8=""><!----><!----><a _ngcontent-sc8="" aria-label="Read more on DeepMind" class="nav-cta ng-star-inserted" href="/research?filters=%7B%22collection%22:%5B%22Publications%22%5D%7D"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">Publications</span><!----><!----><!----></a><!----><!----></dm-link></li></ul></div><div _ngcontent-sc3="" class="column ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/impact"> Impact </a><ul _ngcontent-sc3=""><!----><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/impact#real_world_impact"> Real-world impact </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/impact#significant_breakthroughs"> Significant breakthroughs </a></li><!----></ul></div><div _ngcontent-sc3="" class="column ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/blog"> Blog </a><ul _ngcontent-sc3=""><!----><!----><li _ngcontent-sc3="" class="ng-star-inserted"><dm-link _ngcontent-sc3="" classlist="nav-cta" _nghost-sc8=""><!----><!----><a _ngcontent-sc8="" aria-label="Read more on DeepMind" class="nav-cta ng-star-inserted" href="/blog?filters=%7B%22category%22:%5B%22Research%22%5D%7D"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">Research</span><!----><!----><!----></a><!----><!----></dm-link></li><li _ngcontent-sc3="" class="ng-star-inserted"><dm-link _ngcontent-sc3="" classlist="nav-cta" _nghost-sc8=""><!----><!----><a _ngcontent-sc8="" aria-label="Read more on DeepMind" class="nav-cta ng-star-inserted" href="/blog?filters=%7B%22collection%22:%5B%22Announcements%22%5D%7D"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">News</span><!----><!----><!----></a><!----><!----></dm-link></li></ul></div><div _ngcontent-sc3="" class="column ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/safety-and-ethics"> Safety &amp; Ethics </a><ul _ngcontent-sc3=""><!----><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/safety-and-ethics#overview"> Overview </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/safety-and-ethics#technical_safety"> Technical safety </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/safety-and-ethics#ethics_society"> Ethics &amp; Society </a></li><!----></ul></div><div _ngcontent-sc3="" class="column ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/careers"> Careers </a><ul _ngcontent-sc3=""><!----><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/careers#a_unique_mission"> A unique mission </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/careers#teams"> Teams </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/careers#diversity_matters"> Diversity matters </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/careers#locations"> Locations </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/careers#internships"> Internships </a></li><!----></ul></div></div><!----><div _ngcontent-sc3="" class="back-to-top"><svg _ngcontent-sc3="" role="img"><use _ngcontent-sc3="" xlink:href="#arrow"></use></svg></div><div _ngcontent-sc3="" class="information"><div _ngcontent-sc3="" class="legal"><!----><dm-link _ngcontent-sc3="" classlist="dm-cta caption" _nghost-sc8="" class="ng-star-inserted"><!----><!----><a _ngcontent-sc8="" aria-label="Read more on an external page" class="external dm-cta caption ng-star-inserted" rel="noopener" target="_blank" href="mailto:press@deepmind.com"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">Press</span><!----><!----><!----></a><!----><!----><!----></dm-link><dm-link _ngcontent-sc3="" classlist="dm-cta caption" _nghost-sc8="" class="ng-star-inserted"><!----><!----><a _ngcontent-sc8="" aria-label="Read more on DeepMind" class="dm-cta caption ng-star-inserted" href="/terms-and-conditions"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">Terms &amp; Conditions</span><!----><!----><!----></a><!----><!----></dm-link><dm-link _ngcontent-sc3="" classlist="dm-cta caption" _nghost-sc8="" class="ng-star-inserted"><!----><!----><a _ngcontent-sc8="" aria-label="Read more on DeepMind" class="dm-cta caption ng-star-inserted" href="/privacy-policy"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">Privacy Policy</span><!----><!----><!----></a><!----><!----></dm-link><dm-link _ngcontent-sc3="" classlist="dm-cta caption" _nghost-sc8="" class="ng-star-inserted"><!----><!----><a _ngcontent-sc8="" aria-label="Read more on an external page" class="external dm-cta caption ng-star-inserted" rel="noopener" target="_blank" href="https://storage.googleapis.com/deepmind-media/modern_slavery/FINAL_201_Google_Modern_Slavery_Statement.pdf"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">Modern Slavery Statement</span><!----><!----><!----></a><!----><!----><!----></dm-link><dm-link _ngcontent-sc3="" classlist="dm-cta caption" _nghost-sc8="" class="ng-star-inserted"><!----><!----><a _ngcontent-sc8="" aria-label="Read more on an external page" class="external dm-cta caption ng-star-inserted" rel="noopener" target="_blank" href="https://abc.xyz/"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">Alphabet Inc</span><!----><!----><!----></a><!----><!----><!----></dm-link></div><ul _ngcontent-sc3="" class="social"><!----><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta icon" rel="noopener" target="_blank" aria-label="Follow us on Twitter!" href="https://twitter.com/DeepMindAI"><svg _ngcontent-sc3="" role="img"><use _ngcontent-sc3="" xlink:href="#twitter"></use></svg></a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta icon" rel="noopener" target="_blank" aria-label="Follow us on Youtube!" href="https://www.youtube.com/deepmind"><svg _ngcontent-sc3="" role="img"><use _ngcontent-sc3="" xlink:href="#youtube"></use></svg></a></li></ul></div></div><div _ngcontent-sc3="" class="shape"><svg _ngcontent-sc3="" role="img"><use _ngcontent-sc3="" xlink:href="#shape-octa3"></use></svg></div></div></footer></dm-footer></div></dm-app-root>
+<script src="runtime-es2015.858f8dd898b75fe86926.js" type="module" crossorigin="use-credentials"></script><script src="polyfills-es2015.0b2e40f2b7e045bb6031.js" type="module" crossorigin="use-credentials"></script><script src="runtime-es5.741402d1d47331ce975c.js" nomodule=""></script><script src="polyfills-es5.343790ebaac41845eaa3.js" nomodule=""></script><script src="main-es2015.b86475430f0c2e1f65c0.js" type="module" crossorigin="use-credentials"></script><script src="main-es5.90f722d029495b63e37f.js" nomodule=""></script>
+
+</body></html>

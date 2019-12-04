@@ -1,0 +1,1521 @@
+<!DOCTYPE html><html class="loading" dir="ltr" lang="ALL"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+  <base href="/">
+
+  <!-- Facebook base meta tags. -->
+  <meta property="og:image:width" content="600">
+  <meta property="og:image:height" content="600">
+  <meta property="og:site_name" content="Deepmind">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter base meta tags. -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@DeepMindAI">
+
+  <!-- Set in Angular. -->
+  <title>Replay in biological and artificial neural networks | DeepMind</title>
+  <meta name="description" content="Our waking and sleeping lives are punctuated by fragments of recalled memories: a sudden connection in the shower between seemingly disparate thoughts, or an ill-fated choice decades ago that haunts us as we struggle to fall asleep. ">
+
+  <link rel="preconnect" href="https://lh3.googleusercontent.com">
+  <link href="assets/favicon.ico" rel="icon">
+<link rel="stylesheet" href="styles.c25992414036055c2434.css"><style ng-transition="deepmind-website">[_nghost-sc0] {
+  display: flex;
+  flex-direction: column;
+}
+@media (min-width: 1024px) {
+  [_nghost-sc0] {
+    flex-direction: row;
+  }
+}
+[_nghost-sc0]   .dm-body[_ngcontent-sc0] {
+  background-color: #f0f5f5;
+  height: 100%;
+  width: 100%;
+}
+@media (min-width: 1024px) {
+  [_nghost-sc0]   .dm-body[_ngcontent-sc0] {
+    width: calc(100% - 100px);
+  }
+}
+[_nghost-sc0]   .svg-elements[_ngcontent-sc0] {
+  height: 0;
+  position: absolute;
+  visibility: hidden;
+  width: 0;
+}</style><style ng-transition="deepmind-website">[_nghost-sc2] {
+  display: block;
+  position: relative;
+}
+header[_ngcontent-sc2] {
+  background-color: #0053d6;
+  height: 60px;
+  width: 100%;
+}
+@media (min-width: 768px) {
+  header[_ngcontent-sc2] {
+    height: 70px;
+  }
+}
+@media (min-width: 1024px) {
+  header[_ngcontent-sc2] {
+    height: 100%;
+    width: 100px;
+  }
+}
+header[_ngcontent-sc2]::after {
+  background-color: #0053d6;
+  content: "";
+  height: 100%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: right 0.3s ease, width 0.3s ease;
+  width: 0;
+  z-index: 34;
+}
+header.is-peaking[_ngcontent-sc2]::after {
+  right: -10px;
+  width: 10px;
+}
+.header-container[_ngcontent-sc2] {
+  background-color: #0053d6;
+  display: flex;
+  flex-direction: column;
+  height: inherit;
+  justify-content: space-between;
+  left: 0;
+  padding: 0 20px;
+  position: fixed;
+  top: 0;
+  width: inherit;
+  z-index: 35;
+}
+@media (min-width: 1024px) {
+  .header-container[_ngcontent-sc2] {
+    height: 100%;
+    padding: 30px 20px;
+  }
+}
+header.is-menu-open[_ngcontent-sc2]   .header-container[_ngcontent-sc2] {
+  width: 100%;
+}
+@media (min-width: 1024px) {
+  header.is-menu-open[_ngcontent-sc2]   .header-container[_ngcontent-sc2] {
+    width: 100px;
+  }
+}
+.header-container[_ngcontent-sc2]   ul[_ngcontent-sc2] {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.menu-wrapper[_ngcontent-sc2] {
+  display: flex;
+  height: 100%;
+}
+@media (min-width: 1024px) {
+  .menu-wrapper[_ngcontent-sc2] {
+    flex-direction: column;
+    height: auto;
+  }
+}
+.menu-header[_ngcontent-sc2] {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+@media (min-width: 1024px) {
+  .menu-header[_ngcontent-sc2] {
+    display: block;
+  }
+}
+.menu-header[_ngcontent-sc2]   .logo[_ngcontent-sc2] {
+  display: block;
+  margin: 0 0 0 -12px;
+}
+@media (min-width: 768px) {
+  .menu-header[_ngcontent-sc2]   .logo[_ngcontent-sc2] {
+    margin: 0;
+  }
+}
+@media (min-width: 1024px) {
+  .menu-header[_ngcontent-sc2]   .logo[_ngcontent-sc2] {
+    margin: 0 0 30px 0;
+  }
+}
+.menu-header[_ngcontent-sc2]   .logo[_ngcontent-sc2]   svg[_ngcontent-sc2] {
+  display: block;
+  height: 40px;
+  width: 184px;
+}
+@media (min-width: 1024px) {
+  .menu-header[_ngcontent-sc2]   .logo[_ngcontent-sc2]   svg[_ngcontent-sc2] {
+    width: 40px;
+  }
+}
+.menu-header[_ngcontent-sc2]   .logo[_ngcontent-sc2]   svg.full-logo[_ngcontent-sc2] {
+  width: 184px;
+}
+.menu-header[_ngcontent-sc2]   .menu-controls[_ngcontent-sc2] {
+  align-items: center;
+  display: flex;
+  flex-direction: row-reverse;
+}
+@media (min-width: 1024px) {
+  .menu-header[_ngcontent-sc2]   .menu-controls[_ngcontent-sc2] {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+    width: 38px;
+  }
+}
+.menu-header[_ngcontent-sc2]   .menu-controls[_ngcontent-sc2]   button[_ngcontent-sc2]    + button[_ngcontent-sc2] {
+  display: block;
+  margin: 0 20px 0 0;
+}
+@media (min-width: 1024px) {
+  .menu-header[_ngcontent-sc2]   .menu-controls[_ngcontent-sc2]   button[_ngcontent-sc2]    + button[_ngcontent-sc2] {
+    margin: 30px 0 0;
+  }
+}
+nav[_ngcontent-sc2] {
+  display: none;
+}
+@media (min-width: 1024px) {
+  nav[_ngcontent-sc2] {
+    display: flex;
+  }
+}
+@media (min-width: 1024px) {
+  header.is-menu-open[_ngcontent-sc2]   nav[_ngcontent-sc2] {
+    align-items: center;
+    height: 100%;
+    justify-content: center;
+  }
+}
+.pages[_ngcontent-sc2] {
+  display: block;
+  width: 100%;
+}
+header.is-menu-open[_ngcontent-sc2]   .pages[_ngcontent-sc2] {
+  width: auto;
+}
+@media (min-width: 1024px) {
+  header.is-menu-open[_ngcontent-sc2]   .pages[_ngcontent-sc2] {
+    display: flex;
+    flex-direction: row-reverse;
+    -webkit-transform: rotateZ(-90deg);
+            transform: rotateZ(-90deg);
+  }
+}
+.pages[_ngcontent-sc2]   li[_ngcontent-sc2]   a[_ngcontent-sc2] {
+  cursor: pointer;
+  position: relative;
+}
+.pages[_ngcontent-sc2]   li[_ngcontent-sc2]   a[_ngcontent-sc2]::before {
+  border-left: 6px solid transparent;
+  content: "";
+  display: block;
+  height: 100%;
+  left: -20px;
+  position: absolute;
+  top: 0;
+}
+.pages[_ngcontent-sc2]   li[_ngcontent-sc2]   a[_ngcontent-sc2]:focus::before, .pages[_ngcontent-sc2]   li[_ngcontent-sc2]   a[_ngcontent-sc2]:hover::before {
+  border-color: #fff;
+}
+.pages[_ngcontent-sc2]   li.is-active[_ngcontent-sc2]   a[_ngcontent-sc2]::before {
+  border-color: #fff;
+}
+.page-link[_ngcontent-sc2] {
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  display: block;
+  padding: 10px 0;
+}
+.page-link.nav-cta[_ngcontent-sc2]:focus, .page-link.nav-cta[_ngcontent-sc2]:hover {
+  color: #fff;
+}
+.social-media-wrapper[_ngcontent-sc2] {
+  display: none;
+}
+@media (min-width: 1024px) {
+  .social-media-wrapper[_ngcontent-sc2] {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    width: 38px;
+  }
+}
+.social-media-wrapper[_ngcontent-sc2]   li[_ngcontent-sc2]    + li[_ngcontent-sc2] {
+  margin-top: 10px;
+}
+.social-media-wrapper[_ngcontent-sc2]   svg[_ngcontent-sc2] {
+  height: 20px;
+  width: 20px;
+}
+.hamburger-menu[_ngcontent-sc2] {
+  cursor: pointer;
+  display: block;
+  height: 18px;
+  position: relative;
+  width: 22px;
+}
+@media (min-width: 1024px) {
+  .hamburger-menu[_ngcontent-sc2] {
+    width: 30px;
+  }
+}
+@media (hover: hover) {
+  .hamburger-menu[_ngcontent-sc2]:focus   span[_ngcontent-sc2]:nth-child(2), .hamburger-menu[_ngcontent-sc2]:hover   span[_ngcontent-sc2]:nth-child(2) {
+    -webkit-transform: scaleX(0.5);
+            transform: scaleX(0.5);
+  }
+}
+.hamburger-menu[_ngcontent-sc2]   span[_ngcontent-sc2] {
+  background-color: #fff;
+  display: block;
+  height: 2px;
+  margin: 0;
+  position: absolute;
+  -webkit-transform-origin: center;
+          transform-origin: center;
+  transition: width 0.2s ease, -webkit-transform 0.3s ease;
+  transition: transform 0.3s ease, width 0.2s ease;
+  transition: transform 0.3s ease, width 0.2s ease, -webkit-transform 0.3s ease;
+  width: 100%;
+}
+.hamburger-menu[_ngcontent-sc2]   span[_ngcontent-sc2]:first-child {
+  top: 0;
+}
+.hamburger-menu[_ngcontent-sc2]   span[_ngcontent-sc2]:nth-child(2) {
+  top: 8px;
+}
+.hamburger-menu[_ngcontent-sc2]   span[_ngcontent-sc2]:last-child {
+  bottom: 0;
+}
+.hamburger-menu.is-active[_ngcontent-sc2]   span[_ngcontent-sc2]:first-child {
+  -webkit-transform: translateY(8px) rotate(45deg);
+          transform: translateY(8px) rotate(45deg);
+  width: 23px;
+}
+@media (min-width: 1024px) {
+  .hamburger-menu.is-active[_ngcontent-sc2]   span[_ngcontent-sc2]:first-child {
+    width: 29px;
+  }
+}
+.hamburger-menu.is-active[_ngcontent-sc2]   span[_ngcontent-sc2]:nth-child(2) {
+  width: 0;
+}
+.hamburger-menu.is-active[_ngcontent-sc2]   span[_ngcontent-sc2]:last-child {
+  -webkit-transform: translateY(-8px) rotate(-45deg);
+          transform: translateY(-8px) rotate(-45deg);
+  width: 23px;
+}
+@media (min-width: 1024px) {
+  .hamburger-menu.is-active[_ngcontent-sc2]   span[_ngcontent-sc2]:last-child {
+    width: 29px;
+  }
+}
+.search[_ngcontent-sc2] {
+  text-align: center;
+}
+.search.no-focus[_ngcontent-sc2]:focus   g[_ngcontent-sc2] {
+  -webkit-transform: none;
+          transform: none;
+}
+.search[_ngcontent-sc2]:focus   g[_ngcontent-sc2], .search[_ngcontent-sc2]:hover   g[_ngcontent-sc2] {
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
+}
+@media (hover: none) {
+  .search.no-focus[_ngcontent-sc2]:focus   g[_ngcontent-sc2] {
+    -webkit-transform: none;
+            transform: none;
+  }
+  .search.no-focus[_ngcontent-sc2]:hover   g[_ngcontent-sc2] {
+    -webkit-transform: none;
+            transform: none;
+  }
+  .search[_ngcontent-sc2]:focus   g[_ngcontent-sc2], .search[_ngcontent-sc2]:hover   g[_ngcontent-sc2] {
+    -webkit-transform: none;
+            transform: none;
+  }
+}
+.search[_ngcontent-sc2]   svg[_ngcontent-sc2] {
+  height: 22px;
+  vertical-align: middle;
+  width: 22px;
+}
+@media (min-width: 1024px) {
+  .search[_ngcontent-sc2]   svg[_ngcontent-sc2] {
+    height: 28px;
+    width: 30px;
+  }
+}
+.search[_ngcontent-sc2]   svg[_ngcontent-sc2]   g[_ngcontent-sc2] {
+  transition: -webkit-transform 0.3s ease;
+  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, -webkit-transform 0.3s ease;
+}
+.search[_ngcontent-sc2]   svg[_ngcontent-sc2]   g[_ngcontent-sc2]   [_ngcontent-sc2]:first-child {
+  fill: #0053d6;
+}</style><style ng-transition="deepmind-website">[_nghost-sc3] {
+  display: block;
+}
+footer[_ngcontent-sc3] {
+  background-color: #14234b;
+  overflow: hidden;
+  padding: 50px 0 40px;
+  position: relative;
+}
+@media (min-width: 768px) {
+  footer[_ngcontent-sc3] {
+    padding: 60px 0 50px;
+  }
+}
+@media (min-width: 1440px) {
+  footer[_ngcontent-sc3] {
+    padding: 90px 0 100px;
+  }
+}
+.logo[_ngcontent-sc3] {
+  display: none;
+}
+@media (min-width: 1024px) {
+  .logo[_ngcontent-sc3] {
+    display: block;
+    margin: 0 0 45px;
+  }
+}
+.logo[_ngcontent-sc3]   svg[_ngcontent-sc3] {
+  fill: #fff;
+  height: 28px;
+  width: 130px;
+}
+.body[_ngcontent-sc3] {
+  flex: 1 1 0%;
+  position: relative;
+}
+.categories[_ngcontent-sc3] {
+  display: flex;
+  flex-flow: row wrap;
+}
+@media (min-width: 1440px) {
+  .categories[_ngcontent-sc3] {
+    flex-flow: row nowrap;
+  }
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3] {
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .categories[_ngcontent-sc3]   .column[_ngcontent-sc3] {
+    margin: 0 0 30px;
+    max-width: 33.3333333333%;
+  }
+}
+@media (min-width: 1440px) {
+  .categories[_ngcontent-sc3]   .column[_ngcontent-sc3] {
+    max-width: none;
+  }
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3]:last-child {
+  flex-grow: 0;
+}
+@media (min-width: 768px) {
+  .categories[_ngcontent-sc3]   .column[_ngcontent-sc3]:last-child {
+    flex-grow: 1;
+  }
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3]    > .nav-cta[_ngcontent-sc3] {
+  font-size: 16px;
+  font-weight: 700;
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   [dmAccordionTitle][_ngcontent-sc3] {
+  flex-grow: 1;
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   [dmAccordionTitle][_ngcontent-sc3]:focus, .categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   [dmAccordionTitle][_ngcontent-sc3]:hover {
+  border: 0;
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   ul[_ngcontent-sc3] {
+  list-style-type: none;
+  padding: 0 0 20px;
+}
+@media (min-width: 768px) {
+  .categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   ul[_ngcontent-sc3] {
+    border-left: 1px solid #0053d6;
+    margin: 15px 0 0;
+    padding: 0 0 0 8px;
+  }
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   ul[_ngcontent-sc3]   li[_ngcontent-sc3]    + li[_ngcontent-sc3] {
+  margin: 10px 0 0;
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   ul[_ngcontent-sc3]   li[_ngcontent-sc3]   a[_ngcontent-sc3] {
+  display: inherit;
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   ul[_ngcontent-sc3]   li[_ngcontent-sc3]   a[_ngcontent-sc3]:focus, .categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   ul[_ngcontent-sc3]   li[_ngcontent-sc3]   a[_ngcontent-sc3]:hover {
+  border: 0;
+}
+.categories[_ngcontent-sc3]   .column[_ngcontent-sc3]   ul[_ngcontent-sc3]   li[_ngcontent-sc3]   dm-link[_ngcontent-sc3] {
+  line-height: 1;
+}
+.information[_ngcontent-sc3] {
+  display: flex;
+}
+@media (min-width: 768px) {
+  .information[_ngcontent-sc3] {
+    border-top: 1px solid #5c657f;
+    padding: 25px 0;
+  }
+}
+@media (min-width: 1440px) {
+  .information[_ngcontent-sc3] {
+    padding: 35px 0;
+  }
+}
+.information[_ngcontent-sc3]   .legal[_ngcontent-sc3] {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+@media (min-width: 768px) {
+  .information[_ngcontent-sc3]   .legal[_ngcontent-sc3] {
+    align-items: center;
+    flex-direction: row;
+    margin: 0;
+  }
+}
+.information[_ngcontent-sc3]   .legal[_ngcontent-sc3]   dm-link[_ngcontent-sc3] {
+  margin: 0 0 15px;
+}
+@media (min-width: 768px) {
+  .information[_ngcontent-sc3]   .legal[_ngcontent-sc3]   dm-link[_ngcontent-sc3] {
+    margin: 0 45px 0 0;
+  }
+}
+.information[_ngcontent-sc3]   .social[_ngcontent-sc3] {
+  align-items: flex-end;
+  display: flex;
+  justify-content: flex-end;
+  list-style: none;
+}
+@media (min-width: 768px) {
+  .information[_ngcontent-sc3]   .social[_ngcontent-sc3] {
+    align-items: center;
+  }
+}
+.information[_ngcontent-sc3]   .social[_ngcontent-sc3]   li[_ngcontent-sc3] {
+  display: flex;
+}
+.information[_ngcontent-sc3]   .social[_ngcontent-sc3]   a[_ngcontent-sc3] {
+  margin: 0 0 15px;
+  padding: 0 0 0 32px;
+}
+@media (min-width: 768px) {
+  .information[_ngcontent-sc3]   .social[_ngcontent-sc3]   a[_ngcontent-sc3] {
+    margin: 0 0 0 15px;
+    padding: 0;
+  }
+}
+.information[_ngcontent-sc3]   .social[_ngcontent-sc3]   a[_ngcontent-sc3]   svg[_ngcontent-sc3] {
+  height: 20px;
+  vertical-align: middle;
+  width: 20px;
+}
+.shape[_ngcontent-sc3] {
+  height: 100%;
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+@media (min-width: 1440px) {
+  .shape[_ngcontent-sc3] {
+    display: inline;
+  }
+}
+.shape[_ngcontent-sc3]   svg[_ngcontent-sc3] {
+  bottom: -100px;
+  fill: #0053d6;
+  height: 400px;
+  position: absolute;
+  right: -100px;
+  width: 400px;
+}
+@media (min-width: 768px) {
+  .shape[_ngcontent-sc3]   svg[_ngcontent-sc3] {
+    right: -100px;
+    top: 10%;
+  }
+}
+@media (min-width: 1440px) {
+  .shape[_ngcontent-sc3]   svg[_ngcontent-sc3] {
+    bottom: -200px;
+    left: 60%;
+    top: auto;
+  }
+}
+.back-to-top[_ngcontent-sc3] {
+  margin: 30px 0;
+  position: relative;
+  text-align: right;
+}
+@media (min-width: 768px) {
+  .back-to-top[_ngcontent-sc3] {
+    margin: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+}
+@media (min-width: 1024px) {
+  .back-to-top[_ngcontent-sc3] {
+    display: none;
+  }
+}
+.back-to-top[_ngcontent-sc3]   svg[_ngcontent-sc3] {
+  fill: #fff;
+  height: 16px;
+  margin: 0 0 0 auto;
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+  transition: -webkit-transform 0.2s ease;
+  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, -webkit-transform 0.2s ease;
+  width: 25px;
+}
+@media (min-width: 768px) {
+  .back-to-top[_ngcontent-sc3]   svg[_ngcontent-sc3] {
+    margin: auto;
+  }
+}</style><style ng-transition="deepmind-website">[_nghost-sc8] {
+  display: block;
+}
+.media[_ngcontent-sc8] {
+  display: block;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+.link[_ngcontent-sc8]   .icon[_ngcontent-sc8] {
+  height: 30px;
+  min-width: 30px;
+  position: relative;
+  width: 30px;
+}
+.link.external[_ngcontent-sc8]:focus   .icon[_ngcontent-sc8]::before, .link.external[_ngcontent-sc8]:hover   .icon[_ngcontent-sc8]::before {
+  background-color: #0053d6;
+}
+.link.external[_ngcontent-sc8]   .icon[_ngcontent-sc8]::before {
+  background-color: #ffdb13;
+  border-radius: 50%;
+  content: "";
+  display: block;
+  height: 30px;
+  position: absolute;
+  right: 0;
+  width: 30px;
+}
+.link.external[_ngcontent-sc8]   svg[_ngcontent-sc8] {
+  background-color: transparent;
+  border-radius: 0;
+  padding: 8px;
+  position: relative;
+}
+.link.transparent[_ngcontent-sc8]   .icon[_ngcontent-sc8] {
+  line-height: 0;
+}
+.hero-link[_ngcontent-sc8] {
+  align-items: flex-start;
+  font: 500 14px/30px "Deepmind Sans", Helvetica, Arial, sans-serif;
+  letter-spacing: 0;
+}
+@media (min-width: 1024px) {
+  .hero-link[_ngcontent-sc8] {
+    font-size: 18px;
+    line-height: 30px;
+  }
+}
+.cta-text[_ngcontent-sc8] {
+  margin-right: 10px;
+  text-transform: uppercase;
+}</style><style ng-transition="deepmind-website">[_nghost-sc10] {
+  display: block;
+  position: relative;
+  width: 100%;
+}</style><meta property="og:title" content="REPLAY IN BIOLOGICAL AND ARTIFICIAL NEURAL NETWORKS"><meta property="og:description" content="Our waking and sleeping lives are punctuated by fragments of recalled memories: a sudden connection in the shower between seemingly disparate thoughts, or an ill-fated choice decades ago that haunts us as we struggle to fall asleep. "><meta property="og:image" content="https://lh3.googleusercontent.com/iFFsMi3U36WfNbEfgDBLF-sd7gcOgOSUePw7hMOVHCfnFYE0fvE9gCDsJobc5niXG-iFatQKDJ1Tv00074iaE-nxzBH-GlzYgPRp0g"><meta property="og:url" content="/blog/article/replay-in-biological-and-artificial-neural-networks"><meta name="twitter:title" content="REPLAY IN BIOLOGICAL AND ARTIFICIAL NEURAL NETWORKS"><meta name="twitter:description" content="Our waking and sleeping lives are punctuated by fragments of recalled memories: a sudden connection in the shower between seemingly disparate thoughts, or an ill-fated choice decades ago that haunts us as we struggle to fall asleep. "><meta name="twitter:image:src" content="https://lh3.googleusercontent.com/iFFsMi3U36WfNbEfgDBLF-sd7gcOgOSUePw7hMOVHCfnFYE0fvE9gCDsJobc5niXG-iFatQKDJ1Tv00074iaE-nxzBH-GlzYgPRp0g"><meta name="twitter:site" content="/blog/article/replay-in-biological-and-artificial-neural-networks"><style ng-transition="deepmind-website">[_nghost-sc49] {
+  display: block;
+  margin-top: 70px;
+}
+@media (min-width: 1024px) {
+  [_nghost-sc49] {
+    margin-top: 100px;
+  }
+}
+dm-breadcrumb[_ngcontent-sc49] {
+  left: 20px;
+  position: absolute;
+  top: -45px;
+}
+@media (min-width: 768px) {
+  dm-breadcrumb[_ngcontent-sc49] {
+    left: 30px;
+  }
+}
+@media (min-width: 1024px) {
+  dm-breadcrumb[_ngcontent-sc49] {
+    left: 60px;
+    margin: 40px 0 25px;
+    top: -100px;
+  }
+}
+@media (min-width: 1440px) {
+  dm-breadcrumb[_ngcontent-sc49] {
+    left: 90px;
+  }
+}
+.blog-article-bg[_ngcontent-sc49] {
+  background: linear-gradient(to right, #fff 50%, #ffe6f0 50%);
+}
+@media (min-width: 1024px) {
+  .blog-article-bg[_ngcontent-sc49] {
+    background: linear-gradient(to right, #ffe6f0 50%, #fff 50%);
+  }
+}
+.page-content-container[_ngcontent-sc49] {
+  display: flex;
+  flex-direction: column-reverse;
+}
+@media (max-width: 1023px) {
+  .page-content-container[_ngcontent-sc49] {
+    padding: 0;
+  }
+}
+@media (min-width: 1024px) {
+  .page-content-container[_ngcontent-sc49] {
+    flex-direction: row;
+  }
+}
+aside[_ngcontent-sc49] {
+  background-color: #ffe6f0;
+  display: flex;
+  flex-direction: column;
+  padding: 50px 0 50px 30px;
+  width: 100%;
+}
+@media (min-width: 768px) {
+  aside[_ngcontent-sc49] {
+    -webkit-column-gap: 0;
+       -moz-column-gap: 0;
+            column-gap: 0;
+    -webkit-columns: 2;
+       -moz-columns: 2;
+            columns: 2;
+    display: inline;
+  }
+}
+@media (min-width: 1024px) {
+  aside[_ngcontent-sc49] {
+    display: flex;
+    max-width: 260px;
+    padding: 0 40px 50px 0;
+  }
+}
+@media (min-width: 1440px) {
+  aside[_ngcontent-sc49] {
+    max-width: 300px;
+  }
+}
+.page-content[_ngcontent-sc49] {
+  background-color: #fff;
+  padding: 20px 20px 0;
+  width: calc(100% - 20px);
+}
+@media (min-width: 768px) {
+  .page-content[_ngcontent-sc49] {
+    padding: 20px 30px 0;
+    width: calc(100% - 125px);
+  }
+}
+@media (min-width: 1024px) {
+  .page-content[_ngcontent-sc49] {
+    padding: 55px 0 55px 30px;
+    width: 100%;
+  }
+}
+@media (min-width: 1440px) {
+  .page-content[_ngcontent-sc49] {
+    padding: 70px 0 70px 100px;
+  }
+}
+dm-social-share[_ngcontent-sc49], dm-authors-list[_ngcontent-sc49], dm-tag-list[_ngcontent-sc49] {
+  margin-bottom: 30px;
+}
+@media (min-width: 768px) {
+  dm-social-share[_ngcontent-sc49], dm-authors-list[_ngcontent-sc49], dm-tag-list[_ngcontent-sc49] {
+    margin: 0 20px 30px 0;
+  }
+}
+@media (min-width: 1024px) {
+  dm-social-share[_ngcontent-sc49], dm-authors-list[_ngcontent-sc49], dm-tag-list[_ngcontent-sc49] {
+    margin: 0 0 30px;
+  }
+}
+dm-authors-list[_ngcontent-sc49] {
+  margin-bottom: 30px;
+}
+@media (min-width: 768px) {
+  dm-authors-list[_ngcontent-sc49] {
+    -webkit-column-break-before: always;
+       -moz-column-break-before: always;
+            break-before: always;
+    margin: 0;
+  }
+}
+@media (min-width: 1024px) {
+  dm-authors-list[_ngcontent-sc49] {
+    -webkit-column-break-before: auto;
+       -moz-column-break-before: auto;
+            break-before: auto;
+    margin-bottom: 30px;
+  }
+}
+dm-tag-list[_ngcontent-sc49] {
+  order: 3;
+}</style><style ng-transition="deepmind-website">[_nghost-sc13] {
+  display: block;
+}
+.theme-dark[_nghost-sc13]   li[_ngcontent-sc13]   a[_ngcontent-sc13] {
+  color: #0053d6;
+}
+.theme-dark[_nghost-sc13]   .logo[_ngcontent-sc13]   svg[_ngcontent-sc13], .theme-dark[_nghost-sc13]   .arrow[_ngcontent-sc13] {
+  fill: #0053d6;
+}
+ul[_ngcontent-sc13] {
+  align-items: center;
+  display: flex;
+  list-style: none;
+}
+ul[_ngcontent-sc13]   li[_ngcontent-sc13] {
+  align-items: center;
+  display: flex;
+}
+ul[_ngcontent-sc13]   li[_ngcontent-sc13]:not(:nth-child(2)) {
+  display: none;
+}
+@media (min-width: 1024px) {
+  ul[_ngcontent-sc13]   li[_ngcontent-sc13]:not(:nth-child(2)) {
+    display: flex;
+  }
+}
+ul[_ngcontent-sc13]   li[_ngcontent-sc13]:last-child   a[_ngcontent-sc13] {
+  font-weight: bold;
+}
+ul[_ngcontent-sc13]   li[_ngcontent-sc13]   .nav-cta[_ngcontent-sc13]:focus, ul[_ngcontent-sc13]   li[_ngcontent-sc13]   .nav-cta[_ngcontent-sc13]:hover {
+  border: 0;
+}
+ul[_ngcontent-sc13]   li[_ngcontent-sc13]   .disabled[_ngcontent-sc13] {
+  cursor: default;
+  pointer-events: none;
+}
+ul[_ngcontent-sc13]   li[_ngcontent-sc13]   .disabled[_ngcontent-sc13]:focus, ul[_ngcontent-sc13]   li[_ngcontent-sc13]   .disabled[_ngcontent-sc13]:hover {
+  color: #fff;
+}
+ul[_ngcontent-sc13]   .logo[_ngcontent-sc13]   svg[_ngcontent-sc13] {
+  display: none;
+  fill: #fff;
+  height: 25px;
+  width: 110px;
+}
+@media (min-width: 1024px) {
+  ul[_ngcontent-sc13]   .logo[_ngcontent-sc13]   svg[_ngcontent-sc13] {
+    display: block;
+    height: 28px;
+    width: 130px;
+  }
+}
+ul[_ngcontent-sc13]   .arrow[_ngcontent-sc13] {
+  fill: #fff;
+  height: 9px;
+  margin: 0 25px 0 0;
+  -webkit-transform: scaleX(-1);
+          transform: scaleX(-1);
+  width: 5px;
+}
+@media (min-width: 1024px) {
+  ul[_ngcontent-sc13]   .arrow[_ngcontent-sc13] {
+    margin: 0 25px;
+    -webkit-transform: scaleX(1);
+            transform: scaleX(1);
+  }
+}
+ul[_ngcontent-sc13]   .arrow.is-last[_ngcontent-sc13] {
+  display: none;
+}
+@media (min-width: 1024px) {
+  ul[_ngcontent-sc13]   .arrow.is-last[_ngcontent-sc13] {
+    display: inline;
+  }
+}</style><style ng-transition="deepmind-website">[_nghost-sc50] {
+  display: block;
+}
+header[_ngcontent-sc50] {
+  position: relative;
+}
+header[_ngcontent-sc50]   .article-image[_ngcontent-sc50] {
+  background: linear-gradient(transparent 60%, #ffe6f0 60%);
+}
+@media (min-width: 768px) {
+  header[_ngcontent-sc50]   .article-image[_ngcontent-sc50] {
+    background: linear-gradient(transparent 30%, #ffe6f0 30%);
+  }
+}
+@media (min-width: 1024px) {
+  header[_ngcontent-sc50]   .article-image[_ngcontent-sc50] {
+    background: transparent;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    z-index: 0;
+  }
+}
+@media (min-width: 2048px) {
+  header[_ngcontent-sc50]   .article-image[_ngcontent-sc50] {
+    max-height: 820px;
+  }
+}
+@media (min-width: 1024px) {
+  header[_ngcontent-sc50]   .article-image[_ngcontent-sc50]   picture[_ngcontent-sc50] {
+    height: auto;
+    position: relative;
+    display: block;
+    margin-left: auto;
+    width: 75%;
+  }
+  header[_ngcontent-sc50]   .article-image[_ngcontent-sc50]   picture[_ngcontent-sc50]::before {
+    content: "";
+    display: block;
+    padding-top: 56.25%;
+    width: 100%;
+  }
+  header[_ngcontent-sc50]   .article-image[_ngcontent-sc50]   picture[_ngcontent-sc50]    > img[_ngcontent-sc50], header[_ngcontent-sc50]   .article-image[_ngcontent-sc50]   picture[_ngcontent-sc50]    > svg[_ngcontent-sc50], header[_ngcontent-sc50]   .article-image[_ngcontent-sc50]   picture[_ngcontent-sc50]    > path[_ngcontent-sc50] {
+    display: block;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+}
+@media (min-width: 2048px) {
+  header[_ngcontent-sc50]   .article-image[_ngcontent-sc50]   picture[_ngcontent-sc50] {
+    width: calc( 1440px - 330px + (100vw - 1440px - 100px) / 2);
+  }
+}
+header[_ngcontent-sc50]   .article-image[_ngcontent-sc50]   picture[_ngcontent-sc50]   img[_ngcontent-sc50] {
+  height: 100%;
+  max-width: none;
+  width: calc(100% - 20px);
+}
+@media (min-width: 768px) {
+  header[_ngcontent-sc50]   .article-image[_ngcontent-sc50]   picture[_ngcontent-sc50]   img[_ngcontent-sc50] {
+    width: calc(100% - 30px);
+  }
+}
+@media (min-width: 1024px) {
+  header[_ngcontent-sc50]   .article-image[_ngcontent-sc50]   picture[_ngcontent-sc50]   img[_ngcontent-sc50] {
+    width: auto;
+  }
+}
+.article-content-container[_ngcontent-sc50] {
+  align-items: flex-start;
+  background-color: #ffe6f0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+@media (min-width: 1024px) {
+  .article-content-container[_ngcontent-sc50] {
+    align-items: flex-end;
+    bottom: 0;
+    margin: 0 auto;
+    position: absolute;
+    z-index: 1;
+  }
+}
+@media (min-width: 1440px) {
+  .article-content-container[_ngcontent-sc50] {
+    padding-left: calc((100% - 1440px) / 2);
+  }
+}
+@media (min-width: 2048px) {
+  .article-content-container[_ngcontent-sc50] {
+    min-width: 745px;
+    width: calc(100% - calc( 1440px - 330px + (100vw - 1440px - 100px) / 2) + 350px);
+  }
+}
+.article-content[_ngcontent-sc50] {
+  padding: 30px 20px 25px;
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .article-content[_ngcontent-sc50] {
+    padding: 25px 125px 25px 30px;
+  }
+}
+@media (min-width: 1024px) {
+  .article-content[_ngcontent-sc50] {
+    margin: 0;
+    max-width: 485px;
+    padding: 50px 50px 30px 60px;
+  }
+}
+@media (min-width: 1440px) {
+  .article-content[_ngcontent-sc50] {
+    max-width: 745px;
+    padding: 50px 50px 30px 90px;
+  }
+}
+.article-meta-container[_ngcontent-sc50] {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.article-meta-container[_ngcontent-sc50]   svg[_ngcontent-sc50] {
+  background-color: #e1144b;
+  border-radius: 50%;
+  fill: #fff;
+  height: 40px;
+  margin: 0 9px 0 0;
+  width: 40px;
+}
+.article-meta-container[_ngcontent-sc50]   .article-category-container[_ngcontent-sc50] {
+  align-items: center;
+  display: flex;
+}
+.dm-h2[_ngcontent-sc50] {
+  margin: 30px 0;
+}
+
+@media (min-width: 1024px) {
+  .article-description[_ngcontent-sc50] {
+    font-size: 36px;
+    line-height: 48px;
+  }
+}
+@media (min-width: 1440px) {
+  .article-description[_ngcontent-sc50] {
+    font-size: 55px;
+    line-height: 65px;
+  }
+}</style><style ng-transition="deepmind-website">[_nghost-sc19] {
+  display: block;
+}
+
+.social-share[_ngcontent-sc19] {
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  padding-top: 15px;
+  text-align: left;
+}
+
+.social-share[_ngcontent-sc19]   p[_ngcontent-sc19] {
+  margin-bottom: 15px;
+}
+
+.social-media[_ngcontent-sc19] {
+  display: flex;
+  list-style: none;
+  padding: 0;
+}
+
+.social-media[_ngcontent-sc19]   li[_ngcontent-sc19] {
+  margin-right: 10px;
+}
+
+.social-media[_ngcontent-sc19]   li[_ngcontent-sc19]:last-child {
+  margin: 0;
+}
+
+.social-media[_ngcontent-sc19]   svg[_ngcontent-sc19] {
+  height: 30px;
+  width: 30px;
+}</style><style ng-transition="deepmind-website">[_nghost-sc45] {
+  display: block;
+}
+.authors-container[_ngcontent-sc45] {
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  padding-top: 15px;
+  text-align: left;
+}
+.authors-container[_ngcontent-sc45]   .title[_ngcontent-sc45] {
+  margin-bottom: 15px;
+}
+.authors-list[_ngcontent-sc45] {
+  display: flex;
+  flex-flow: row wrap;
+  list-style: none;
+  padding: 0;
+}
+@media (min-width: 768px) {
+  .authors-list[_ngcontent-sc45] {
+    display: block;
+  }
+}
+.authors-list[_ngcontent-sc45]   li[_ngcontent-sc45] {
+  align-items: center;
+  display: flex;
+  flex-basis: 50%;
+  margin-bottom: 5px;
+}
+.authors-list[_ngcontent-sc45]   li[_ngcontent-sc45]   .image[_ngcontent-sc45] {
+  align-items: center;
+  background-color: #0053d6;
+  border-radius: 50%;
+  display: flex;
+  height: 50px;
+  justify-content: center;
+  margin-right: 10px;
+  min-width: 50px;
+  overflow: hidden;
+  position: relative;
+  width: 50px;
+  z-index: 0;
+}
+.authors-list[_ngcontent-sc45]   li[_ngcontent-sc45]   .image[_ngcontent-sc45]   p[_ngcontent-sc45] {
+  color: #fff;
+  margin: 0;
+}
+li[_ngcontent-sc45]:not(.external)   .author-name[_ngcontent-sc45] {
+  border: 0;
+  position: relative;
+}
+li[_ngcontent-sc45]:not(.external)   .author-name[_ngcontent-sc45]::before {
+  background-color: #0053d6;
+  bottom: 0;
+  content: "";
+  height: 1px;
+  left: 0;
+  position: absolute;
+  right: 0;
+  -webkit-transform: scaleX(0);
+          transform: scaleX(0);
+  -webkit-transform-origin: bottom right;
+          transform-origin: bottom right;
+  transition: -webkit-transform 0.5s ease;
+  transition: transform 0.5s ease;
+  transition: transform 0.5s ease, -webkit-transform 0.5s ease;
+}
+li[_ngcontent-sc45]:not(.external)   .author-name[_ngcontent-sc45]:hover {
+  color: #0053d6;
+}
+li[_ngcontent-sc45]:not(.external)   .author-name[_ngcontent-sc45]:hover::before {
+  -webkit-transform: scaleX(1);
+          transform: scaleX(1);
+  -webkit-transform-origin: bottom left;
+          transform-origin: bottom left;
+}
+.authors-list[_ngcontent-sc45]   li.external[_ngcontent-sc45]   .image[_ngcontent-sc45] {
+  background-color: #fff;
+}
+.authors-list[_ngcontent-sc45]   li.external[_ngcontent-sc45]   .image[_ngcontent-sc45]   p[_ngcontent-sc45] {
+  color: #123693;
+  font-weight: 700;
+}
+.authors-list[_ngcontent-sc45]   li.external[_ngcontent-sc45]   .author-name[_ngcontent-sc45] {
+  color: #123693;
+}
+.authors-list[_ngcontent-sc45]   li.external[_ngcontent-sc45]   .author-name[_ngcontent-sc45]:hover {
+  color: #123693;
+}
+.footnote[_ngcontent-sc45] {
+  margin: 15px 0 0;
+}
+.footnote[_ngcontent-sc45]   small[_ngcontent-sc45]   sup[_ngcontent-sc45] {
+  top: -1px;
+}</style><style ng-transition="deepmind-website">[_nghost-sc18] {
+  background-color: #f0f5f5;
+  display: block;
+  padding: 60px 0;
+}
+@media (min-width: 768px) {
+  [_nghost-sc18] {
+    padding: 70px 0;
+  }
+}
+@media (min-width: 1024px) {
+  [_nghost-sc18] {
+    padding: 80px 0;
+  }
+}
+@media (min-width: 1440px) {
+  [_nghost-sc18] {
+    padding: 100px 0;
+  }
+}
+.footer-promos[_ngcontent-sc18] {
+  display: flex;
+  flex-direction: column;
+}
+@media (min-width: 1440px) {
+  .footer-promos.is-case-study[_ngcontent-sc18] {
+    flex-direction: row;
+  }
+}
+@media (min-width: 1440px) {
+  .footer-promos.is-case-study[_ngcontent-sc18]   .dm-h5[_ngcontent-sc18] {
+    margin: 0 100px 0 0;
+    min-width: 325px;
+  }
+}
+@media (min-width: 2048px) {
+  .footer-promos.is-case-study[_ngcontent-sc18]   .dm-h5[_ngcontent-sc18] {
+    min-width: 375px;
+  }
+}
+.footer-promos[_ngcontent-sc18]   .dm-h5[_ngcontent-sc18] {
+  margin: 0 0 30px;
+  min-width: 100%;
+}
+.promo-wrapper[_ngcontent-sc18] {
+  display: flex;
+  flex-flow: row wrap;
+  width: 100%;
+}
+.promo-wrapper[_ngcontent-sc18]   .footer-promo[_ngcontent-sc18] {
+  flex-grow: 1;
+  margin: 0 0 30px;
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .promo-wrapper[_ngcontent-sc18]   .footer-promo[_ngcontent-sc18] {
+    max-width: calc(50% - 15px);
+    width: calc(50% - 15px);
+  }
+}
+@media (min-width: 768px) {
+  .promo-wrapper[_ngcontent-sc18]   .footer-promo[_ngcontent-sc18]:nth-child(2n) {
+    margin: 0 0 30px 30px;
+  }
+}
+.promo-wrapper[_ngcontent-sc18]   dm-component-factory[_ngcontent-sc18] {
+  height: 100%;
+}</style><style ng-transition="deepmind-website">[_nghost-sc42] {
+  display: block;
+  position: relative;
+}
+.user-content.is-homepage-intro[_ngcontent-sc42] {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  left: 0;
+  margin: 40px auto;
+  max-width: 835px;
+  right: 0;
+  text-align: center;
+}</style><style ng-transition="deepmind-website">[_nghost-sc46] {
+  display: block;
+  margin: 30px 0;
+  position: relative;
+  width: 100%;
+}
+.full-width[_nghost-sc46] {
+  margin: 30px 0 30px -30px;
+  width: calc(100% + 80px);
+}
+@media (min-width: 768px) {
+  .full-width[_nghost-sc46] {
+    width: calc(100% + 215px);
+  }
+}
+@media (min-width: 1024px) {
+  .full-width[_nghost-sc46] {
+    margin: 30px 0 30px calc((312px + 100px) * -1);
+    width: calc(100% + 312px + 100px);
+  }
+}
+@media (min-width: 2048px) {
+  .full-width[_nghost-sc46] {
+    margin: 30px 0 30px calc((100vw - 775px) / -2);
+    width: calc(1440px + ((100vw - 1440px) / 2));
+  }
+}
+img[_ngcontent-sc46] {
+  left: 0;
+  position: relative;
+  width: 100%;
+}
+figcaption[_ngcontent-sc46] {
+  margin: 17px 0 0;
+}</style><style ng-transition="deepmind-website">[_nghost-sc36] {
+  display: flex;
+  flex: 1 1 0%;
+  height: 100%;
+  position: relative;
+}
+.is-featured-card   [_nghost-sc36]   .article-card-container[_ngcontent-sc36] {
+  background-color: transparent;
+}
+.article-card-container[_ngcontent-sc36] {
+  background-color: #ffe6f0;
+  display: flex;
+  height: 100%;
+  min-height: 525px;
+  min-width: 280px;
+  width: 100%;
+}
+.article-card-container.is-blog-article[_ngcontent-sc36] {
+  max-width: none;
+  min-height: auto;
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .article-card-container.is-blog-article[_ngcontent-sc36] {
+    min-height: 525px;
+  }
+}
+.caption[_ngcontent-sc36] {
+  margin: 0;
+}
+.header[_ngcontent-sc36] {
+  display: flex;
+  margin-bottom: 22px;
+}
+.header[_ngcontent-sc36]    > svg[_ngcontent-sc36] {
+  background-color: #e1144b;
+  border-radius: 50%;
+  fill: #fff;
+  height: 40px;
+  margin: 0 9px 0 0;
+  min-width: 40px;
+  width: 40px;
+}
+.header[_ngcontent-sc36]   .category[_ngcontent-sc36] {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.body[_ngcontent-sc36]   h4[_ngcontent-sc36] {
+  margin: 0 0 10px;
+}
+.body[_ngcontent-sc36]   p[_ngcontent-sc36] {
+  margin: 0 0 10px;
+}
+.footer[_ngcontent-sc36] {
+  align-items: center;
+  display: flex;
+  margin: auto 0 0;
+  padding: 15px 0 0;
+}
+.footer[_ngcontent-sc36]   .read-more[_ngcontent-sc36]   svg[_ngcontent-sc36] {
+  height: 30px;
+  width: 30px;
+}
+.footer[_ngcontent-sc36]   .dm-cta[_ngcontent-sc36]:last-child {
+  left: 0;
+  margin: 0 0 0 auto;
+}</style><style ng-transition="deepmind-website">[_nghost-sc37] {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+  z-index: 0;
+}
+.image-left[_nghost-sc37]   .content-card-body[_ngcontent-sc37], .image-right[_nghost-sc37]   .content-card-body[_ngcontent-sc37] {
+  width: 100%;
+}
+@media (min-width: 1440px) {
+  .image-left[_nghost-sc37]   .content-card-body[_ngcontent-sc37], .image-right[_nghost-sc37]   .content-card-body[_ngcontent-sc37] {
+    width: 50%;
+  }
+}
+@media (min-width: 1440px) {
+  .image-left[_nghost-sc37]   .image[_ngcontent-sc37], .image-right[_nghost-sc37]   .image[_ngcontent-sc37] {
+    height: auto;
+    max-height: none;
+    min-height: auto;
+    width: 50%;
+  }
+}
+@media (min-width: 1440px) {
+  .image-left[_nghost-sc37]   .content-card-body[_ngcontent-sc37], .image-right[_nghost-sc37]   .content-card-body[_ngcontent-sc37] {
+    width: 50%;
+  }
+}
+@media (min-width: 1440px) {
+  .image-left[_nghost-sc37] {
+    flex-direction: row;
+  }
+}
+@media (min-width: 1440px) {
+  .image-right[_nghost-sc37] {
+    flex-direction: row-reverse;
+  }
+}
+.content-card-body[_ngcontent-sc37] {
+  align-items: inherit;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: inherit;
+  padding: 20px;
+}
+@media (min-width: 1024px) {
+  .content-card-body[_ngcontent-sc37] {
+    padding: 25px;
+  }
+}
+.content-card-body.has-border[_ngcontent-sc37] {
+  position: relative;
+}
+.content-card-body.has-border[_ngcontent-sc37]:before {
+  background-color: #d8d8d8;
+  bottom: 0;
+  content: "";
+  height: 1px;
+  left: 20px;
+  position: absolute;
+  width: calc(100% - 40px);
+}
+@media (min-width: 1024px) {
+  .content-card-body.has-border[_ngcontent-sc37]:before {
+    left: 25px;
+    width: calc(100% - 50px);
+  }
+}
+.image[_ngcontent-sc37] {
+  height: auto;
+  position: relative;
+  display: block;
+  min-height: 200px;
+  position: relative;
+  width: 100%;
+}
+.image[_ngcontent-sc37]::before {
+  content: "";
+  display: block;
+  padding-top: 56.25%;
+  width: 100%;
+}
+.image[_ngcontent-sc37]    > img[_ngcontent-sc37], .image[_ngcontent-sc37]    > svg[_ngcontent-sc37], .image[_ngcontent-sc37]    > path[_ngcontent-sc37] {
+  display: block;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}</style><style ng-transition="deepmind-website">[_nghost-sc9] {
+  display: block;
+  height: 100%;
+  left: 0;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+.image[_ngcontent-sc9], .video[_ngcontent-sc9] {
+  background: center/cover no-repeat;
+  display: block;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: -1;
+}
+.image[_ngcontent-sc9]   img[_ngcontent-sc9], .video[_ngcontent-sc9]   video[_ngcontent-sc9] {
+  max-width: none;
+  min-height: 100%;
+  min-width: 103%;
+  position: absolute;
+  width: 100%;
+}
+@supports ((-o-object-fit: cover) or (object-fit: cover)) {
+  .image[_ngcontent-sc9]   img[_ngcontent-sc9], .video[_ngcontent-sc9]   video[_ngcontent-sc9] {
+    -o-object-fit: cover;
+       object-fit: cover;
+  }
+}
+.v-position-default[_nghost-sc9]   .image[_ngcontent-sc9]   img[_ngcontent-sc9], .v-position-top[_nghost-sc9]   .image[_ngcontent-sc9]   img[_ngcontent-sc9], .v-position-default[_nghost-sc9]   .video[_ngcontent-sc9]   video[_ngcontent-sc9], .v-position-top[_nghost-sc9]   .video[_ngcontent-sc9]   video[_ngcontent-sc9] {
+  top: 0;
+}
+.v-position-bottom[_nghost-sc9]   .image[_ngcontent-sc9]   img[_ngcontent-sc9], .v-position-bottom[_nghost-sc9]   .video[_ngcontent-sc9]   video[_ngcontent-sc9] {
+  bottom: 0;
+}
+.v-position-center[_nghost-sc9]   .image[_ngcontent-sc9]   img[_ngcontent-sc9], .v-position-center[_nghost-sc9]   .video[_ngcontent-sc9]   video[_ngcontent-sc9] {
+  top: 50%;
+  -webkit-transform: translate(0, -50%);
+          transform: translate(0, -50%);
+}
+.h-position-default[_nghost-sc9]   .image[_ngcontent-sc9]   img[_ngcontent-sc9], .h-position-left[_nghost-sc9]   .image[_ngcontent-sc9]   img[_ngcontent-sc9], .h-position-default[_nghost-sc9]   .video[_ngcontent-sc9]   video[_ngcontent-sc9], .h-position-left[_nghost-sc9]   .video[_ngcontent-sc9]   video[_ngcontent-sc9] {
+  left: 0;
+}
+.h-position-right[_nghost-sc9]   .image[_ngcontent-sc9]   img[_ngcontent-sc9], .h-position-right[_nghost-sc9]   .video[_ngcontent-sc9]   video[_ngcontent-sc9] {
+  right: 0;
+}
+.h-position-center[_nghost-sc9]   .image[_ngcontent-sc9]   img[_ngcontent-sc9], .h-position-center[_nghost-sc9]   .video[_ngcontent-sc9]   video[_ngcontent-sc9] {
+  left: 50%;
+  -webkit-transform: translate(-50%, 0);
+          transform: translate(-50%, 0);
+}
+.h-position-center.v-position-center[_nghost-sc9]   .image[_ngcontent-sc9]   img[_ngcontent-sc9], .h-position-center.v-position-center[_nghost-sc9]   .video[_ngcontent-sc9]   video[_ngcontent-sc9] {
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+dm-modal[_ngcontent-sc9] {
+  pointer-events: auto;
+}</style></head>
+<body>
+  <script data-gtm-id="GTM-MWTBMKX" src="https://www.gstatic.com/brandstudio/kato/google_tag_manager_component/google_tag_manager_component.js">
+  </script>
+  <noscript>
+    <iframe class="gtm-iframe"
+            height="0"
+            src="https://www.googletagmanager.com/ns.html?id=GTM-MWTBMKX"
+            width="0">
+    </iframe>
+  </noscript>
+
+  <script src="https://www.gstatic.com/brandstudio/kato/cookie_choice_component/cookie_consent_bar.v2.js">
+  </script>
+
+  <dm-app-root _nghost-sc0="" ng-version="8.0.0"><!----><dm-header _ngcontent-sc0="" _nghost-sc2="" class="ng-tns-c2-0"><!----><!----><header _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted"><div _ngcontent-sc2="" class="header-container"><div _ngcontent-sc2="" class="menu-wrapper"><div _ngcontent-sc2="" class="menu-header"><a _ngcontent-sc2="" class="nav-cta logo" aria-label="Home page" routerlink="/" href="/"><!----><svg _ngcontent-sc2="" class="full-logo ng-tns-c2-0 ng-star-inserted" role="img"><use _ngcontent-sc2="" class="ng-tns-c2-0" xlink:href="#deepmind-logo"></use></svg><!----></a><div _ngcontent-sc2="" class="menu-controls"><button _ngcontent-sc2="" class="nav-cta hamburger-menu" aria-label="Toggle menu" aria-pressed="true" role="button"><span _ngcontent-sc2="" class="ng-tns-c2-0"></span><span _ngcontent-sc2="" class="ng-tns-c2-0"></span><span _ngcontent-sc2="" class="ng-tns-c2-0"></span></button><button _ngcontent-sc2="" class="nav-cta search" aria-label="Search publications" aria-pressed="true" role="button"><svg _ngcontent-sc2="" class="ng-tns-c2-0" role="img" viewBox="0 0 27 28"><path _ngcontent-sc2="" class="ng-tns-c2-0" d="M17.537 20.034l1.414-1.414 7.854 7.854-1.414 1.415z"></path><g _ngcontent-sc2="" class="ng-tns-c2-0"><path _ngcontent-sc2="" class="ng-tns-c2-0" d="M11.292 20.583a9.292 9.292 0 1 0 0-18.583 9.292 9.292 0 0 0 0 18.583z"></path><path _ngcontent-sc2="" class="ng-tns-c2-0" d="M11.292 22.583C5.055 22.583 0 17.528 0 11.292 0 5.055 5.055 0 11.292 0c6.236 0 11.291 5.055 11.291 11.292 0 6.236-5.055 11.291-11.291 11.291zm0-2a9.292 9.292 0 1 0 0-18.583 9.292 9.292 0 0 0 0 18.583z"></path></g></svg></button></div></div><!----><nav _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted"><ul _ngcontent-sc2="" class="pages"><!----><li _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted"><a _ngcontent-sc2="" class="nav-cta page-link" href="/about"> About </a></li><li _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted"><a _ngcontent-sc2="" class="nav-cta page-link" href="/research"> Research </a></li><li _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted"><a _ngcontent-sc2="" class="nav-cta page-link" href="/impact"> Impact </a></li><li _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted is-active"><a _ngcontent-sc2="" class="nav-cta page-link" href="/blog"> Blog </a></li><li _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted"><a _ngcontent-sc2="" class="nav-cta page-link" href="/safety-and-ethics"> Safety &amp; Ethics </a></li><li _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted"><a _ngcontent-sc2="" class="nav-cta page-link" href="/careers"> Careers </a></li></ul></nav></div><div _ngcontent-sc2="" class="social-media-wrapper"><ul _ngcontent-sc2="" class="ng-tns-c2-0"><!----><li _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted"><a _ngcontent-sc2="" class="nav-cta icon" rel="noopener" target="_blank" aria-label="Follow us on Twitter!" href="https://twitter.com/DeepMindAI"><svg _ngcontent-sc2="" class="ng-tns-c2-0" role="img"><use _ngcontent-sc2="" class="ng-tns-c2-0" xlink:href="#twitter"></use></svg></a></li><li _ngcontent-sc2="" class="ng-tns-c2-0 ng-star-inserted"><a _ngcontent-sc2="" class="nav-cta icon" rel="noopener" target="_blank" aria-label="Follow us on Youtube!" href="https://www.youtube.com/deepmind"><svg _ngcontent-sc2="" class="ng-tns-c2-0" role="img"><use _ngcontent-sc2="" class="ng-tns-c2-0" xlink:href="#youtube"></use></svg></a></li></ul></div></div></header><!----><!----><!----></dm-header><div _ngcontent-sc0="" class="dm-body"><router-outlet _ngcontent-sc0=""></router-outlet><dm-page-loader class="ng-star-inserted"><dm-component-factory _nghost-sc10=""><!----><dm-blog-article-page _nghost-sc49="" id="" class="ng-star-inserted"><!----><!----><div _ngcontent-sc49="" class="dm-section ng-star-inserted"><dm-breadcrumb _ngcontent-sc49="" _nghost-sc13="" class="theme-dark"><!----><ul _ngcontent-sc13="" class="ng-star-inserted"><!----><li _ngcontent-sc13="" class="ng-star-inserted"><!----><a _ngcontent-sc13="" class="nav-cta logo ng-star-inserted" href="/"><svg _ngcontent-sc13="" role="img"><use _ngcontent-sc13="" xlink:href="#deepmind-logo-text"></use></svg></a><!----></li><li _ngcontent-sc13="" class="ng-star-inserted"><!----><a _ngcontent-sc13="" class="nav-cta ng-star-inserted" tab-index="0" href="/blog"><svg _ngcontent-sc13="" class="arrow" role="img"><use _ngcontent-sc13="" xlink:href="#breadcrumb-arrow"></use></svg> Blog </a><!----></li><li _ngcontent-sc13="" class="ng-star-inserted"><!----><a _ngcontent-sc13="" class="nav-cta disabled ng-star-inserted" tab-index="-1" href="/blog/article/replay-in-biological-and-artificial-neural-networks"><svg _ngcontent-sc13="" class="arrow is-last" role="img"><use _ngcontent-sc13="" xlink:href="#breadcrumb-arrow"></use></svg> Replay in biological and artificial neural networks </a><!----></li></ul></dm-breadcrumb></div><dm-blog-article-hero _ngcontent-sc49="" _nghost-sc50="" class="ng-star-inserted"><header _ngcontent-sc50=""><!----><div _ngcontent-sc50="" class="article-image ng-star-inserted"><picture _ngcontent-sc50=""><source _ngcontent-sc50="" type="image/webp" srcset="https://lh3.googleusercontent.com/eohzdDYYI-2LrdsULD1rGc31h-aTo6gMaWryEdCkGEA7xqjHvjymHq2N1X40rXDM63A-Y0rKqJ94tcTxn1SyLJa53hEV5vxnrE21CQ=w1440-rw-v1 1x,https://lh3.googleusercontent.com/eohzdDYYI-2LrdsULD1rGc31h-aTo6gMaWryEdCkGEA7xqjHvjymHq2N1X40rXDM63A-Y0rKqJ94tcTxn1SyLJa53hEV5vxnrE21CQ=w2048-rw-v1 2x"><source _ngcontent-sc50="" type="image/jpg" srcset="https://lh3.googleusercontent.com/eohzdDYYI-2LrdsULD1rGc31h-aTo6gMaWryEdCkGEA7xqjHvjymHq2N1X40rXDM63A-Y0rKqJ94tcTxn1SyLJa53hEV5vxnrE21CQ=w1440 1x,https://lh3.googleusercontent.com/eohzdDYYI-2LrdsULD1rGc31h-aTo6gMaWryEdCkGEA7xqjHvjymHq2N1X40rXDM63A-Y0rKqJ94tcTxn1SyLJa53hEV5vxnrE21CQ=w2048 2x"><img _ngcontent-sc50="" alt="" srcset="https://lh3.googleusercontent.com/eohzdDYYI-2LrdsULD1rGc31h-aTo6gMaWryEdCkGEA7xqjHvjymHq2N1X40rXDM63A-Y0rKqJ94tcTxn1SyLJa53hEV5vxnrE21CQ=w2048 2x" src="https://lh3.googleusercontent.com/eohzdDYYI-2LrdsULD1rGc31h-aTo6gMaWryEdCkGEA7xqjHvjymHq2N1X40rXDM63A-Y0rKqJ94tcTxn1SyLJa53hEV5vxnrE21CQ=w1440"></picture></div><div _ngcontent-sc50="" class="article-content-container"><div _ngcontent-sc50="" class="article-content"><div _ngcontent-sc50="" class="article-meta-container"><div _ngcontent-sc50="" class="article-category-container"><svg _ngcontent-sc50="" role="img"><use _ngcontent-sc50="" xlink:href="#article"></use></svg><div _ngcontent-sc50="" class="category"><p _ngcontent-sc50="" class="caption title">Blog post</p><!----><p _ngcontent-sc50="" class="caption ng-star-inserted"> Research </p></div></div><p _ngcontent-sc50="" class="caption date">06 Sep 2019</p></div><h2 _ngcontent-sc50="" class="dm-h2 article-description"> Replay in biological and artificial neural networks </h2></div></div></header></dm-blog-article-hero><div _ngcontent-sc49="" class="blog-article-bg ng-star-inserted"><div _ngcontent-sc49="" class="page-content-container dm-section"><aside _ngcontent-sc49=""><dm-social-share _ngcontent-sc49="" _nghost-sc19=""><!----><!----><div _ngcontent-sc19="" class="social-share ng-star-inserted"><p _ngcontent-sc19="" class="caption title">Share</p><ul _ngcontent-sc19="" class="social-media"><!----><li _ngcontent-sc19="" class="ng-star-inserted"><a _ngcontent-sc19="" class="dm-cta icon" aria-label="Share to Twitter!"><svg _ngcontent-sc19="" role="img"><use _ngcontent-sc19="" xlink:href="#twitter"></use></svg></a></li><li _ngcontent-sc19="" class="ng-star-inserted"><a _ngcontent-sc19="" class="dm-cta icon" aria-label="Share to Facebook!"><svg _ngcontent-sc19="" role="img"><use _ngcontent-sc19="" xlink:href="#facebook"></use></svg></a></li><li _ngcontent-sc19="" class="ng-star-inserted"><a _ngcontent-sc19="" class="dm-cta icon" aria-label="Share to LinkedIn!"><svg _ngcontent-sc19="" role="img"><use _ngcontent-sc19="" xlink:href="#linkedin"></use></svg></a></li></ul></div></dm-social-share><!----><!----><dm-authors-list _ngcontent-sc49="" _nghost-sc45="" class="ng-star-inserted"><address _ngcontent-sc45="" class="authors-container"><p _ngcontent-sc45="" class="caption title">Authors</p><ul _ngcontent-sc45="" class="authors-list"><!----><li _ngcontent-sc45="" class="ng-star-inserted"><div _ngcontent-sc45="" class="image"><!----><p _ngcontent-sc45="" class="ng-star-inserted"><small _ngcontent-sc45="">ZKN</small></p><!----></div><!----><a _ngcontent-sc45="" alt="More articles" class="author-name small ng-star-inserted" routerlink="/research" href="/research?filters=%7B%22authors%22:%5B%226370347397414912%22%5D%7D"> Zeb Kurth-Nelson<!----></a><!----></li><li _ngcontent-sc45="" class="ng-star-inserted"><div _ngcontent-sc45="" class="image"><!----><p _ngcontent-sc45="" class="ng-star-inserted"><small _ngcontent-sc45="">WD</small></p><!----></div><!----><a _ngcontent-sc45="" alt="More articles" class="author-name small ng-star-inserted" routerlink="/research" href="/research?filters=%7B%22authors%22:%5B%225520880444112896%22%5D%7D"> Will Dabney<!----></a><!----></li></ul><!----></address></dm-authors-list></aside><div _ngcontent-sc49="" class="page-content"><!----><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content"><p><em>One of a series of posts explaining the theories underpinning our research.</em></p>
+<p><strong>Our waking and sleeping lives are punctuated by fragments of recalled memories: a sudden connection in the shower between seemingly disparate thoughts, or an ill-fated choice decades ago that haunts us as we struggle to fall asleep. By measuring memory retrieval directly in the brain, neuroscientists have noticed something remarkable: spontaneous recollections, measured directly in the brain, often occur as very fast <a href="https://www.annualreviews.org/doi/10.1146/annurev-neuro-072116-031538">sequences</a> of multiple memories. These so-called 'replay' sequences play out in a fraction of a second–so fast that we're not necessarily aware of the sequence.</strong></p>
+<p>In parallel, AI researchers discovered that incorporating a similar kind of <a href="https://www.aaai.org/Papers/AAAI/1991/AAAI91-122.pdf">experience replay</a> improved the efficiency of learning in artificial neural networks. Over the last three decades, the AI and neuroscientific studies of replay have grown up together. Machine learning offers hypotheses sophisticated enough to push forward our expanding knowledge of the brain; and insights from neuroscience guide and inspire AI development. Replay is a key point of contact between the two fields because like the brain, AI uses experience to learn and improve. And each piece of experience offers much more potential for learning than can be absorbed in real-time–so continued offline learning is crucial for both brains and artificial neural nets.</p>
+<h4>Replay in the brain</h4>
+<p>Neural replay sequences were originally discovered by studying the hippocampus in rats. As we know from the Nobel prize winning work of <a href="https://www.nobelprize.org/prizes/medicine/2014/okeefe/lecture/">John O’Keefe</a> and others, many hippocampal cells fire only when the animal is physically located in a specific <a href="https://www.annualreviews.org/doi/abs/10.1146/annurev.neuro.31.061307.090723">place</a>. In early experiments, <a href="https://science.sciencemag.org/content/271/5257/1870.long">rats</a> ran the length of a single corridor or circular track, so researchers could easily determine which neuron coded for each position within the corridor.</p></div></dm-body-text><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-image-gallery _nghost-sc46="" id="" class="ng-star-inserted" colour-theme=""><!----><figure _ngcontent-sc46="" class="ng-star-inserted"><!----><img _ngcontent-sc46="" alt="When rats are awake and active, each hippocampal place cell codes for a particular location in space. Each row is a different cell, and they are sorted by the location they represent. Each vertical tick mark is an action potential. The solid lines represent smoothed firing rates." src="https://kstatic.googleusercontent.com/files/18664354bc3e55b9dab9847744c54f41157e4aaf40b5f6b6e3900b2ce4c4bc13a858b9e3b03aecf91bab426970d479b0442e0174eccb24d377e1f475b857fcae" class="ng-star-inserted"><!----><figcaption _ngcontent-sc46="" class="caption"> When rats are awake and active, each hippocampal place cell codes for a particular location in space. Each row is a different cell, and they are sorted by the location they represent. Each vertical tick mark is an action potential. The solid lines represent smoothed firing rates. </figcaption></figure></dm-image-gallery><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content"><p>Afterwards, the scientists recorded from the same neurons while the rats rested. During rest, the cells sometimes spontaneously fired in rapid sequences demarking the same path the animal ran earlier, but at a greatly accelerated speed. These sequences are called replay. An entire replay sequence only lasts a fraction of a second, but plays through several seconds worth of real experience.</p></div></dm-body-text><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-image-gallery _nghost-sc46="" id="" class="ng-star-inserted" colour-theme=""><!----><figure _ngcontent-sc46="" class="ng-star-inserted"><!----><img _ngcontent-sc46="" alt="During rest, place cells spontaneously fire in fast sequences that sweep through paths in the environment." src="https://kstatic.googleusercontent.com/files/540ed5a551de9f4a241b0912c2a113343d184c2f4ddcef8ff7f87c28460f8bb68f80d5606962d92d3087e877e7f4deaad876fb23e657176dcbcdd417b24f3148" class="ng-star-inserted"><!----><figcaption _ngcontent-sc46="" class="caption"> During rest, place cells spontaneously fire in fast sequences that sweep through paths in the environment. </figcaption></figure></dm-image-gallery><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content"><p>We now know replay is essential for learning. In a number of more recent experiments, researchers recorded from hippocampus to detect a signature of replay events in real time. By disrupting brain activity during replay events (either during <a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/hipo.20707">sleep</a> or <a href="https://science.sciencemag.org/content/336/6087/1454.editor-summary">wakeful</a> resting), scientists significantly impaired rodents’ ability to learn a new task. The same disruption applied 200 milliseconds out of sync with replay events had no effect on learning.</p>
+<p>While these experiments have been revealing, a significant limitation of rodent experiments is the difficulty of studying more sophisticated aspects of cognition, such as abstract concepts. In the last few years, replay-like sequences have also been <a href="https://www.sciencedirect.com/science/article/pii/S0896627316302070">detected</a> in human brains, supporting the idea that replay is pervasive, and expanding the kinds of questions we can ask about it.</p>
+<h4>Replay in artificial intelligence</h4></div></dm-body-text><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-image-gallery _nghost-sc46="" id="" class="ng-star-inserted" colour-theme=""><!----><figure _ngcontent-sc46="" class="ng-star-inserted"><!----><img _ngcontent-sc46="" alt="Artificial neural networks collect experience by interacting with the environment, save that experience to a replay buffer, and later play it back to continue learning from it." src="https://kstatic.googleusercontent.com/files/3631d7df9945b8fb6b724638b3c0696b49fb51784135ba5682a4fb14c3e0136cc6e53b05f2785bf172e88722b8ba75bf4aaddc6030227b16f2fcdcb13524eb3b" class="ng-star-inserted"><!----><figcaption _ngcontent-sc46="" class="caption"> Artificial neural networks collect experience by interacting with the environment, save that experience to a replay buffer, and later play it back to continue learning from it. </figcaption></figure></dm-image-gallery><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content"><p>Incorporating replay<em> in silico </em>has been beneficial to advancing <a href="https://www.sciencedirect.com/science/article/pii/S0896627317305093">artificial intelligence</a>. Deep learning often depends upon a ready supply of large datasets. In <a href="http://karpathy.github.io/2016/05/31/rl/">reinforcement learning</a>, these data come through direct interaction with the environment, which takes time. The technique of <a href="https://www.aaai.org/Papers/AAAI/1991/AAAI91-122.pdf">experience</a> <a href="http://www.incompleteideas.net/lin-92.pdf">replay</a> allows the agent to repeatedly rehearse previous interactions, making the most of each interaction. This method proved crucial for combining deep neural networks with reinforcement learning in the <a href="https://www.nature.com/articles/nature14236">DQN</a> agent that first mastered multiple Atari games.</p>
+<p>Since the introduction of DQN, the efficiency of replay has been improved by <a href="https://link.springer.com/article/10.1007/BF00993104">preferentially</a> <a href="https://papers.nips.cc/paper/1409-generalized-prioritized-sweeping.pdf">replaying</a> <a href="https://arxiv.org/abs/1511.05952">the</a> most salient experiences from memory, rather than simply choosing experiences at random for replay. And recently, a variant of preferential replay has been <a href="https://www.nature.com/articles/s41593-018-0232-z">applied</a> as a model in neuroscience to successfully explain empirical data from brain recordings.</p>
+<p>Further improvements in agent performance have come from <a href="https://arxiv.org/abs/1802.01561">combining experiences</a> across multiple agents, learning about a variety of <a href="https://arxiv.org/abs/1707.01495">different behaviours</a> from the same set of experiences, and replaying not only the trajectory of events in the world, but also the agent's corresponding <a href="https://openreview.net/pdf?id=r1lyTjAqYX">internal memory states</a>. Each of these methods makes interesting predictions for neuroscience that remain largely untested.</p>
+<h4>Movie versus imagination</h4>
+<p>As mentioned above, research into experience replay has unfolded along parallel tracks in artificial intelligence and neuroscience, with each field providing ideas and inspiration for the other. In particular, there is a central distinction, which has been studied in both fields, between two versions of replay.</p>
+<p>Suppose you come home and, to your surprise and dismay, discover water pooling on your beautiful wooden floors. Stepping into the dining room, you find a broken vase. Then you hear a whimper, and you glance out the patio door to see your dog looking very guilty.</p></div></dm-body-text><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-image-gallery _nghost-sc46="" id="" class="ng-star-inserted" colour-theme=""><!----><figure _ngcontent-sc46="" class="ng-star-inserted"><!----><picture _ngcontent-sc46="" class="ng-star-inserted"><source _ngcontent-sc46="" type="image/webp" srcset="https://lh3.googleusercontent.com/C-QjTkZyFjGU59rw6PvBbxmnA874zVHzYpNuftGLBQ811c2R8iwuz4k85xg0kUGPs1xeMx6AHMvsrMKxXfdDG_zNK075xFy-4_xMiuA=w1440-rw-v1 1x,https://lh3.googleusercontent.com/C-QjTkZyFjGU59rw6PvBbxmnA874zVHzYpNuftGLBQ811c2R8iwuz4k85xg0kUGPs1xeMx6AHMvsrMKxXfdDG_zNK075xFy-4_xMiuA=w2048-rw-v1 2x"><source _ngcontent-sc46="" type="image/jpg" srcset="https://lh3.googleusercontent.com/C-QjTkZyFjGU59rw6PvBbxmnA874zVHzYpNuftGLBQ811c2R8iwuz4k85xg0kUGPs1xeMx6AHMvsrMKxXfdDG_zNK075xFy-4_xMiuA=w1440 1x,https://lh3.googleusercontent.com/C-QjTkZyFjGU59rw6PvBbxmnA874zVHzYpNuftGLBQ811c2R8iwuz4k85xg0kUGPs1xeMx6AHMvsrMKxXfdDG_zNK075xFy-4_xMiuA=w2048 2x"><img _ngcontent-sc46="" alt="A sequence of events, as they were experienced." srcset="https://lh3.googleusercontent.com/C-QjTkZyFjGU59rw6PvBbxmnA874zVHzYpNuftGLBQ811c2R8iwuz4k85xg0kUGPs1xeMx6AHMvsrMKxXfdDG_zNK075xFy-4_xMiuA=w2048 2x" src="https://lh3.googleusercontent.com/C-QjTkZyFjGU59rw6PvBbxmnA874zVHzYpNuftGLBQ811c2R8iwuz4k85xg0kUGPs1xeMx6AHMvsrMKxXfdDG_zNK075xFy-4_xMiuA=w1440"></picture><!----><figcaption _ngcontent-sc46="" class="caption"> A sequence of events, as they were experienced. </figcaption></figure></dm-image-gallery><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content"><p>In the first version of replay, which we could call the "movie" version, when you sit down on the couch and take a rest, replay faithfully rehearses the actual experiences of the past. This theory says that your brain will replay the sequence: "water, vase, dog". In AI terms, the past experience was stored in a replay buffer, and trajectories for offline learning were drawn directly from the buffer.</p></div></dm-body-text><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-image-gallery _nghost-sc46="" id="" class="ng-star-inserted" colour-theme=""><!----><figure _ngcontent-sc46="" class="ng-star-inserted"><!----><picture _ngcontent-sc46="" class="ng-star-inserted"><source _ngcontent-sc46="" type="image/webp" srcset="https://lh3.googleusercontent.com/D23-E5sekk4Zm3eyfQkxqhvJ0X4ELFeutC9KGit44vpeMYIzlGpGui8pfZjm8Klfep4Z_XdkdGCoqxnTqdXC6eSai_1u1p0gNhc3e9g=w1440-rw-v1 1x,https://lh3.googleusercontent.com/D23-E5sekk4Zm3eyfQkxqhvJ0X4ELFeutC9KGit44vpeMYIzlGpGui8pfZjm8Klfep4Z_XdkdGCoqxnTqdXC6eSai_1u1p0gNhc3e9g=w2048-rw-v1 2x"><source _ngcontent-sc46="" type="image/jpg" srcset="https://lh3.googleusercontent.com/D23-E5sekk4Zm3eyfQkxqhvJ0X4ELFeutC9KGit44vpeMYIzlGpGui8pfZjm8Klfep4Z_XdkdGCoqxnTqdXC6eSai_1u1p0gNhc3e9g=w1440 1x,https://lh3.googleusercontent.com/D23-E5sekk4Zm3eyfQkxqhvJ0X4ELFeutC9KGit44vpeMYIzlGpGui8pfZjm8Klfep4Z_XdkdGCoqxnTqdXC6eSai_1u1p0gNhc3e9g=w2048 2x"><img _ngcontent-sc46="" alt="&quot;Movie&quot; replay: events are played back in the same order as they occurred." srcset="https://lh3.googleusercontent.com/D23-E5sekk4Zm3eyfQkxqhvJ0X4ELFeutC9KGit44vpeMYIzlGpGui8pfZjm8Klfep4Z_XdkdGCoqxnTqdXC6eSai_1u1p0gNhc3e9g=w2048 2x" src="https://lh3.googleusercontent.com/D23-E5sekk4Zm3eyfQkxqhvJ0X4ELFeutC9KGit44vpeMYIzlGpGui8pfZjm8Klfep4Z_XdkdGCoqxnTqdXC6eSai_1u1p0gNhc3e9g=w1440"></picture><!----><figcaption _ngcontent-sc46="" class="caption"> "Movie" replay: events are played back in the same order as they occurred. </figcaption></figure></dm-image-gallery><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content"><p>In the second version, which we might call "imagination," replay doesn’t literally rehearse events in the order they were experienced. Instead, it infers or imagines the <em>real relationships</em> between events, and synthesises sequences that make sense given an understanding of how the world works. In AI terms, these replay sequences are <a href="https://arxiv.org/pdf/1809.10635.pdf">generated</a> using a <a href="https://arxiv.org/pdf/1705.08690.pdf">learned</a> <a href="https://arxiv.org/pdf/1705.08690.pdf">model</a> of the environment.</p></div></dm-body-text><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-image-gallery _nghost-sc46="" id="" class="ng-star-inserted" colour-theme=""><!----><figure _ngcontent-sc46="" class="ng-star-inserted"><!----><picture _ngcontent-sc46="" class="ng-star-inserted"><source _ngcontent-sc46="" type="image/webp" srcset="https://lh3.googleusercontent.com/_qZPd5eOIcKiFJVK4ell6UqianT6m2z7WrcFPoqLCIrqKM_-Spl8tKYRp616X3QpyvzZ_E9iIL8QpWcjMTcKAm1NgiQtXMBEGTXu=w1440-rw-v1 1x,https://lh3.googleusercontent.com/_qZPd5eOIcKiFJVK4ell6UqianT6m2z7WrcFPoqLCIrqKM_-Spl8tKYRp616X3QpyvzZ_E9iIL8QpWcjMTcKAm1NgiQtXMBEGTXu=w2048-rw-v1 2x"><source _ngcontent-sc46="" type="image/jpg" srcset="https://lh3.googleusercontent.com/_qZPd5eOIcKiFJVK4ell6UqianT6m2z7WrcFPoqLCIrqKM_-Spl8tKYRp616X3QpyvzZ_E9iIL8QpWcjMTcKAm1NgiQtXMBEGTXu=w1440 1x,https://lh3.googleusercontent.com/_qZPd5eOIcKiFJVK4ell6UqianT6m2z7WrcFPoqLCIrqKM_-Spl8tKYRp616X3QpyvzZ_E9iIL8QpWcjMTcKAm1NgiQtXMBEGTXu=w2048 2x"><img _ngcontent-sc46="" alt="&quot;Imagination&quot; replay: events are played back in a synthesised order which respects knowledge of the structure of the world." srcset="https://lh3.googleusercontent.com/_qZPd5eOIcKiFJVK4ell6UqianT6m2z7WrcFPoqLCIrqKM_-Spl8tKYRp616X3QpyvzZ_E9iIL8QpWcjMTcKAm1NgiQtXMBEGTXu=w2048 2x" src="https://lh3.googleusercontent.com/_qZPd5eOIcKiFJVK4ell6UqianT6m2z7WrcFPoqLCIrqKM_-Spl8tKYRp616X3QpyvzZ_E9iIL8QpWcjMTcKAm1NgiQtXMBEGTXu=w1440"></picture><!----><figcaption _ngcontent-sc46="" class="caption"> "Imagination" replay: events are played back in a synthesised order which respects knowledge of the structure of the world. </figcaption></figure></dm-image-gallery><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content"><p>The imagination theory makes a different prediction about how replay will look: when you rest on the couch, your brain should replay the sequence "dog, vase, water". You know from past experience that dogs are more likely to cause broken vases than broken vases are to cause dogs–and this knowledge can be used to reorganise experience into a more meaningful order.</p>
+<p>In deep RL, the large majority of agents have used movie-like replay, because it is easy to implement (the system can simply store events in memory, and play them back as they happened). However, RL researchers have continued to study the possibilities around imagination replay.</p>
+<p>Meanwhile in neuroscience, classic theories of replay postulated that movie replay would be useful to strengthen the connections between neurons that represent different events or locations in the order they were experienced. However, there have been <a href="https://www.annualreviews.org/doi/pdf/10.1146/annurev-neuro-072116-031538">hints</a> from experimental neuroscience that replay might be able to imagine new sequences. The most compelling <a href="https://www.sciencedirect.com/science/article/pii/S0896627310000607">observation</a> is that even when rats only experienced two arms of a maze separately, subsequent replay sequences sometimes followed trajectories from one arm into the other.</p>
+<p>But studies like this leave open the question of whether replay simply stitches together chunks of experienced sequences, or if it can synthesise new trajectories from whole cloth. Also, rodent experiments have been primarily limited to <em>spatial</em> sequences, but it would be fascinating to know whether humans' ability to imagine sequences is enriched by our vast reserve of abstract <em>conceptual</em> knowledge.</p>
+<h4>A new replay experiment in humans</h4>
+<p>We asked these questions in a set of recent <a href="https://www.cell.com/cell/fulltext/S0092-8674(19)30640-3">experiments</a> performed jointly between UCL, Oxford, and DeepMind.</p>
+<p>In these experiments, we first taught people a rule that defined how a set of objects could interact. The exact rule we used can be found in the paper. But to continue in the language of the "water, vase, dog" example, we can think of the rule as the knowledge that dogs can cause broken vases, and broken vases can cause water on the floor. We then presented these objects to people in a <em>scrambled</em> order (like "water, vase, dog"). That way, we could ask whether their brains replayed the items in the scrambled order that they experienced, or in the unscrambled order that meaningfully connected the items. They were shown the scrambled sequence and then given five minutes to rest, while sitting in an <a href="https://en.wikipedia.org/wiki/Magnetoencephalography">MEG</a> brain scanner.</p>
+<p>As in previous experiments, fast replay sequences of the objects were evident in the brain recordings. (In yet another example of the <a href="https://deepmind.com/blog/ai-and-neuroscience-virtuous-circle/">virtuous circle</a> between neuroscience and AI, we used machine learning to read out these signatures from cortical activity.) These spontaneous sequences played out rapidly over about a sixth of a second, and contained up to four objects in a row. However, the sequences did not play out in the <em>experienced</em> order (i.e., the scrambled order: spilled water –&gt; vase –&gt; dog). Instead, they played out the <em>unscrambled</em>, meaningful order: dog –&gt; vase –&gt; spilled water. This answers–in the affirmative–the questions of whether replay can imagine new sequences from whole cloth, and whether these sequences are shaped by abstract knowledge.</p>
+<p>However, this finding still leaves open the important question of <em>how</em> the brain builds these unscrambled sequences. To try to answer this, we played a second sequence for participants. In this sequence, you walk into your factory and see spilled oil on the floor. You then see a knocked over oil barrel. Finally, you turn to see a guilty robot. To unscramble this sequence, you can use the same kind of knowledge as in the "water, vase, dog" sequence: knowledge that a mobile agent can knock over containers, and those knocked-over containers can spill liquid. Using that knowledge, the second sequence can also be unscrambled: robot –&gt; barrel –&gt; spilled oil.</p>
+<p>By showing people multiple sequences with the same structure, we could examine two new types of neural representation. First, the part of the representation that is <em>common</em> between spilled water and spilled oil. This is an <em>abstract</em> code for "a spilled liquid", invariant over whether we're in the home sequence or the factory sequence. And second, the part of the representation that is common between water, vase and dog. This is an abstract code for "the home sequence," invariant over which object we're considering.</p>
+<p>We found both of these types of abstract codes in the brain data. And to our surprise, during rest they played out in fast sequences that were precisely coordinated with the spontaneous replay sequences mentioned above. Each object in a replay sequence was preceded slightly by both abstract codes. For example, during a dog, vase, water replay sequence, the representation of "water" was preceded by the codes for "home sequence" and "spilled liquid".</p></div></dm-body-text><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-image-gallery _nghost-sc46="" id="" class="ng-star-inserted" colour-theme=""><!----><figure _ngcontent-sc46="" class="ng-star-inserted"><!----><picture _ngcontent-sc46="" class="ng-star-inserted"><source _ngcontent-sc46="" type="image/webp" srcset="https://lh3.googleusercontent.com/ZTI60B4x-uIl7SuUaNjl4O4vXeeCUk2Z2y1a0fBWiL-OYXd3uvs4emxs9JSxwKScV9RB9xXgqDGu_e386e_hCemGJE44Z6X5ZC6YL6s=w1440-rw-v1 1x,https://lh3.googleusercontent.com/ZTI60B4x-uIl7SuUaNjl4O4vXeeCUk2Z2y1a0fBWiL-OYXd3uvs4emxs9JSxwKScV9RB9xXgqDGu_e386e_hCemGJE44Z6X5ZC6YL6s=w2048-rw-v1 2x"><source _ngcontent-sc46="" type="image/jpg" srcset="https://lh3.googleusercontent.com/ZTI60B4x-uIl7SuUaNjl4O4vXeeCUk2Z2y1a0fBWiL-OYXd3uvs4emxs9JSxwKScV9RB9xXgqDGu_e386e_hCemGJE44Z6X5ZC6YL6s=w1440 1x,https://lh3.googleusercontent.com/ZTI60B4x-uIl7SuUaNjl4O4vXeeCUk2Z2y1a0fBWiL-OYXd3uvs4emxs9JSxwKScV9RB9xXgqDGu_e386e_hCemGJE44Z6X5ZC6YL6s=w2048 2x"><img _ngcontent-sc46="" alt="Structurally similar sequences in different contexts slotted into a common analogical framework" srcset="https://lh3.googleusercontent.com/ZTI60B4x-uIl7SuUaNjl4O4vXeeCUk2Z2y1a0fBWiL-OYXd3uvs4emxs9JSxwKScV9RB9xXgqDGu_e386e_hCemGJE44Z6X5ZC6YL6s=w2048 2x" src="https://lh3.googleusercontent.com/ZTI60B4x-uIl7SuUaNjl4O4vXeeCUk2Z2y1a0fBWiL-OYXd3uvs4emxs9JSxwKScV9RB9xXgqDGu_e386e_hCemGJE44Z6X5ZC6YL6s=w1440"></picture><!----><figcaption _ngcontent-sc46="" class="caption"> Structurally similar sequences in different contexts slotted into a common analogical framework </figcaption></figure></dm-image-gallery><!----></dm-component-factory><dm-component-factory _ngcontent-sc49="" _nghost-sc10="" class="ng-star-inserted"><!----><dm-body-text _nghost-sc42="" id="" colour-theme="" class="ng-star-inserted"><div _ngcontent-sc42="" class="dm-section user-content"><p>These abstract codes, which incorporate the conceptual knowledge that lets us unscramble the sequences, may help the brain to retrieve the correct item for the next slot in the replay sequence. This paints an interesting picture of a system where the brain slots new information into an <a href="https://psyarxiv.com/6fm9a/">abstract</a> <a href="https://www.sciencedirect.com/science/article/pii/S0896627318308560">framework</a> <a href="http://www.talfanevans.co.uk/Neurips_2019/coordinated_hippocampal_entorhinal_replay_as_structural_inference.pdf">built</a> from past experiences, keeping it organized using precise relative timings within very fast replay sequences. Each position within a sequence could be thought of as a role in an <a href="https://www.goodreads.com/book/show/7711871-surfaces-and-essences">analogy</a> (as in the above figure). Finally, we speculate that during rest, the brain may explore novel implications of previously-learned knowledge by placing an item into an analogy in which it's never been experienced, and examining the consequences.</p>
+<h4>The virtuous circle, continued</h4>
+<p>Coming back to the virtuous circle, analogy and abstraction are relatively underused in current neural network architectures. The new results described above both indicate that the imagination style of replay may be a fruitful avenue to continue pursuing in AI research, and suggest directions for neuroscience research to learn more about the brain mechanisms underlying analogy and abstraction. It's exciting to think about how data from the brain will continue helping with the advance toward better and more human-like artificial intelligence.</p>
+<p><em>The </em><em><a href="https://www.cell.com/cell/fulltext/S0092-8674(19)30640-3?_returnURL=https%3A%2F%2Flinkinghub.elsevier.com%2Fretrieve%2Fpii%2FS0092867419306403%3Fshowall%3Dtrue">new work reported in Cell</a><em> was done by </em><strong><em>Yunzhe Liu</em></strong><em>, </em><strong><em>Ray Dolan</em></strong><em>, </em><strong><em>Zeb Kurth-Nelson</em></strong><em> and </em><strong><em>Tim Behrens</em></strong><em>, and was a collaboration between DeepMind, the Wellcome Centre for Human Neuroimaging (UCL), the Max Planck-UCL Centre for Computational Psychiatry and Ageing Research, and the Wellcome Centre For Integrative Neuroimaging (Oxford).</em></em></p></div></dm-body-text><!----></dm-component-factory></div></div></div><!----><dm-footer-promos _ngcontent-sc49="" _nghost-sc18="" class="ng-star-inserted"><div _ngcontent-sc18="" class="dm-section footer-promos"><!----><h5 _ngcontent-sc18="" class="dm-h5 ng-star-inserted">Further reading</h5><div _ngcontent-sc18="" class="promo-wrapper"><!----><div _ngcontent-sc18="" class="footer-promo ng-star-inserted"><dm-component-factory _ngcontent-sc18="" _nghost-sc10=""><!----><dm-article-card _nghost-sc36="" class="ng-tns-c36-1 ng-trigger ng-trigger-animateIn ng-star-inserted" id="" style="transform:translateX(0px);opacity:0;"><div _ngcontent-sc36="" class="article-card-container"><!----><dm-content-card _ngcontent-sc36="" _nghost-sc37="" class="ng-star-inserted" style=""><!----><!----><!----><dm-link _ngcontent-sc37="" class="image blog-post-img ng-star-inserted" classlist="media" _nghost-sc8=""><!----><!----><a _ngcontent-sc8="" aria-label="Read more on DeepMind" class="media ng-star-inserted" href="/blog/article/podcast-episode-1-ai-and-neuroscience-the-virtuous-circle"><!----><!----><!----><!----><!----><dm-media _ngcontent-sc8="" _nghost-sc9="" class="h-position-right v-position-default ng-star-inserted"><!----><div _ngcontent-sc9="" class="image ng-star-inserted" style="background-image:url('https://lh3.googleusercontent.com/7geTHtadxGuxiVnIAQ-LIaqn94qZGJBFtALRrGfIKtQpHm1R2QckFKU75s49whc5nLw3WmVKKVZ4TCT05lNdxsypWiPIAqFKZOmN1w=w2048');background-position:right default;"><!----><!----><!----></div><!----><!----><div _ngcontent-sc9="" class="video ng-star-inserted"><!----></div><!----><!----></dm-media><!----></a><!----><!----></dm-link><!----><!----><div _ngcontent-sc37="" class="content-card-body"><div _ngcontent-sc36="" class="header ng-tns-c36-1"><svg _ngcontent-sc36="" class="ng-tns-c36-1" role="img"><use _ngcontent-sc36="" class="ng-tns-c36-1" xlink:href="#article"></use></svg><!----><div _ngcontent-sc36="" class="category ng-tns-c36-1 ng-star-inserted"><p _ngcontent-sc36="" class="caption title"> Blog post </p><p _ngcontent-sc36="" class="caption"> Podcasts </p></div></div><div _ngcontent-sc36="" class="body ng-tns-c36-1"><h4 _ngcontent-sc36="" class="dm-h4"><a _ngcontent-sc36="" class="ng-tns-c36-1" href="/blog/article/podcast-episode-1-ai-and-neuroscience-the-virtuous-circle"> Episode 1: AI and neuroscience - The virtuous circle </a></h4><p _ngcontent-sc36="" class="small">What can the human brain teach us about AI? And what can AI teach us about our own intelligence?</p></div><div _ngcontent-sc36="" class="footer ng-tns-c36-1"><p _ngcontent-sc36="" class="caption date">17 Aug 2019</p><a _ngcontent-sc36="" class="dm-cta link" aria-label="Episode 1: AI and neuroscience - The virtuous circle" href="/blog/article/podcast-episode-1-ai-and-neuroscience-the-virtuous-circle"><svg _ngcontent-sc36="" class="ng-tns-c36-1" role="img"><use _ngcontent-sc36="" class="ng-tns-c36-1" xlink:href="#read-more"></use></svg></a></div></div></dm-content-card><!----></div></dm-article-card><!----></dm-component-factory></div><div _ngcontent-sc18="" class="footer-promo ng-star-inserted"><dm-component-factory _ngcontent-sc18="" _nghost-sc10=""><!----><dm-article-card _nghost-sc36="" class="ng-tns-c36-2 ng-trigger ng-trigger-animateIn ng-star-inserted" id="" style="transform:translateX(0px);opacity:0;"><div _ngcontent-sc36="" class="article-card-container"><!----><dm-content-card _ngcontent-sc36="" _nghost-sc37="" class="ng-star-inserted" style=""><!----><!----><!----><dm-link _ngcontent-sc37="" class="image blog-post-img ng-star-inserted" classlist="media" _nghost-sc8=""><!----><!----><a _ngcontent-sc8="" aria-label="Read more on DeepMind" class="media ng-star-inserted" href="/blog/article/ai-and-neuroscience-virtuous-circle"><!----><!----><!----><!----><!----><dm-media _ngcontent-sc8="" _nghost-sc9="" class="h-position-default v-position-default ng-star-inserted"><!----><div _ngcontent-sc9="" class="image ng-star-inserted" style="background-image:url('https://lh3.googleusercontent.com/O0gUB9xPINfNwcPUudpfyc3Zz1-ihd564n1rXjnCzMYcFxFKnH-GeWBHXvY9vXcw7aUaOpg9zjPviDlEN11y3YrT4wXnmkQe9oTiHA=w2048');background-position:default default;"><!----><!----><!----></div><!----><!----><div _ngcontent-sc9="" class="video ng-star-inserted"><!----></div><!----><!----></dm-media><!----></a><!----><!----></dm-link><!----><!----><div _ngcontent-sc37="" class="content-card-body"><div _ngcontent-sc36="" class="header ng-tns-c36-2"><svg _ngcontent-sc36="" class="ng-tns-c36-2" role="img"><use _ngcontent-sc36="" class="ng-tns-c36-2" xlink:href="#article"></use></svg><!----><div _ngcontent-sc36="" class="category ng-tns-c36-2 ng-star-inserted"><p _ngcontent-sc36="" class="caption title"> Blog post </p><p _ngcontent-sc36="" class="caption"> Research </p></div></div><div _ngcontent-sc36="" class="body ng-tns-c36-2"><h4 _ngcontent-sc36="" class="dm-h4"><a _ngcontent-sc36="" class="ng-tns-c36-2" href="/blog/article/ai-and-neuroscience-virtuous-circle"> AI and Neuroscience: A virtuous circle </a></h4><p _ngcontent-sc36="" class="small">
+
+Recent progress in AI has been remarkable.&nbsp;Artificial systems now outperform expert humans at Atari video games, the...</p></div><div _ngcontent-sc36="" class="footer ng-tns-c36-2"><p _ngcontent-sc36="" class="caption date">02 Aug 2017</p><a _ngcontent-sc36="" class="dm-cta link" aria-label="AI and Neuroscience: A virtuous circle" href="/blog/article/ai-and-neuroscience-virtuous-circle"><svg _ngcontent-sc36="" class="ng-tns-c36-2" role="img"><use _ngcontent-sc36="" class="ng-tns-c36-2" xlink:href="#read-more"></use></svg></a></div></div></dm-content-card><!----></div></dm-article-card><!----></dm-component-factory></div><div _ngcontent-sc18="" class="footer-promo ng-star-inserted"><dm-component-factory _ngcontent-sc18="" _nghost-sc10=""><!----><dm-article-card _nghost-sc36="" class="ng-tns-c36-3 ng-trigger ng-trigger-animateIn ng-star-inserted" id="" style="transform:translateX(0px);opacity:0;"><div _ngcontent-sc36="" class="article-card-container"><!----><dm-content-card _ngcontent-sc36="" _nghost-sc37="" class="ng-star-inserted" style=""><!----><!----><!----><dm-link _ngcontent-sc37="" class="image blog-post-img ng-star-inserted" classlist="media" _nghost-sc8=""><!----><!----><a _ngcontent-sc8="" aria-label="Read more on DeepMind" class="media ng-star-inserted" href="/blog/article/robust-and-verified-ai"><!----><!----><!----><!----><!----><dm-media _ngcontent-sc8="" _nghost-sc9="" class="h-position-default v-position-default ng-star-inserted"><!----><div _ngcontent-sc9="" class="image ng-star-inserted" style="background-image:url('https://lh3.googleusercontent.com/FDgEFuLgJ4tCOCvbakg0sY3M_N-yJEEd19Cp44Go4RrkG2uYyxVdmCBLl0nqheOlNdd88SvysUyYwFwWd9Gcv7gLd5blgi-9vnDSSw=w2048');background-position:default default;"><!----><!----><!----></div><!----><!----><div _ngcontent-sc9="" class="video ng-star-inserted"><!----></div><!----><!----></dm-media><!----></a><!----><!----></dm-link><!----><!----><div _ngcontent-sc37="" class="content-card-body"><div _ngcontent-sc36="" class="header ng-tns-c36-3"><svg _ngcontent-sc36="" class="ng-tns-c36-3" role="img"><use _ngcontent-sc36="" class="ng-tns-c36-3" xlink:href="#article"></use></svg><!----><div _ngcontent-sc36="" class="category ng-tns-c36-3 ng-star-inserted"><p _ngcontent-sc36="" class="caption title"> Blog post </p><p _ngcontent-sc36="" class="caption"> Research </p></div></div><div _ngcontent-sc36="" class="body ng-tns-c36-3"><h4 _ngcontent-sc36="" class="dm-h4"><a _ngcontent-sc36="" class="ng-tns-c36-3" href="/blog/article/robust-and-verified-ai"> Identifying and eliminating bugs in learned predictive models </a></h4><p _ngcontent-sc36="" class="small">One in a series of posts explaining the theories underpinning our research. Bugs and software have gone hand in hand...</p></div><div _ngcontent-sc36="" class="footer ng-tns-c36-3"><p _ngcontent-sc36="" class="caption date">28 Mar 2019</p><a _ngcontent-sc36="" class="dm-cta link" aria-label="Identifying and eliminating bugs in learned predictive models" href="/blog/article/robust-and-verified-ai"><svg _ngcontent-sc36="" class="ng-tns-c36-3" role="img"><use _ngcontent-sc36="" class="ng-tns-c36-3" xlink:href="#read-more"></use></svg></a></div></div></dm-content-card><!----></div></dm-article-card><!----></dm-component-factory></div><div _ngcontent-sc18="" class="footer-promo ng-star-inserted"><dm-component-factory _ngcontent-sc18="" _nghost-sc10=""><!----><dm-article-card _nghost-sc36="" class="ng-tns-c36-4 ng-trigger ng-trigger-animateIn ng-star-inserted" id="" style="transform:translateX(0px);opacity:0;"><div _ngcontent-sc36="" class="article-card-container"><!----><dm-content-card _ngcontent-sc36="" _nghost-sc37="" class="ng-star-inserted" style=""><!----><!----><!----><dm-link _ngcontent-sc37="" class="image blog-post-img ng-star-inserted" classlist="media" _nghost-sc8=""><!----><!----><a _ngcontent-sc8="" aria-label="Read more on DeepMind" class="media ng-star-inserted" href="/blog/article/unsupervised-learning"><!----><!----><!----><!----><!----><dm-media _ngcontent-sc8="" _nghost-sc9="" class="h-position-default v-position-default ng-star-inserted"><!----><div _ngcontent-sc9="" class="image ng-star-inserted" style="background-image:url('https://lh3.googleusercontent.com/jtV2skXd1cv4k_oTgE_4AsEfRu54-MwnMxg2aXh3zeFjCG250yhpKiqZfDVbibuaQoF-UWmoSardIH24Wphx-Q0Lf-Slqd2oKfFZNw=w2048');background-position:default default;"><!----><!----><!----></div><!----><!----><div _ngcontent-sc9="" class="video ng-star-inserted"><!----></div><!----><!----></dm-media><!----></a><!----><!----></dm-link><!----><!----><div _ngcontent-sc37="" class="content-card-body"><div _ngcontent-sc36="" class="header ng-tns-c36-4"><svg _ngcontent-sc36="" class="ng-tns-c36-4" role="img"><use _ngcontent-sc36="" class="ng-tns-c36-4" xlink:href="#article"></use></svg><!----><div _ngcontent-sc36="" class="category ng-tns-c36-4 ng-star-inserted"><p _ngcontent-sc36="" class="caption title"> Blog post </p><p _ngcontent-sc36="" class="caption"> Research </p></div></div><div _ngcontent-sc36="" class="body ng-tns-c36-4"><h4 _ngcontent-sc36="" class="dm-h4"><a _ngcontent-sc36="" class="ng-tns-c36-4" href="/blog/article/unsupervised-learning"> Unsupervised learning: The curious pupil </a></h4><p _ngcontent-sc36="" class="small">One in a series of posts explaining the theories underpinning our research. Over the last decade, machine learning has...</p></div><div _ngcontent-sc36="" class="footer ng-tns-c36-4"><p _ngcontent-sc36="" class="caption date">25 Jun 2019</p><a _ngcontent-sc36="" class="dm-cta link" aria-label="Unsupervised learning: The curious pupil" href="/blog/article/unsupervised-learning"><svg _ngcontent-sc36="" class="ng-tns-c36-4" role="img"><use _ngcontent-sc36="" class="ng-tns-c36-4" xlink:href="#read-more"></use></svg></a></div></div></dm-content-card><!----></div></dm-article-card><!----></dm-component-factory></div></div></div></dm-footer-promos><!----><!----></dm-blog-article-page><!----></dm-component-factory></dm-page-loader><div _ngcontent-sc0="" class="svg-elements"></div><dm-footer _ngcontent-sc0="" _nghost-sc3=""><!----><!----><footer _ngcontent-sc3="" colour-theme="ink_dark" class="ng-star-inserted"><div _ngcontent-sc3="" class="body-wrapper dm-section"><div _ngcontent-sc3="" class="logo"><a _ngcontent-sc3="" aria-label="Home page" class="dm-cta" routerlink="/" href="/"><svg _ngcontent-sc3="" role="img"><use _ngcontent-sc3="" xlink:href="#deepmind-logo-text"></use></svg></a></div><div _ngcontent-sc3="" class="body"><!----><div _ngcontent-sc3="" class="categories ng-star-inserted"><!----><div _ngcontent-sc3="" class="column ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/about"> About </a><ul _ngcontent-sc3=""><!----><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/about#our_story"> Our story </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/about#recent_progress"> Recent progress </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/about#our_global_community"> Our global community </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/about#leadership"> Leadership </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/about#teams"> Teams </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/about#access_to_science"> Access to science </a></li><!----></ul></div><div _ngcontent-sc3="" class="column ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/research"> Research </a><ul _ngcontent-sc3=""><!----><!----><li _ngcontent-sc3="" class="ng-star-inserted"><dm-link _ngcontent-sc3="" classlist="nav-cta" _nghost-sc8=""><!----><!----><a _ngcontent-sc8="" aria-label="Read more on DeepMind" class="nav-cta ng-star-inserted" href="/research?filters=%7B%22category%22:%5B%22Research%22%5D%7D"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">Blog</span><!----><!----><!----></a><!----><!----></dm-link></li><li _ngcontent-sc3="" class="ng-star-inserted"><dm-link _ngcontent-sc3="" classlist="nav-cta" _nghost-sc8=""><!----><!----><a _ngcontent-sc8="" aria-label="Read more on DeepMind" class="nav-cta ng-star-inserted" href="/research?filters=%7B%22collection%22:%5B%22OpenSource%22%5D%7D"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">Open source</span><!----><!----><!----></a><!----><!----></dm-link></li><li _ngcontent-sc3="" class="ng-star-inserted"><dm-link _ngcontent-sc3="" classlist="nav-cta" _nghost-sc8=""><!----><!----><a _ngcontent-sc8="" aria-label="Read more on DeepMind" class="nav-cta ng-star-inserted" href="/research?filters=%7B%22collection%22:%5B%22Publications%22%5D%7D"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">Publications</span><!----><!----><!----></a><!----><!----></dm-link></li></ul></div><div _ngcontent-sc3="" class="column ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/impact"> Impact </a><ul _ngcontent-sc3=""><!----><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/impact#real_world_impact"> Real-world impact </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/impact#significant_breakthroughs"> Significant breakthroughs </a></li><!----></ul></div><div _ngcontent-sc3="" class="column ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/blog"> Blog </a><ul _ngcontent-sc3=""><!----><!----><li _ngcontent-sc3="" class="ng-star-inserted"><dm-link _ngcontent-sc3="" classlist="nav-cta" _nghost-sc8=""><!----><!----><a _ngcontent-sc8="" aria-label="Read more on DeepMind" class="nav-cta ng-star-inserted" href="/blog?filters=%7B%22category%22:%5B%22Research%22%5D%7D"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">Research</span><!----><!----><!----></a><!----><!----></dm-link></li><li _ngcontent-sc3="" class="ng-star-inserted"><dm-link _ngcontent-sc3="" classlist="nav-cta" _nghost-sc8=""><!----><!----><a _ngcontent-sc8="" aria-label="Read more on DeepMind" class="nav-cta ng-star-inserted" href="/blog?filters=%7B%22collection%22:%5B%22Announcements%22%5D%7D"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">News</span><!----><!----><!----></a><!----><!----></dm-link></li></ul></div><div _ngcontent-sc3="" class="column ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/safety-and-ethics"> Safety &amp; Ethics </a><ul _ngcontent-sc3=""><!----><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/safety-and-ethics#overview"> Overview </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/safety-and-ethics#technical_safety"> Technical safety </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/safety-and-ethics#ethics_society"> Ethics &amp; Society </a></li><!----></ul></div><div _ngcontent-sc3="" class="column ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/careers"> Careers </a><ul _ngcontent-sc3=""><!----><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/careers#a_unique_mission"> A unique mission </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/careers#teams"> Teams </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/careers#diversity_matters"> Diversity matters </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/careers#locations"> Locations </a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta" href="/careers#internships"> Internships </a></li><!----></ul></div></div><!----><div _ngcontent-sc3="" class="back-to-top"><svg _ngcontent-sc3="" role="img"><use _ngcontent-sc3="" xlink:href="#arrow"></use></svg></div><div _ngcontent-sc3="" class="information"><div _ngcontent-sc3="" class="legal"><!----><dm-link _ngcontent-sc3="" classlist="dm-cta caption" _nghost-sc8="" class="ng-star-inserted"><!----><!----><a _ngcontent-sc8="" aria-label="Read more on an external page" class="external dm-cta caption ng-star-inserted" rel="noopener" target="_blank" href="mailto:press@deepmind.com"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">Press</span><!----><!----><!----></a><!----><!----><!----></dm-link><dm-link _ngcontent-sc3="" classlist="dm-cta caption" _nghost-sc8="" class="ng-star-inserted"><!----><!----><a _ngcontent-sc8="" aria-label="Read more on DeepMind" class="dm-cta caption ng-star-inserted" href="/terms-and-conditions"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">Terms &amp; Conditions</span><!----><!----><!----></a><!----><!----></dm-link><dm-link _ngcontent-sc3="" classlist="dm-cta caption" _nghost-sc8="" class="ng-star-inserted"><!----><!----><a _ngcontent-sc8="" aria-label="Read more on DeepMind" class="dm-cta caption ng-star-inserted" href="/privacy-policy"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">Privacy Policy</span><!----><!----><!----></a><!----><!----></dm-link><dm-link _ngcontent-sc3="" classlist="dm-cta caption" _nghost-sc8="" class="ng-star-inserted"><!----><!----><a _ngcontent-sc8="" aria-label="Read more on an external page" class="external dm-cta caption ng-star-inserted" rel="noopener" target="_blank" href="https://storage.googleapis.com/deepmind-media/modern_slavery/FINAL_201_Google_Modern_Slavery_Statement.pdf"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">Modern Slavery Statement</span><!----><!----><!----></a><!----><!----><!----></dm-link><dm-link _ngcontent-sc3="" classlist="dm-cta caption" _nghost-sc8="" class="ng-star-inserted"><!----><!----><a _ngcontent-sc8="" aria-label="Read more on an external page" class="external dm-cta caption ng-star-inserted" rel="noopener" target="_blank" href="https://abc.xyz/"><!----><!----><!----><span _ngcontent-sc8="" class="ng-star-inserted">Alphabet Inc</span><!----><!----><!----></a><!----><!----><!----></dm-link></div><ul _ngcontent-sc3="" class="social"><!----><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta icon" rel="noopener" target="_blank" aria-label="Follow us on Twitter!" href="https://twitter.com/DeepMindAI"><svg _ngcontent-sc3="" role="img"><use _ngcontent-sc3="" xlink:href="#twitter"></use></svg></a></li><li _ngcontent-sc3="" class="ng-star-inserted"><a _ngcontent-sc3="" class="nav-cta icon" rel="noopener" target="_blank" aria-label="Follow us on Youtube!" href="https://www.youtube.com/deepmind"><svg _ngcontent-sc3="" role="img"><use _ngcontent-sc3="" xlink:href="#youtube"></use></svg></a></li></ul></div></div><div _ngcontent-sc3="" class="shape"><svg _ngcontent-sc3="" role="img"><use _ngcontent-sc3="" xlink:href="#shape-octa3"></use></svg></div></div></footer></dm-footer></div></dm-app-root>
+<script src="runtime-es2015.858f8dd898b75fe86926.js" type="module" crossorigin="use-credentials"></script><script src="polyfills-es2015.0b2e40f2b7e045bb6031.js" type="module" crossorigin="use-credentials"></script><script src="runtime-es5.741402d1d47331ce975c.js" nomodule=""></script><script src="polyfills-es5.343790ebaac41845eaa3.js" nomodule=""></script><script src="main-es2015.b86475430f0c2e1f65c0.js" type="module" crossorigin="use-credentials"></script><script src="main-es5.90f722d029495b63e37f.js" nomodule=""></script>
+
+</body></html>
